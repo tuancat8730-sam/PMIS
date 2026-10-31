@@ -19,7 +19,7 @@
 | Epic | Tên | Phân hệ spec | Phụ thuộc | Độ lớn | Phase | Trạng thái |
 |---|---|---|---|---|---|---|
 | E0 | Nền tảng: monorepo, DB, auth/RBAC, audit log, CI | §2, §6 | — | M | 1 | **Đã làm phần lớn** (xem bên dưới) |
-| E1 | Danh mục đa dự án, template archetype, bên liên quan, nhân sự chủ chốt, hợp đồng | P1, §4 | E0 | M | 1 | Chưa làm |
+| E1 | Danh mục đa dự án, template archetype, bên liên quan, nhân sự chủ chốt, hợp đồng | P1, §4 | E0 | M | 1 | **Đã làm** (chưa commit; xem `e01-portfolio.plan.md`) |
 | E2 | Đơn vị thụ hưởng, tên kép sau sáp nhập, cụm địa lý | P2 | E0, E1 | S | 1 | Chưa làm |
 | E3 | Tiến độ: baseline kép, đường găng, slippage, phạt, H0–H9, CR/NCR, rủi ro | P4 | E1, E2 | L | 2 | Chưa làm |
 | E4 | Checklist pháp lý 89+ hồ sơ, máy trạng thái trưởng thành (chưa có Drive) | P3.1–3.2 | E1 | M | 2 | Chưa làm |
@@ -66,6 +66,22 @@
 - [ ] Commit E0 lên `origin` (chờ xác nhận)
 
 Kết quả kiểm chứng (2026-10-31): API 43/43 test xanh trên PostgreSQL 16, ruff sạch, alembic không drift; web lint, 6 test và build xanh. Chi tiết và nhật ký: `.claude/plans/e00-completion.plan.md`.
+
+## E1 — Trạng thái chi tiết
+
+### Đã làm
+- **Bảng:** `projects` (archetype, health, tổng mức đầu tư `NUMERIC(18,2)`), `project_stakeholders` (kiểm tổng liên danh ≤ 100%), `contracts`, `contract_personnel` (CCCD mã hóa Fernet, chỉ lưu 4 số cuối để hiển thị, quét trùng trong dự án).
+- **API:** `POST/GET /api/v1/projects`, `GET /api/v1/projects/{id}`, `POST/GET /api/v1/projects/{id}/stakeholders`, `POST/GET /api/v1/projects/{id}/contracts`, `POST/GET /api/v1/contracts/{id}/personnel`. Mọi thao tác ghi có audit cùng transaction và rate limit.
+- **Migration:** `6b19966287e0`. `downgrade` xóa 4 enum. Round-trip và `alembic check` sạch.
+- **RBAC theo dự án:** bảng `project_members`, guard theo thành viên trong `deps.py`. ADMIN toàn cục vượt qua.
+- **Test:** 110/110 xanh (67 test mới), coverage 89,89%. Ruff sạch.
+
+### Chưa làm / hoãn (xem `e01-portfolio.plan.md` mục 5)
+- [x] RBAC theo dự án (`project_members`): thành viên đọc, PM ghi; nhân sự chỉ PM hoặc ADMIN (D3).
+- [ ] Template engine sinh M1–M9, H0–H9, CL-01..10, 89 hồ sơ: chờ E3, E4 (D5).
+- [ ] Seed dữ liệu thật: chuyển sang E2.
+- [ ] Chạy lại `docker compose up` với migration E1.
+- [ ] Commit E1 (chờ xác nhận; nhánh theo quy định phải tạo từ `main`, xem D7).
 
 ## Rủi ro đang mở
 

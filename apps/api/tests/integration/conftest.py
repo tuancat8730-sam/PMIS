@@ -79,7 +79,12 @@ def engine(app: FastAPI) -> AsyncEngine:
 @pytest.fixture(autouse=True)
 async def clean_tables(engine: AsyncEngine) -> AsyncIterator[None]:
     async with engine.begin() as connection:
-        await connection.execute(text("TRUNCATE audit_logs, users CASCADE"))
+        await connection.execute(
+            text(
+                "TRUNCATE audit_logs, users, projects, project_members, project_stakeholders, "
+                "contracts, contract_personnel CASCADE"
+            )
+        )
     yield
 
 
