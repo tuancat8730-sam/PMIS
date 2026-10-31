@@ -21,7 +21,7 @@
 | E0 | Nền tảng: monorepo, DB, auth/RBAC, audit log, CI | §2, §6 | — | M | 1 | **Đã làm phần lớn** (xem bên dưới) |
 | E1 | Danh mục đa dự án, template archetype, bên liên quan, nhân sự chủ chốt, hợp đồng | P1, §4 | E0 | M | 1 | **Đã làm** (chưa commit; xem `e01-portfolio.plan.md`) |
 | E2 | Đơn vị thụ hưởng, tên kép sau sáp nhập, cụm địa lý | P2 | E0, E1 | S | 1 | **Đang làm** trên `feat/e02-beneficiary` (API và seed TP.HCM xong, 130 test xanh; chờ B1 để seed 62 đơn vị Lâm Đồng; xem `e02-beneficiary.plan.md`) |
-| E3 | Tiến độ: baseline kép, đường găng, slippage, phạt, H0–H9, CR/NCR, rủi ro | P4 | E1, E2 | L | 2 | Chưa làm |
+| E3 | Tiến độ: baseline kép, đường găng, slippage, phạt, H0–H9, CR/NCR, rủi ro | P4 | E1, E2 | L | 2 | **Đang làm** trên `feat/e03-schedule`: mốc, H0–H9, phạt, seed M1/M8/M9 xong; CR/NCR/rủi ro và đường găng còn lại (xem `e03-schedule.plan.md`) |
 | E4 | Checklist pháp lý 89+ hồ sơ, máy trạng thái trưởng thành (chưa có Drive) | P3.1–3.2 | E1 | M | 2 | Chưa làm |
 | E5 | Google Drive 2 chiều | P3.3 | E4 | L | 2 | Chưa làm |
 | E6 | AI Auditor: kiểm chữ ký/dấu, rà soát lỗi pháp lý | P3.4 | E4, E5 | L | 4 | Chưa làm |

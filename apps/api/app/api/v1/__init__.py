@@ -5,9 +5,13 @@ from app.api.v1 import (
     beneficiary_units,
     contracts,
     health,
+    hold_points,
+    milestones,
+    penalties,
     personnel,
     project_members,
     projects,
+    risk_issues,
     stakeholders,
     users,
 )
@@ -22,3 +26,7 @@ api_router.include_router(stakeholders.router)
 api_router.include_router(contracts.router)
 api_router.include_router(personnel.router)
 api_router.include_router(beneficiary_units.router)
+api_router.include_router(milestones.router)
+api_router.include_router(hold_points.router)
+api_router.include_router(penalties.router)
+api_router.include_router(risk_issues.router)

@@ -5,11 +5,46 @@ from sqlalchemy import func, select
 from app.db.seed_real_projects import seed_hcm_project
 from app.models.audit_log import AuditLog
 from app.models.beneficiary_unit import BeneficiaryUnit
+from app.models.milestone import Milestone
 from app.models.project import Project
 
 pytestmark = pytest.mark.integration
 
 HCM_UNIT_COUNT = 8
+HCM_MILESTONE_CODES = {"M1", "M8", "M9"}
+
+
+async def test_seed_creates_known_hcm_milestones_with_hard_deadlines(app: FastAPI) -> None:
+    # Arrange
+    session_factory = app.state.session_factory
+
+    # Act
+    await seed_hcm_project(session_factory)
+
+    # Assert
+    async with session_factory() as session:
+        milestones = (await session.execute(select(Milestone))).scalars().all()
+    by_code = {milestone.code: milestone for milestone in milestones}
+    assert set(by_code) == HCM_MILESTONE_CODES
+    assert by_code["M8"].is_hard_deadline is True
+    assert by_code["M9"].is_hard_deadline is True
+    assert by_code["M1"].is_hard_deadline is False
+    assert str(by_code["M8"].baseline_end) == "2026-11-30"
+    assert str(by_code["M9"].baseline_end) == "2026-12-09"
+
+
+async def test_running_seed_twice_does_not_duplicate_milestones(app: FastAPI) -> None:
+    # Arrange
+    session_factory = app.state.session_factory
+    await seed_hcm_project(session_factory)
+
+    # Act
+    await seed_hcm_project(session_factory)
+
+    # Assert
+    async with session_factory() as session:
+        milestone_count = await session.scalar(select(func.count()).select_from(Milestone))
+    assert milestone_count == len(HCM_MILESTONE_CODES)
 
 
 async def test_seed_creates_hcm_project_and_eight_units_once(app: FastAPI) -> None:
