@@ -1,0 +1,21 @@
+[
+  {
+    "code": "M1",
+    "name": "Mốc M1 (cần xác nhận tên theo hợp đồng)",
+    "baseline_end": "2026-10-07",
+    "adjusted_end": "2026-11-05",
+    "is_hard_deadline": false
+  },
+  {
+    "code": "M8",
+    "name": "Nghiệm thu",
+    "baseline_end": "2026-11-30",
+    "is_hard_deadline": true
+  },
+  {
+    "code": "M9",
+    "name": "Giải ngân",
+    "baseline_end": "2026-12-09",
+    "is_hard_deadline": true
+  }
+]
