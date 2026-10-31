@@ -3,6 +3,7 @@ from app.models.beneficiary_unit import BeneficiaryUnit
 from app.models.contract import Contract
 from app.models.contract_personnel import ContractPersonnel
 from app.models.hold_point import HoldPoint, HoldPointConfirmation
+from app.models.legal_document import LegalDocument
 from app.models.milestone import Milestone
 from app.models.milestone_adjustment import MilestoneAdjustment
 from app.models.penalty_rule import PenaltyRule
@@ -19,6 +20,7 @@ __all__ = [
     "ContractPersonnel",
     "HoldPoint",
     "HoldPointConfirmation",
+    "LegalDocument",
     "Milestone",
     "MilestoneAdjustment",
     "PenaltyRule",
