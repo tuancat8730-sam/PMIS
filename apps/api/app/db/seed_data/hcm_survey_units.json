@@ -1,0 +1,66 @@
+[
+  {
+    "unit_code": "HCM-01",
+    "official_name": "THPT Chuyên Lê Hồng Phong",
+    "former_name": null,
+    "unit_type": "THPT",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-02",
+    "official_name": "TH Nguyễn Bỉnh Khiêm",
+    "former_name": null,
+    "unit_type": "TIEU_HOC",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-03",
+    "official_name": "THCS Minh Đức",
+    "former_name": null,
+    "unit_type": "THCS",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-04",
+    "official_name": "TH Nguyễn Văn Trỗi",
+    "former_name": null,
+    "unit_type": "TIEU_HOC",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-05",
+    "official_name": "THCS Trần Văn Ơn",
+    "former_name": null,
+    "unit_type": "THCS",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-06",
+    "official_name": "THPT Hùng Vương",
+    "former_name": null,
+    "unit_type": "THPT",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-07",
+    "official_name": "UBND P. Sài Gòn",
+    "former_name": null,
+    "unit_type": "UBND_PHUONG",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  },
+  {
+    "unit_code": "HCM-08",
+    "official_name": "UBND P. Cầu Ông Lãnh",
+    "former_name": null,
+    "unit_type": "UBND_PHUONG",
+    "cluster_code": "HCM-KS",
+    "cluster_name": "Khảo sát cuốn chiếu TP.HCM"
+  }
+]

@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.api.v1 import (
     auth,
+    beneficiary_units,
     contracts,
     health,
     personnel,
@@ -20,3 +21,4 @@ api_router.include_router(project_members.router)
 api_router.include_router(stakeholders.router)
 api_router.include_router(contracts.router)
 api_router.include_router(personnel.router)
+api_router.include_router(beneficiary_units.router)
