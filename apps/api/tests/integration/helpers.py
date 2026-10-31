@@ -1,8 +1,11 @@
-from collections.abc import Awaitable, Callable
+from collections.abc import AsyncIterator, Awaitable, Callable
+from contextlib import asynccontextmanager
 from typing import Any
 
 import httpx
 
+from app.core.config import Settings
+from app.main import create_app
 from app.models.user import User
 
 TEST_PASSWORD = "mat-khau-test-rat-manh-2026"
@@ -27,6 +30,18 @@ CONTRACT_PAYLOAD: dict[str, Any] = {
     "expiration_date": "2026-06-01",
     "contract_value": "4848186000.00",
 }
+
+
+@asynccontextmanager
+async def limited_client(settings: Settings, **limits: int) -> AsyncIterator[httpx.AsyncClient]:
+    """Client riêng với ngưỡng rate limit thấp; app được dựng mới nên không ảnh hưởng test khác."""
+    app = create_app(settings.model_copy(update=limits))
+    transport = httpx.ASGITransport(app=app)
+    try:
+        async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
+            yield client
+    finally:
+        await app.state.engine.dispose()
 
 
 async def login_as(client: httpx.AsyncClient, email: str, password: str = TEST_PASSWORD) -> str:

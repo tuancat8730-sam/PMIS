@@ -1,13 +1,8 @@
-from collections.abc import AsyncIterator
-from contextlib import asynccontextmanager
-
-import httpx
 import pytest
 
 from app.core.config import Settings
 from app.core.rbac import Role
-from app.main import create_app
-from tests.integration.helpers import UserFactory, login_as
+from tests.integration.helpers import UserFactory, limited_client, login_as
 
 pytestmark = pytest.mark.integration
 
@@ -16,22 +11,11 @@ NEW_USER_EMAIL_TEMPLATE = "nguoi-dung-{index}@example.com"
 NEW_USER_PASSWORD = "mat-khau-moi-rat-manh-2026"
 
 
-@asynccontextmanager
-async def _limited_client(settings: Settings, **limits: int) -> AsyncIterator[httpx.AsyncClient]:
-    app = create_app(settings.model_copy(update=limits))
-    transport = httpx.ASGITransport(app=app)
-    try:
-        async with httpx.AsyncClient(transport=transport, base_url="http://test") as client:
-            yield client
-    finally:
-        await app.state.engine.dispose()
-
-
 async def test_login_is_rejected_with_429_and_retry_after_after_too_many_attempts(
     settings: Settings,
 ) -> None:
     # Arrange
-    async with _limited_client(
+    async with limited_client(
         settings,
         login_rate_limit_attempts=2,
         login_rate_limit_window_seconds=900,
@@ -57,7 +41,7 @@ async def test_user_creation_is_rejected_with_429_after_too_many_writes(
 ) -> None:
     # Arrange
     await make_user(email="admin-gioi-han@example.com", role=Role.ADMIN)
-    async with _limited_client(
+    async with limited_client(
         settings,
         login_rate_limit_attempts=10,
         write_rate_limit_attempts=2,

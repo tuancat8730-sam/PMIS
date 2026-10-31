@@ -22,15 +22,21 @@
 | E1 | Danh mục đa dự án, template archetype, bên liên quan, nhân sự chủ chốt, hợp đồng | P1, §4 | E0 | M | 1 | **Đã làm** (chưa commit; xem `e01-portfolio.plan.md`) |
 | E2 | Đơn vị thụ hưởng, tên kép sau sáp nhập, cụm địa lý | P2 | E0, E1 | S | 1 | **Đang làm** trên `feat/e02-beneficiary` (API và seed TP.HCM xong, 130 test xanh; chờ B1 để seed 62 đơn vị Lâm Đồng; xem `e02-beneficiary.plan.md`) |
 | E3 | Tiến độ: baseline kép, đường găng, slippage, phạt, H0–H9, CR/NCR, rủi ro | P4 | E1, E2 | L | 2 | **Đang làm** trên `feat/e03-schedule`: mốc, H0–H9, phạt, seed M1/M8/M9 xong; CR/NCR/rủi ro và đường găng còn lại (xem `e03-schedule.plan.md`) |
-| E4 | Checklist pháp lý 89+ hồ sơ, máy trạng thái trưởng thành (chưa có Drive) | P3.1–3.2 | E1 | M | 2 | Chưa làm |
-| E5 | Google Drive 2 chiều | P3.3 | E4 | L | 2 | Chưa làm |
-| E6 | AI Auditor: kiểm chữ ký/dấu, rà soát lỗi pháp lý | P3.4 | E4, E5 | L | 4 | Chưa làm |
-| E7 | Tài chính: đa hợp đồng, bảo lãnh, tạm ứng, giải ngân | P7 | E1 | M | 2 | Chưa làm |
-| E8 | Module CNTT: khảo sát, RTM, mâu thuẫn hợp đồng, phân hệ A–G, NFR, ATTT | P5 | E1, E3 | L | 3 | Chưa làm |
-| E9 | Module thiết bị: hàng mẫu 21 tiêu chí, serial/IMEI, CO/CQ, ma trận 62×4×3, 240+ biên bản `.docx` | P6 | E1, E2 | XL | 3 | Chưa làm |
-| E10 | Mobile PWA hiện trường: quét QR/serial, ảnh có GPS, ký BB | §5.5 | E9 | M | 3 | Chưa làm |
-| E11 | Auto-Report Studio: báo cáo tuần, meeting note, AI bóc tách biên bản họp | P8 | E3, E4, E9 | L | 4 | Chưa làm |
-| E12 | Command Center: KPI, thẻ cảnh báo đỏ, đếm ngược hợp đồng | P1.1 | E1–E9 | M | 2 (cơ bản) → 4 | Chưa làm |
+| E4 | Checklist pháp lý 89+ hồ sơ, máy trạng thái trưởng thành (chưa có Drive) | P3.1–3.2 | E1 | M | 2 | **Đã làm phần lớn** trên `feat/e04-legal` (máy trạng thái, bảng, API, 219 test xanh). Seed 89+ đầu mục chờ file Excel từ PM (Q1). Plan: `e04-legal.plan.md` |
+| E5 | Google Drive 2 chiều | P3.3 | E4 | L | 2 | Chưa làm. Plan: `e05-drive.plan.md` (chờ Q1–Q4) |
+| E6 | AI Auditor: kiểm chữ ký/dấu, rà soát lỗi pháp lý | P3.4 | E4, E5 | L | 4 | Chưa làm. Plan: `e06-ai-auditor.plan.md` (chờ Q1–Q5) |
+| E7 | Tài chính: đa hợp đồng, bảo lãnh, tạm ứng, giải ngân | P7 | E1 | M | 2 | Chưa làm. Plan: `e07-finance.plan.md` (chờ Q1–Q4) |
+| E8 | Module CNTT: khảo sát, RTM, mâu thuẫn hợp đồng, phân hệ A–G, NFR, ATTT | P5 | E1, E3 | L | 3 | Chưa làm. Plan: `e08-it-system.plan.md` (chờ Q1–Q7) |
+| E9 | Module thiết bị: hàng mẫu 21 tiêu chí, serial/IMEI, CO/CQ, ma trận 62×4×3, 240+ biên bản `.docx` | P6 | E1, E2 | XL | 3 | Chưa làm. Plan: `e09-goods.plan.md` (chờ Q1–Q5; đợt D chờ file mẫu) |
+| E10 | Mobile PWA hiện trường: quét QR/serial, ảnh có GPS, ký BB | §5.5 | E9 | M | 3 | Chưa làm. Plan: `e10-field-pwa.plan.md` (chờ Q1–Q6) |
+| E11 | Auto-Report Studio: báo cáo tuần, meeting note, AI bóc tách biên bản họp | P8 | E3, E4, E9 | L | 4 | Chưa làm. Plan: `e11-reports.plan.md` (chờ Q1–Q5) |
+| E12 | Command Center: KPI, thẻ cảnh báo đỏ, đếm ngược hợp đồng | P1.1 | E1–E9 | M | 2 (cơ bản) → 4 | Chưa làm. Plan: `e12-command-center.plan.md` (chờ Q1–Q5) |
+
+Các câu hỏi cần chốt trước khi bắt đầu, tổng hợp từ 9 plan trên:
+- **Lệch lát cắt cấp tốc:** E11 đứng sau E9 nhưng cần E4. Đề xuất đưa E4 lên trước E11 (`e11-reports.plan.md` Q4).
+- **Số liệu:** tổng giá trị hợp đồng (111,8 tỷ trong spec; 111,07 tỷ chỉ gói chính; 112,19 tỷ kể cả tư vấn) và số trường (1.670 hay 1.732). Ảnh hưởng E2, E8, E9, E12.
+- **Số đơn vị đợt 1:** spec ghi 60, ma trận ghi 62 (`e09-goods.plan.md` Q3).
+- **Thiếu file mẫu:** biên bản bàn giao (E9), báo cáo tuần và meeting note (E11), danh mục 89 đầu mục (E4).
 
 ## Thứ tự thực thi
 
