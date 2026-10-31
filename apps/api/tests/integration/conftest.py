@@ -82,7 +82,7 @@ async def clean_tables(engine: AsyncEngine) -> AsyncIterator[None]:
         await connection.execute(
             text(
                 "TRUNCATE audit_logs, users, projects, project_members, project_stakeholders, "
-                "contracts, contract_personnel CASCADE"
+                "contracts, contract_personnel, beneficiary_units CASCADE"
             )
         )
     yield

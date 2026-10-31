@@ -53,6 +53,12 @@ docker compose exec api python -m app.cli create-admin --email admin@example.com
 
 Khi chạy cục bộ không dùng Docker, dùng `make create-admin EMAIL=... NAME="..."`.
 
+Nạp dữ liệu thật của dự án SGD-HCM (dự án, 8 đơn vị khảo sát). Lệnh chạy lại an toàn, bản ghi đã có được bỏ qua:
+
+```bash
+make seed-projects
+```
+
 ## Chạy cục bộ không dùng Docker cho API
 
 ```bash

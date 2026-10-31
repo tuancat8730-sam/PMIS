@@ -1,4 +1,4 @@
-.PHONY: up down api-install api-test api-lint api-migrate create-admin web-install web-lint web-build web-test
+.PHONY: up down api-install api-test api-lint api-migrate create-admin seed-projects web-install web-lint web-build web-test
 
 API_DIR := apps/api
 WEB_DIR := apps/web
@@ -25,6 +25,9 @@ api-migrate:
 
 create-admin:
 	cd $(API_DIR) && ./.venv/bin/python -m app.cli create-admin --email $(EMAIL) --name "$(NAME)"
+
+seed-projects:
+	cd $(API_DIR) && ./.venv/bin/python -m app.db.seed_real_projects
 
 web-install:
 	cd $(WEB_DIR) && pnpm install

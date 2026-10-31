@@ -1,4 +1,5 @@
 from app.models.audit_log import AuditLog
+from app.models.beneficiary_unit import BeneficiaryUnit
 from app.models.contract import Contract
 from app.models.contract_personnel import ContractPersonnel
 from app.models.project import Project
@@ -8,6 +9,7 @@ from app.models.user import User
 
 __all__ = [
     "AuditLog",
+    "BeneficiaryUnit",
     "Contract",
     "ContractPersonnel",
     "Project",
