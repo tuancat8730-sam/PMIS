@@ -202,11 +202,11 @@ def upgrade() -> None:
     _create_rtm_links()
     _create_pentest_findings()
     _create_nfr_measurements()
-    op.add_column("risk_issues", sa.Column("resolution_ref", sa.Text(), nullable=True))
+    op.add_column("project_risks_and_issues", sa.Column("resolution_ref", sa.Text(), nullable=True))
 
 
 def downgrade() -> None:
-    op.drop_column("risk_issues", "resolution_ref")
+    op.drop_column("project_risks_and_issues", "resolution_ref")
     op.drop_table("nfr_measurements")
     op.drop_table("pentest_findings")
     op.drop_table("rtm_links")

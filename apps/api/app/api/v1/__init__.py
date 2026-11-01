@@ -4,9 +4,11 @@ from app.api.v1 import (
     auth,
     beneficiary_units,
     contracts,
+    delivery_handovers,
     disbursements,
     drive,
     drive_uploads,
+    equipment,
     finance,
     health,
     hold_points,
@@ -37,6 +39,8 @@ api_router.include_router(milestones.router)
 api_router.include_router(hold_points.router)
 api_router.include_router(penalties.router)
 api_router.include_router(finance.router)
+api_router.include_router(equipment.router)
+api_router.include_router(delivery_handovers.router)
 api_router.include_router(disbursements.router)
 api_router.include_router(risk_issues.router)
 api_router.include_router(it_system.router)
