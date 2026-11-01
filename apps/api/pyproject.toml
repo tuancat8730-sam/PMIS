@@ -16,6 +16,8 @@ dependencies = [
     "cryptography>=43",
     "email-validator>=2.1",
     "python-multipart>=0.0.9",
+    # Xuất báo cáo Word theo mẫu (E11). Ghim để bố cục file xuất ổn định.
+    "python-docx==1.1.2",
     # Ghim phiên bản cụ thể cho tích hợp Google Drive và hàng đợi nền (ARQ, kéo theo redis).
     "google-api-python-client==2.201.0",
     "google-auth==2.62.0",
