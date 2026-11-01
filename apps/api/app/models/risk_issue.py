@@ -73,6 +73,7 @@ class RiskIssue(Base):
     mitigation_action: Mapped[str | None] = mapped_column(Text, default=None)
     owner: Mapped[str | None] = mapped_column(String(OWNER_MAX_LENGTH), default=None)
     due_date: Mapped[date | None] = mapped_column(Date, default=None)
+    resolution_ref: Mapped[str | None] = mapped_column(Text, default=None)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

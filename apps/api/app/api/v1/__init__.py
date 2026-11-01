@@ -12,6 +12,8 @@ from app.api.v1 import (
     finance,
     health,
     hold_points,
+    it_system,
+    it_system_quality,
     legal_documents,
     milestones,
     penalties,
@@ -41,6 +43,8 @@ api_router.include_router(equipment.router)
 api_router.include_router(delivery_handovers.router)
 api_router.include_router(disbursements.router)
 api_router.include_router(risk_issues.router)
+api_router.include_router(it_system.router)
+api_router.include_router(it_system_quality.router)
 api_router.include_router(legal_documents.router)
 api_router.include_router(drive.router)
 api_router.include_router(drive_uploads.router)

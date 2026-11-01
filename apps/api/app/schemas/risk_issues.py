@@ -16,6 +16,7 @@ from app.schemas.base import RequestModel
 TITLE_MAX_LENGTH = 300
 DESCRIPTION_MAX_LENGTH = 4000
 MITIGATION_MAX_LENGTH = 2000
+RESOLUTION_REF_MAX_LENGTH = 300
 
 
 class RiskIssueCreate(RequestModel):
@@ -36,6 +37,7 @@ class RiskIssueUpdate(RequestModel):
     mitigation_action: str | None = Field(default=None, max_length=MITIGATION_MAX_LENGTH)
     owner: str | None = Field(default=None, max_length=OWNER_MAX_LENGTH)
     due_date: date | None = None
+    resolution_ref: str | None = Field(default=None, max_length=RESOLUTION_REF_MAX_LENGTH)
 
     @model_validator(mode="after")
     def _reject_null_for_required_fields(self) -> "RiskIssueUpdate":
@@ -61,4 +63,5 @@ class RiskIssueOut(BaseModel):
     mitigation_action: str | None
     owner: str | None
     due_date: date | None
+    resolution_ref: str | None
     created_at: datetime
