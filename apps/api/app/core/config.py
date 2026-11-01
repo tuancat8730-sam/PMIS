@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     login_rate_limit_window_seconds: int = Field(default=900, gt=0)
     write_rate_limit_attempts: int = Field(default=30, gt=0)
     write_rate_limit_window_seconds: int = Field(default=60, gt=0)
+    # File JSON khóa tài khoản dịch vụ Drive, nằm ngoài repo. Thiếu thì tính năng Drive tắt.
+    drive_service_account_file: str | None = None
+    # Token OAuth người dùng để ghi lên Drive, tạo bằng `drive_oauth_setup`, nằm ngoài repo.
+    drive_oauth_token_file: str | None = None
+    redis_url: str = "redis://localhost:6379/0"
 
     @model_validator(mode="after")
     def _check_jwt_secret_length(self) -> "Settings":
