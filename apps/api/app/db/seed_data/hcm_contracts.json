@@ -1,0 +1,17 @@
+[
+  {
+    "package_name": "Gói thầu chính",
+    "package_kind": "MAIN",
+    "contract_value": "4848186000.00"
+  },
+  {
+    "package_name": "Gói TVGS",
+    "package_kind": "CONSULTING",
+    "contract_value": "120000000.00"
+  },
+  {
+    "package_name": "Gói TVQLDA",
+    "package_kind": "CONSULTING",
+    "contract_value": "109000000.00"
+  }
+]

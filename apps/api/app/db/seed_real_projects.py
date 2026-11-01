@@ -12,12 +12,15 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 
 from app.core.config import get_settings
+from app.models.contract import Contract
 from app.models.project import Project, ProjectArchetype
 from app.schemas.beneficiary_units import BeneficiaryUnitCreate
+from app.schemas.contracts import ContractCreate
 from app.schemas.milestones import MilestoneCreate
 from app.schemas.projects import ProjectCreate
 from app.services.audit import record_audit
 from app.services.beneficiary_units import create_unit, find_unit_by_code
+from app.services.contracts import create_contract
 from app.services.milestones import create_milestone, find_milestone_by_code
 from app.services.projects import create_project
 
@@ -26,6 +29,7 @@ logger = logging.getLogger(__name__)
 SEED_DATA_DIR = Path(__file__).resolve().parent / "seed_data"
 HCM_UNITS_FILE = SEED_DATA_DIR / "hcm_survey_units.json"
 HCM_MILESTONES_FILE = SEED_DATA_DIR / "hcm_milestones.json"
+HCM_CONTRACTS_FILE = SEED_DATA_DIR / "hcm_contracts.json"
 
 HCM_PROJECT = ProjectCreate(
     code="SGD-HCM-CSVC-2026",
@@ -112,15 +116,41 @@ async def ensure_milestones(
     return inserted
 
 
+async def ensure_contracts(
+    session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
+) -> int:
+    """Thêm hợp đồng còn thiếu theo tên gói, không tạo trùng khi chạy lại."""
+    existing_names = set(
+        (
+            await session.execute(
+                select(Contract.package_name).where(Contract.project_id == project_id)
+            )
+        ).scalars()
+    )
+    inserted = 0
+    for row in rows:
+        if row["package_name"] in existing_names:
+            continue
+        await create_contract(
+            session,
+            project_id=project_id,
+            payload=ContractCreate.model_validate(row),
+        )
+        inserted += 1
+    return inserted
+
+
 async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) -> int:
-    """Nạp SGD-HCM, 8 đơn vị khảo sát và mốc đã biết trong một transaction; trả về số đơn vị mới."""
+    """Nạp SGD-HCM gồm đơn vị, mốc và hợp đồng trong một transaction; trả về số đơn vị mới."""
     async with session_factory() as session:
         project = await ensure_project(session, HCM_PROJECT)
         inserted = await ensure_units(session, project.id, load_units(HCM_UNITS_FILE))
         milestones = await ensure_milestones(
             session, project.id, load_seed_rows(HCM_MILESTONES_FILE)
         )
+        contracts = await ensure_contracts(session, project.id, load_seed_rows(HCM_CONTRACTS_FILE))
         await session.commit()
+    logger.info("Seed %s: thêm %d hợp đồng", HCM_PROJECT.code, contracts)
     logger.info("Seed %s: thêm %d đơn vị thụ hưởng, %d mốc", HCM_PROJECT.code, inserted, milestones)
     return inserted
 
