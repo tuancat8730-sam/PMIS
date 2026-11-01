@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.api.v1 import (
     auth,
     beneficiary_units,
+    command_center,
     contracts,
     delivery_handovers,
     disbursements,
@@ -35,6 +36,7 @@ api_router.include_router(stakeholders.router)
 api_router.include_router(contracts.router)
 api_router.include_router(personnel.router)
 api_router.include_router(beneficiary_units.router)
+api_router.include_router(command_center.router)
 api_router.include_router(milestones.router)
 api_router.include_router(hold_points.router)
 api_router.include_router(penalties.router)
