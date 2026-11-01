@@ -16,6 +16,8 @@ dependencies = [
     "cryptography>=43",
     "email-validator>=2.1",
     "python-multipart>=0.0.9",
+    # Đọc EXIF GPS và kiểm ảnh hiện trường (E10). Ghim để kết quả đọc EXIF ổn định.
+    "pillow==11.3.0",
     # Ghim phiên bản cụ thể cho tích hợp Google Drive và hàng đợi nền (ARQ, kéo theo redis).
     "google-api-python-client==2.201.0",
     "google-auth==2.62.0",

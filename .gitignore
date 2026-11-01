@@ -27,3 +27,6 @@ pgdata/
 
 # Cấu hình cục bộ của Claude Code
 .claude/settings.local.json
+
+# Ảnh hiện trường lưu cục bộ (E10)
+apps/api/var/

@@ -11,6 +11,7 @@ from app.models.equipment import EquipmentCatalog, SampleInspection
 from app.models.equipment_serial import EquipmentSerial
 from app.models.finance_rule import FinanceRule
 from app.models.hold_point import HoldPoint, HoldPointConfirmation
+from app.models.idempotency_key import IdempotencyKey
 from app.models.it_survey_record import ItSurveyRecord
 from app.models.it_system_module import ItSystemModule
 from app.models.legal_document import LegalDocument
@@ -42,6 +43,7 @@ __all__ = [
     "SampleInspection",
     "HoldPoint",
     "HoldPointConfirmation",
+    "IdempotencyKey",
     "ItSurveyRecord",
     "ItSystemModule",
     "LegalDocument",
