@@ -11,14 +11,19 @@ from app.models.equipment import EquipmentCatalog, SampleInspection
 from app.models.equipment_serial import EquipmentSerial
 from app.models.finance_rule import FinanceRule
 from app.models.hold_point import HoldPoint, HoldPointConfirmation
+from app.models.it_survey_record import ItSurveyRecord
+from app.models.it_system_module import ItSystemModule
 from app.models.legal_document import LegalDocument
 from app.models.milestone import Milestone
 from app.models.milestone_adjustment import MilestoneAdjustment
+from app.models.nfr_measurement import NfrMeasurement
 from app.models.penalty_rule import PenaltyRule
+from app.models.pentest_finding import PentestFinding
 from app.models.project import Project
 from app.models.project_member import ProjectMember
 from app.models.project_stakeholder import ProjectStakeholder
 from app.models.risk_issue import RiskIssue
+from app.models.rtm_link import RtmLink
 from app.models.user import User
 
 __all__ = [

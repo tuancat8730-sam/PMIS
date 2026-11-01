@@ -1,7 +1,7 @@
 """tao bang e9 thiet bi
 
 Revision ID: c5d9a1e7f3b2
-Revises: f7a1d3c9e2b4
+Revises: c9e4a2f1b7d3
 Create Date: 2026-11-01 10:00:00.000000
 
 """
@@ -13,7 +13,7 @@ from alembic import op
 from sqlalchemy.dialects import postgresql
 
 revision: str = "c5d9a1e7f3b2"
-down_revision: str | None = "f7a1d3c9e2b4"
+down_revision: str | None = "c9e4a2f1b7d3"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
