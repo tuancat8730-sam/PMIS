@@ -7,14 +7,18 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.it_gate_rules import is_gated_milestone
 from app.core.schedule_rules import effective_due_date, hard_deadline_respected
 from app.models.milestone import Milestone, StoredMilestoneStatus
 from app.models.milestone_adjustment import MilestoneAdjustment
+from app.models.project import Project, ProjectArchetype
 from app.services.hold_points import blocking_hold_point_codes
+from app.services.it_gate import it_completion_blockers_for_project
 
 HARD_DEADLINE_MESSAGE = "Mốc cứng không được lùi quá hạn gốc"
 LOCKED_CHANGE_REASON_MESSAGE = "Thay đổi hạn của mốc đã khóa cần ghi lý do"
 COMPLETION_BLOCKED_MESSAGE = "Chưa thể hoàn thành mốc, điểm dừng chưa đủ xác nhận 3 bên"
+IT_GATE_BLOCKED_MESSAGE = "Chưa thể nghiệm thu dự án CNTT"
 
 
 class DuplicateMilestoneError(Exception):
@@ -88,6 +92,19 @@ async def _check_completion_allowed(session: AsyncSession, milestone: Milestone)
     blockers = await blocking_hold_point_codes(session, milestone.id)
     if blockers:
         raise ScheduleRuleError(f"{COMPLETION_BLOCKED_MESSAGE}: {', '.join(blockers)}")
+    await _check_it_gate(session, milestone)
+
+
+async def _check_it_gate(session: AsyncSession, milestone: Milestone) -> None:
+    """Mốc M8 của dự án CNTT chỉ hoàn thành khi qua cổng ATTT, pentest và NFR (E8)."""
+    if not is_gated_milestone(milestone.code):
+        return
+    project = await session.get(Project, milestone.project_id)
+    if project is None or project.archetype != ProjectArchetype.IT_SYSTEM:
+        return
+    blockers = await it_completion_blockers_for_project(session, milestone.project_id)
+    if blockers:
+        raise ScheduleRuleError(f"{IT_GATE_BLOCKED_MESSAGE}: {'; '.join(blockers)}")
 
 
 async def update_milestone(

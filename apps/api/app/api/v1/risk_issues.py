@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 
 from app.api.deps import ANY_PROJECT_ROLE, SessionDep, WriteRateLimitDep, project_role_guard
+from app.core.contract_discrepancy_rules import closing_requires_resolution
 from app.core.rbac import Principal, Role, get_current_principal
 from app.models.project import Project
 from app.models.risk_issue import RecordType, RiskIssue
@@ -17,6 +18,9 @@ from app.services.risk_issues import (
 )
 
 RISK_ISSUE_NOT_FOUND_DETAIL = "Không tìm thấy bản ghi rủi ro, CR hoặc NCR"
+CONTRACT_DISCREPANCY_RESOLUTION_MESSAGE = (
+    "Đóng mâu thuẫn hợp đồng cần nhập văn bản chốt của CĐT (resolution_ref)"
+)
 
 router = APIRouter(prefix="/projects/{project_id}/risk-issues", tags=["risk-issues"])
 
@@ -93,6 +97,13 @@ async def update_risk_issue_endpoint(
 ) -> RiskIssueOut:
     record = await _get_risk_issue_or_404(session, project_id, risk_issue_id)
     changes = payload.model_dump(exclude_unset=True)
+    target_status = changes.get("status", record.status)
+    target_ref = changes.get("resolution_ref", record.resolution_ref)
+    if closing_requires_resolution(record.record_type, target_status, target_ref):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=CONTRACT_DISCREPANCY_RESOLUTION_MESSAGE,
+        )
     for field, value in changes.items():
         setattr(record, field, value)
     await session.flush()
