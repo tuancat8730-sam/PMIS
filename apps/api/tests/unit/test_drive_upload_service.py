@@ -1,7 +1,7 @@
 import pytest
-from app.services.drive_upload import DriveFolderNotFoundError, upload_to_project_folder
 
 from app.integrations.drive_gateway import DriveEntry
+from app.services.drive_upload import DriveFolderNotFoundError, upload_to_project_folder
 from tests.fakes.fake_drive_writer import FakeDriveWriter
 
 pytestmark = pytest.mark.unit

@@ -23,3 +23,4 @@ class Contract(Base):
     signed_date: Mapped[date | None] = mapped_column(Date)
     expiration_date: Mapped[date | None] = mapped_column(Date)
     contract_value: Mapped[Decimal] = mapped_column(Numeric(18, 2))
+    package_kind: Mapped[str] = mapped_column(String(20), server_default=text("'MAIN'"))

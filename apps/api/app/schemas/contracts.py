@@ -1,5 +1,6 @@
 from datetime import date
 from decimal import Decimal
+from typing import Literal
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -12,8 +13,12 @@ CONTRACT_VALUE_MAX_DIGITS = 18
 CONTRACT_VALUE_DECIMAL_PLACES = 2
 
 
+PackageKind = Literal["MAIN", "CONSULTING"]
+
+
 class ContractCreate(RequestModel):
     package_name: str = Field(min_length=1, max_length=PACKAGE_NAME_MAX_LENGTH)
+    package_kind: PackageKind = "MAIN"
     contract_number: str | None = Field(default=None, max_length=CONTRACT_NUMBER_MAX_LENGTH)
     signed_date: date | None = None
     expiration_date: date | None = None
@@ -36,6 +41,7 @@ class ContractOut(BaseModel):
     id: UUID
     project_id: UUID
     package_name: str
+    package_kind: str
     contract_number: str | None
     signed_date: date | None
     expiration_date: date | None
