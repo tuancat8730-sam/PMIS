@@ -76,3 +76,9 @@ class LegalDocument(Base):
     assigned_to: Mapped[str | None] = mapped_column(String(ASSIGNEE_MAX_LENGTH))
     due_date: Mapped[date | None] = mapped_column(Date)
     notes: Mapped[str | None] = mapped_column(Text)
+    draft_drive_file_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("drive_files.id", ondelete="SET NULL"),
+    )
+    signed_drive_file_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("drive_files.id", ondelete="SET NULL"),
+    )

@@ -17,11 +17,12 @@
 | Đổi trạng thái ghi audit cùng transaction; `VERIFIED_CLOSED` chỉ PM đóng được | `app/services/legal_documents.py`, router | ✅ Có |
 | API liệt kê (lọc theo `phase_group`, `maturity_status`), xem chi tiết, tạo, sửa, đổi trạng thái | `app/api/v1/legal_documents.py` | ✅ Có |
 | API tổng hợp đếm theo trạng thái và giai đoạn (phục vụ E12 và panel trái màn hình 5.2) | `app/services/legal_documents.py` | ✅ Có |
-| Seed checklist 89+ đầu mục và bảng tình trạng hồ sơ thực tế của 2 dự án (từ file Excel PM cung cấp) | `app/db/seed_real_projects.py` (mở rộng), file dữ liệu | ⏸ Chờ file Excel (Q1 đã chốt) |
+| Seed checklist 89+ đầu mục và bảng tình trạng hồ sơ thực tế của 2 dự án (từ file Excel PM cung cấp) | `app/db/seed_real_projects.py` (mở rộng), file dữ liệu | ⏸ Chờ file Excel: PM chưa gửi (cập nhật 2026-11-01) |
 | Liên kết file Drive (`draft_drive_file_id`, `signed_drive_file_id`) | E5 | ⏸ Thuộc E5 |
 | Đánh dấu "Có lỗi pháp lý" tự động bằng AI | E6 | ⏸ Thuộc E6 |
-| Giao diện Legal & Drive Hub (màn hình 5.2) | `apps/web` | ⏸ Làm sau khi API ổn định |
-| Commit, push, merge PR | — | ⏸ Chỉ khi người dùng yêu cầu |
+| Giao diện Legal & Drive Hub (màn hình 5.2) | `apps/web` | ✅ Có trong E4 (quyết định 2026-11-01). Chưa làm, xem Pha 6 |
+| Commit | — | ✅ Đã commit `51d7e9f` trên `feat/e04-legal` |
+| Push, merge PR | — | ⏸ Chỉ khi người dùng yêu cầu |
 
 **E4 được đánh ✅ khi:** migration round-trip sạch, `alembic check` không drift; mọi chuyển trạng thái hợp lệ và không hợp lệ có unit test; API có test tích hợp (200, 403, 404, 409, 422, audit, 429 ở endpoint ghi); hồ sơ `VERIFIED_CLOSED` không sửa được trực tiếp; seed idempotent khi đã có dữ liệu; coverage ≥ 80%; ruff sạch; OpenAPI cập nhật; plan epic được cập nhật.
 
@@ -71,10 +72,13 @@
 
 | # | Câu hỏi | Đề xuất | Trạng thái |
 |---|---|---|---|
-| Q1 | Nguồn danh mục 89+ đầu mục và bảng tình trạng hồ sơ thực tế là gì? | File Excel do PM cung cấp, nạp qua script seed idempotent | ✅ Đã chốt: file Excel do PM cung cấp. Chờ file |
+| Q1 | Nguồn danh mục 89+ đầu mục và bảng tình trạng hồ sơ thực tế là gì? | File Excel do PM cung cấp, nạp qua script seed idempotent | ✅ Đã chốt: file Excel do PM cung cấp. ⏸ PM chưa gửi file (2026-11-01) |
 | Q2 | Có tách E5 để thêm FK `drive_file_id` không? | Tách như mục S3 | ✅ Đã chốt: có, tách. E5 thêm FK |
 | Q3 | Sau `VERIFIED_CLOSED`, ai được mở lại và cách mở? | PM hoặc ADMIN. Ghi lý do và audit. Mở lại chuyển về `SIGNED_SCAN_PDF` | ✅ Đã chốt: PM hoặc ADMIN, bắt buộc lý do và audit |
 | Q4 | Có cho phép đi lùi trạng thái (ví dụ `SUBMITTED_REVIEW` về `DRAFT_DOCX`) không? | Có, nhưng bắt buộc có lý do và ghi audit | ✅ Đã chốt: có, bắt buộc lý do và audit |
+| Q5 | Ai xác nhận nội dung checklist đối chiếu NĐ 45/2026 và 224/2026 trước khi seed? | PM của dự án | ✅ Đã chốt 2026-11-01: PM của dự án. Chưa có xác nhận |
+| Q6 | Nhánh E4 đang chưa commit, xử lý thế nào? | Commit E4 ngay | ✅ Đã chốt 2026-11-01. Thực tế: E4 đã có commit `51d7e9f` từ trước, không còn thay đổi E4 nào chưa commit |
+| Q7 | Giao diện Legal & Drive Hub (màn hình 5.2) có nằm trong E4 không? | Có, làm trong E4 | ✅ Đã chốt 2026-11-01: có, làm trong E4 (Pha 6) |
 
 ## 7. Kế hoạch thực hiện
 
@@ -119,6 +123,14 @@ Quy ước: mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), r
 | 5.2 | Tự review diff: không secret, không `print`, không `.env` | ✅ | Đã rà các file mới; không secret, không `print` |
 | 5.3 | Cập nhật `pmis-epics.plan.md` và file plan này | ✅ | Đã cập nhật cả hai |
 
+### Pha 6: Giao diện Legal & Drive Hub (màn hình 5.2, `apps/web`)
+| ID | Việc | Trạng thái | Ghi chú |
+|---|---|---|---|
+| 6.1 | Đọc spec màn hình 5.2 và thiết kế bố cục theo API hiện có | ⬜ | Phạm vi theo Q7 (2026-11-01) |
+| 6.2 | Panel tổng hợp theo giai đoạn và trạng thái (`/legal-documents/summary`) | ⬜ | |
+| 6.3 | Danh sách hồ sơ, lọc theo giai đoạn và trạng thái, đổi trạng thái có lý do | ⬜ | Khớp Q3, Q4 |
+| 6.4 | Panel gợi ý khớp file Drive (`/drive/suggestions`) do E5 cung cấp | ⬜ | Phụ thuộc E5 đã merge API |
+
 ## 8. Trạng thái theo yêu cầu
 
 | Yêu cầu | Hiện tại | Đích E4 | Pha |
@@ -126,7 +138,8 @@ Quy ước: mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), r
 | Máy trạng thái 7 trạng thái | ✅ | ✅ | 1 |
 | Bảng và API hồ sơ | ✅ | ✅ | 2, 3 |
 | Khóa `VERIFIED_CLOSED` | ✅ | ✅ | 3 |
-| Seed 89+ đầu mục | ⬜ | ⏸ | 4 (chờ Q1) |
+| Seed 89+ đầu mục | ⬜ | ⏸ | 4 (chờ Q1: PM chưa gửi file) |
+| Giao diện Legal & Drive Hub | ⬜ | ✅ | 6 (Q7) |
 
 ## 9. Rủi ro
 
@@ -145,6 +158,7 @@ Quy ước: mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), r
 | 2026-10-31 | Người dùng chốt Q1–Q4 theo đề xuất. Q1 còn chờ file Excel từ PM để làm Pha 4 |
 | 2026-10-31 | Pha 0 xong trên nhánh `feat/e04-legal`. Baseline: 183 pass, 1 skip, coverage 86,71%, ruff sạch, alembic head `e8b2c5f1a3d4` |
 | 2026-10-31 | Xong Pha 1–3 và 5: máy trạng thái, migration `f3a9c1d07b2e`, API (CRUD, transitions, summary, 429). Chuyển trạng thái đi lùi và mở lại cần lý do, ghi audit. Dời `helpers.limited_client` sang dùng chung. Kết quả: 219 pass, 1 skip, coverage 86,19%. Pha 4 còn chờ file Excel. Chưa commit |
+| 2026-11-01 | Đã commit E4 trong `51d7e9f` (`feat: E4 checklist pháp lý và máy trạng thái trưởng thành`). Chốt Q5 (PM dự án xác nhận checklist), Q6, Q7 (giao diện 5.2 trong E4, thêm Pha 6). PM chưa gửi file Excel nên Pha 4 vẫn ⏸ |
 
 ## Acceptance
 

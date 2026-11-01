@@ -4,6 +4,8 @@ from app.api.v1 import (
     auth,
     beneficiary_units,
     contracts,
+    drive,
+    drive_uploads,
     health,
     hold_points,
     legal_documents,
@@ -32,3 +34,5 @@ api_router.include_router(hold_points.router)
 api_router.include_router(penalties.router)
 api_router.include_router(risk_issues.router)
 api_router.include_router(legal_documents.router)
+api_router.include_router(drive.router)
+api_router.include_router(drive_uploads.router)

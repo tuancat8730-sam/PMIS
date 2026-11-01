@@ -7,6 +7,7 @@ from sqlalchemy import Date, DateTime, Enum, Numeric, String, Text, func, text
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.db.base import Base
+from app.models.drive_file import DRIVE_FILE_ID_MAX_LENGTH
 
 
 class ProjectArchetype(StrEnum):
@@ -50,6 +51,8 @@ class Project(Base):
     total_investment: Mapped[Decimal] = mapped_column(Numeric(18, 2))
     start_date: Mapped[date | None] = mapped_column(Date)
     end_date: Mapped[date | None] = mapped_column(Date)
+    # ID thư mục gốc trên Google Drive của dự án (E5). Lưu theo dự án, không hard-code trong mã.
+    drive_root_folder_id: Mapped[str | None] = mapped_column(String(DRIVE_FILE_ID_MAX_LENGTH))
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

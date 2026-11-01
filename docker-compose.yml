@@ -31,6 +31,19 @@ services:
       db:
         condition: service_healthy
 
+  worker:
+    build: ./apps/api
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://pmis:${POSTGRES_PASSWORD:-pmis}@db:5432/pmis
+      REDIS_URL: redis://redis:6379/0
+    command: ["python", "-m", "arq", "app.worker.settings.WorkerSettings"]
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
   web:
     build:
       context: ./apps/web
