@@ -13,7 +13,10 @@ interface CommandCenterViewProps {
 const NOT_AVAILABLE = "chưa có dữ liệu";
 
 function KpiValue({ value }: { value: number | null }) {
-  return <span className="text-3xl font-semibold text-neutral-900">{value ?? NOT_AVAILABLE}</span>;
+  if (value === null) {
+    return <span className="text-base text-neutral-500">{NOT_AVAILABLE}</span>;
+  }
+  return <span className="text-3xl font-semibold text-neutral-900">{value}</span>;
 }
 
 export function CommandCenterView({ data, selectedCode, onSelectProject }: CommandCenterViewProps) {
