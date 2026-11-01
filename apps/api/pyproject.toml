@@ -16,6 +16,12 @@ dependencies = [
     "cryptography>=43",
     "email-validator>=2.1",
     "python-multipart>=0.0.9",
+    # Ghim phiên bản cụ thể cho tích hợp Google Drive và hàng đợi nền (ARQ, kéo theo redis).
+    "google-api-python-client==2.201.0",
+    "google-auth==2.62.0",
+    "arq==0.28.0",
+    # OAuth người dùng để ghi lên Drive (tài khoản dịch vụ không có quota trong My Drive).
+    "google-auth-oauthlib==1.5.0",
 ]
 
 [project.optional-dependencies]

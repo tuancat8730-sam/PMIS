@@ -15,6 +15,7 @@ INVESTOR_NAME_MAX_LENGTH = 300
 DECISION_AUTHORITY_MAX_LENGTH = 300
 INVESTMENT_MAX_DIGITS = 18
 INVESTMENT_DECIMAL_PLACES = 2
+DRIVE_ID_MAX_LENGTH = 128
 
 
 class ProjectCreate(RequestModel):
@@ -31,6 +32,9 @@ class ProjectCreate(RequestModel):
     )
     start_date: date | None = None
     end_date: date | None = None
+    drive_root_folder_id: str | None = Field(
+        default=None, min_length=1, max_length=DRIVE_ID_MAX_LENGTH
+    )
 
     @model_validator(mode="after")
     def _check_date_order(self) -> "ProjectCreate":
@@ -53,4 +57,5 @@ class ProjectOut(BaseModel):
     total_investment: Decimal
     start_date: date | None
     end_date: date | None
+    drive_root_folder_id: str | None
     created_at: datetime
