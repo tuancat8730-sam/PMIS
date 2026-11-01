@@ -9,6 +9,7 @@ from app.api.v1 import (
     drive,
     drive_uploads,
     equipment,
+    field,
     finance,
     health,
     hold_points,
@@ -41,6 +42,7 @@ api_router.include_router(penalties.router)
 api_router.include_router(finance.router)
 api_router.include_router(equipment.router)
 api_router.include_router(delivery_handovers.router)
+api_router.include_router(field.router)
 api_router.include_router(disbursements.router)
 api_router.include_router(risk_issues.router)
 api_router.include_router(it_system.router)

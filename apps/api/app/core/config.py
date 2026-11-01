@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     # Token OAuth người dùng để ghi lên Drive, tạo bằng `drive_oauth_setup`, nằm ngoài repo.
     drive_oauth_token_file: str | None = None
     redis_url: str = "redis://localhost:6379/0"
+    # Thư mục lưu ảnh và biên bản ký tay từ thiết bị hiện trường (lưu cục bộ trước, Drive sau E5).
+    field_photo_dir: str = "var/field_photos"
 
     @model_validator(mode="after")
     def _check_jwt_secret_length(self) -> "Settings":
