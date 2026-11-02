@@ -58,7 +58,7 @@
 | 0.5 | Lập bảng ánh xạ: file nguồn → bảng/cột đích, kèm thiếu sót | 🟡 | Bản nháp cho LD bên dưới, lượt 3 đã bổ sung |
 | 0.6 | Chốt danh sách dữ liệu có đủ nguồn để seed, và dữ liệu thiếu | 🟡 | Đã chốt nguồn cho milestones LD (Phụ lục danh mục + Kế hoạch phối hợp), milestones HCM (Excel + biên bản giao ban), risk LD (báo cáo tuần), risk HCM (Excel + báo cáo TVGS). Chưa mở các file lẻ: biên bản bàn giao từng trường LD (61 thư mục, tổng 4 cụm, chỉ đếm), 3 nhật ký thi công HCM, 6 biểu mẫu nghiệp vụ, 11 file TTHC, 3 file phần mềm, 2 file nghiệm thu. Phụ lục bảng giá, Điều kiện cụ thể, Ủy quyền LD (pdf) chưa mở |
 
-### Pha 1: Tiến độ & kế hoạch (sheet 2) và rủi ro (sheet 3)
+### Pha 1: Tiến độ & kế hoạch (sheet 2) và rủi ro (sheet 3) — ✅ xong, PR #14 (nhánh `feat/tracking-pha1`)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
 | 1.1 | Test đỏ: trường mới của milestones và risk_issues | ✅ | `tests/unit/test_risk_matrix_rules.py`, `tests/integration/test_tracking_fields_api.py`. Đỏ trước (module thiếu), xanh sau khi làm |
@@ -188,6 +188,7 @@
 | 2026-11-02 | Lập plan từ câu trả lời của người dùng. Bắt đầu Pha 0: đã liệt kê thư mục gốc HCM và LD, và 5 thư mục con LD |
 | 2026-11-02 | Pha 0 tiếp: đọc Chỉ mục hồ sơ LD và Phụ lục tiến độ LD. Lập bản nháp bảng ánh xạ LD và danh sách mâu thuẫn |
 | 2026-11-02 | Pha 0 lượt 2: đọc Báo cáo tuần QLDA LD tuần 03, Văn bản hợp đồng LD, Hợp đồng TVGS LD, Tờ trình 2710, Báo cáo giám sát tuần 02 của HCM. Liệt kê con của LD và HCM |
+| 2026-11-02 | Pha 1 xong. Commit `ae76f40` (tính năng), `7e7779f` (làm mới chữ mốc HCM M1/M8/M9). Push `feat/tracking-pha1`, PR https://github.com/tuancat8730-sam/PMIS/pull/14 |
 | 2026-11-02 | Lượt 6 (đọc hết theo cấu trúc, mở tài liệu chính): Đề xuất danh sách khảo sát (14/10: 9 trường + 2 phường), Báo cáo nhanh khảo sát (29/10: danh sách khác 14/10), Biên bản họp khởi động (25/09). Cấu trúc LD: 4 cụm, 61 thư mục đơn vị. Cấu trúc HCM: 96 mục con cấp 1–2. Pha 1: 1.1, 1.3 xong; 1.2 cần `make api-migrate` trên DB dev. Ghi chú: danh sách trường khảo sát HCM đổi giữa 14/10 và 29/10 |
 | 2026-11-02 | Lượt 4 và 5: đọc Đề cương TVGS LD, Kế hoạch phối hợp, Công văn mời họp, BCKTKT HCM, 4 báo cáo tuần DVN, 4 biên bản giao ban HCM. Đọc Ra soát lần 3 qua script (tải base64, giải mã, đọc XML bằng thư viện chuẩn) |
 | 2026-11-02 | Pha 0 lượt 3 (ưu tiên Lâm Đồng): đọc Phụ lục danh mục thiết bị, Serial 320 bộ, Kế hoạch bố trí xe, QĐ 3505, Đề cương TVQLDA, Đề cương TVGS trình duyệt, QĐ phê duyệt Đề cương TVGS, Công văn gửi trường (pdf và docx), Triển khai giao nhận. Ghi thêm mâu thuẫn và dữ liệu seed. Plan đã được viết lại gọn, bỏ khối trùng. Chưa sửa code, chưa seed |
