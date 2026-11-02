@@ -45,3 +45,5 @@ class DriveFile(Base):
         DateTime(timezone=True),
         server_default=text("NOW()"),
     )
+    # Đặt khi file không còn trong cây Drive của dự án. Giữ dòng để không mất lịch sử.
+    removed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

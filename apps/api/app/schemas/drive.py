@@ -22,6 +22,7 @@ class DriveSyncOut(BaseModel):
     scanned: int
     created: int
     updated: int
+    removed: int
 
 
 class DriveUploadOut(BaseModel):

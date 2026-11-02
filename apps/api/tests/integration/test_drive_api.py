@@ -79,7 +79,7 @@ async def test_pm_sync_stores_files_returns_counts_and_writes_audit(
 
     # Assert
     assert sync.status_code == 200, sync.text
-    assert sync.json() == {"scanned": 1, "created": 1, "updated": 0}
+    assert sync.json() == {"scanned": 1, "created": 1, "updated": 0, "removed": 0}
     assert [item["file_name"] for item in files.json()] == ["tong_hop.pdf"]
     audit = await session.execute(select(AuditLog).where(AuditLog.action == "drive.sync"))
     assert len(audit.scalars().all()) == 1
