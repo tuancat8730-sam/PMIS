@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from app.core.config import get_settings
 from app.models.contract import Contract
+from app.models.milestone import Milestone
 from app.models.project import Project, ProjectArchetype
 from app.models.risk_issue import RiskIssue
 from app.schemas.beneficiary_units import BeneficiaryUnitCreate
@@ -113,13 +114,36 @@ async def ensure_units(session: AsyncSession, project_id: UUID, rows: list[dict[
     return inserted
 
 
+SEED_OWNED_MILESTONE_TEXT_FIELDS = (
+    "name",
+    "deliverables",
+    "acceptance_conditions",
+    "tvgs_checkpoint",
+    "pm_comment",
+)
+
+
+def _refresh_seed_text(milestone: Milestone, payload: MilestoneCreate) -> bool:
+    """Ghi đè các trường chữ nguồn từ Excel/Drive lên bản seed cũ; trả về True nếu có đổi."""
+    changed = False
+    values = payload.model_dump()
+    for field in SEED_OWNED_MILESTONE_TEXT_FIELDS:
+        if values[field] is not None and getattr(milestone, field) != values[field]:
+            setattr(milestone, field, values[field])
+            changed = True
+    return changed
+
+
 async def ensure_milestones(
     session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
 ) -> int:
     inserted = 0
     for row in rows:
         payload = MilestoneCreate(**row)
-        if await find_milestone_by_code(session, project_id, payload.code) is not None:
+        existing = await find_milestone_by_code(session, project_id, payload.code)
+        if existing is not None:
+            if _refresh_seed_text(existing, payload):
+                await session.flush()
             continue
         milestone = await create_milestone(
             session, project_id=project_id, values=payload.model_dump()

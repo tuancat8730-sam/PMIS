@@ -122,3 +122,26 @@ async def test_seed_creates_hcm_risks_with_levels_and_runs_idempotently(app: Fas
     r01 = next(risk for risk in risks if risk.title.endswith("(R01)"))
     assert r01.impact == RiskLevel.VERY_HIGH
     assert r01.likelihood == RiskLevel.VERY_HIGH
+
+
+async def test_seed_refreshes_source_text_of_existing_milestones(app: FastAPI) -> None:
+    # Arrange: bản seed cũ còn tên placeholder và chưa có dữ liệu tracking
+    session_factory = app.state.session_factory
+    await seed_hcm_project(session_factory)
+    async with session_factory() as session:
+        m1 = (await session.execute(select(Milestone).where(Milestone.code == "M1"))).scalar_one()
+        m1.name = "Mốc M1 (cần xác nhận tên theo hợp đồng)"
+        m1.deliverables = None
+        m1.pm_comment = None
+        await session.commit()
+
+    # Act
+    await seed_hcm_project(session_factory)
+
+    # Assert
+    async with session_factory() as session:
+        m1 = (await session.execute(select(Milestone).where(Milestone.code == "M1"))).scalar_one()
+    assert "cần xác nhận" not in m1.name
+    assert m1.deliverables is not None
+    assert m1.pm_comment is not None
+    assert str(m1.baseline_end) == "2026-10-07"
