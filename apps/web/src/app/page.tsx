@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { fetchApiHealth, type ApiHealthStatus } from "@/lib/api";
 
 const STATUS_COPY: Record<ApiHealthStatus, { label: string; tone: string }> = {
@@ -26,6 +28,9 @@ export default async function Home() {
         </h2>
         <p className={`mt-1 text-lg font-semibold ${tone}`}>{label}</p>
       </section>
+      <Link href="/login" className="text-base font-semibold text-neutral-900 underline underline-offset-4">
+        Đăng nhập
+      </Link>
     </main>
   );
 }

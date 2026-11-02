@@ -1,8 +1,8 @@
 # Plan: Hoàn thành PMIS (Hệ thống quản trị & giám sát dự án đầu tư công)
 
 **Source**: `PROJECT_MANAGEMENT_SOFTWARE_SPEC.md`
-**Repo**: `git@github.com:tuancat8730-sam/PMIS.git` (chưa commit)
-**Cập nhật**: 2026-10-31
+**Repo**: `git@github.com:tuancat8730-sam/PMIS.git`. E0–E9 đã merge qua PR #1–#9. E10 nằm trên `feat/e10-field-pwa`, chưa merge. E11 và E12 nằm trên `feat/e11-e12-command-center` (nhánh hiện tại), chưa merge.
+**Cập nhật**: 2026-11-01 (đối chiếu git log và kết quả test cùng ngày)
 **Complexity**: Large (13 epic, chia theo lát cắt cấp tốc)
 
 ## Quyết định đã chốt
@@ -19,18 +19,35 @@
 | Epic | Tên | Phân hệ spec | Phụ thuộc | Độ lớn | Phase | Trạng thái |
 |---|---|---|---|---|---|---|
 | E0 | Nền tảng: monorepo, DB, auth/RBAC, audit log, CI | §2, §6 | — | M | 1 | **Đã làm phần lớn** (xem bên dưới) |
-| E1 | Danh mục đa dự án, template archetype, bên liên quan, nhân sự chủ chốt, hợp đồng | P1, §4 | E0 | M | 1 | **Đã làm** (chưa commit; xem `e01-portfolio.plan.md`) |
-| E2 | Đơn vị thụ hưởng, tên kép sau sáp nhập, cụm địa lý | P2 | E0, E1 | S | 1 | **Đang làm** trên `feat/e02-beneficiary` (API và seed TP.HCM xong, 130 test xanh; chờ B1 để seed 62 đơn vị Lâm Đồng; xem `e02-beneficiary.plan.md`) |
-| E3 | Tiến độ: baseline kép, đường găng, slippage, phạt, H0–H9, CR/NCR, rủi ro | P4 | E1, E2 | L | 2 | **Đang làm** trên `feat/e03-schedule`: mốc, H0–H9, phạt, seed M1/M8/M9 xong; CR/NCR/rủi ro và đường găng còn lại (xem `e03-schedule.plan.md`) |
-| E4 | Checklist pháp lý 89+ hồ sơ, máy trạng thái trưởng thành (chưa có Drive) | P3.1–3.2 | E1 | M | 2 | **Đã làm phần lớn** trên `feat/e04-legal` (máy trạng thái, bảng, API, 219 test xanh). Seed 89+ đầu mục chờ file Excel từ PM (Q1). Plan: `e04-legal.plan.md` |
-| E5 | Google Drive 2 chiều | P3.3 | E4 | L | 2 | Chưa làm. Plan: `e05-drive.plan.md` (chờ Q1–Q4) |
-| E6 | AI Auditor: kiểm chữ ký/dấu, rà soát lỗi pháp lý | P3.4 | E4, E5 | L | 4 | Chưa làm. Plan: `e06-ai-auditor.plan.md` (chờ Q1–Q5) |
-| E7 | Tài chính: đa hợp đồng, bảo lãnh, tạm ứng, giải ngân | P7 | E1 | M | 2 | **Phần lõi xong** trên `feat/e07-finance` (PR mở). Còn: đếm ngược HĐ, seed Lâm Đồng, S5. Plan: `e07-finance.plan.md` |
-| E8 | Module CNTT: khảo sát, RTM, mâu thuẫn hợp đồng, phân hệ A–G, NFR, ATTT | P5 | E1, E3 | L | 3 | Chưa làm. Plan: `e08-it-system.plan.md` (chờ Q1–Q7) |
-| E9 | Module thiết bị: hàng mẫu 21 tiêu chí, serial/IMEI, CO/CQ, ma trận 62×4×3, 240+ biên bản `.docx` | P6 | E1, E2 | XL | 3 | Chưa làm. Plan: `e09-goods.plan.md` (chờ Q1–Q5; đợt D chờ file mẫu) |
-| E10 | Mobile PWA hiện trường: quét QR/serial, ảnh có GPS, ký BB | §5.5 | E9 | M | 3 | Chưa làm. Plan: `e10-field-pwa.plan.md` (chờ Q1–Q6) |
-| E11 | Auto-Report Studio: báo cáo tuần, meeting note, AI bóc tách biên bản họp | P8 | E3, E4, E9 | L | 4 | Chưa làm. Plan: `e11-reports.plan.md` (chờ Q1–Q5) |
-| E12 | Command Center: KPI, thẻ cảnh báo đỏ, đếm ngược hợp đồng | P1.1 | E1–E9 | M | 2 (cơ bản) → 4 | Chưa làm. Plan: `e12-command-center.plan.md` (chờ Q1–Q5) |
+| E1 | Danh mục đa dự án, template archetype, bên liên quan, nhân sự chủ chốt, hợp đồng | P1, §4 | E0 | M | 1 | **Đã merge** (PR #2). 67 test pass. Template engine M1–M9, H0–H9, CL-01..10 chưa làm, chờ E3/E4 (xem `e01-portfolio.plan.md`) |
+| E2 | Đơn vị thụ hưởng, tên kép sau sáp nhập, cụm địa lý | P2 | E0, E1 | S | 1 | **Đã merge** (PR #3). 22 test pass, 1 skip. Có test seed dự án TP.HCM. Seed 62 đơn vị Lâm Đồng: chưa xác minh trong code (xem `e02-beneficiary.plan.md`) |
+| E3 | Tiến độ: baseline kép, đường găng, slippage, phạt, H0–H9, CR/NCR, rủi ro | P4 | E1, E2 | L | 2 | **Đã merge** (PR #4). 51 test pass. Có mốc, H0–H9, phạt, CR/NCR, rủi ro. Đường găng và slippage: chưa xác minh trong code (xem `e03-schedule.plan.md`) |
+| E4 | Checklist pháp lý 89+ hồ sơ, máy trạng thái trưởng thành (chưa có Drive) | P3.1–3.2 | E1 | M | 2 | **Đã merge** (PR #5). 36 test pass. Seed 89+ đầu mục chờ file Excel từ PM (Q1). Plan: `e04-legal.plan.md` |
+| E5 | Google Drive 2 chiều | P3.3 | E4 | L | 2 | **Đã merge** (PR #6). 62 test pass (dùng fake Drive). Đã đẩy thử lên Drive thật (commit `8a8f21c`). Plan: `e05-drive.plan.md` |
+| E6 | AI Auditor: kiểm chữ ký/dấu, rà soát lỗi pháp lý | P3.4 | E4, E5 | L | 4 | **Chưa làm, không có code.** Chỉ có plan `e06-ai-auditor.plan.md` (chưa commit, chờ Q1–Q5) |
+| E7 | Tài chính: đa hợp đồng, bảo lãnh, tạm ứng, giải ngân | P7 | E1 | M | 2 | **Đã merge** (PR #7). 42 test pass. Đếm ngược HĐ đã có ở E12. Seed Lâm Đồng và S5: chưa xác minh trong code. Plan: `e07-finance.plan.md` |
+| E8 | Module CNTT: khảo sát, RTM, mâu thuẫn hợp đồng, phân hệ A–G, NFR, ATTT | P5 | E1, E3 | L | 3 | **Đã merge** (PR #8). 50 unit test (rule, schema, NFR, RTM). Chưa có integration test API. Plan: `e08-it-system.plan.md` |
+| E9 | Module thiết bị: hàng mẫu 21 tiêu chí, serial/IMEI, CO/CQ, ma trận 62×4×3, 240+ biên bản `.docx` | P6 | E1, E2 | XL | 3 | **Đã merge** (PR #9). 52 test pass (ma trận, hàng mẫu, serial, bàn giao). Sinh 240+ biên bản `.docx` chưa thấy trong code; generator docx thuộc E11. Plan: `e09-goods.plan.md` |
+| E10 | Mobile PWA hiện trường: quét QR/serial, ảnh có GPS, ký BB | §5.5 | E9 | M | 3 | **Đã code, chưa merge.** Commit `82c5f11` trên `feat/e10-field-pwa`. Trên nhánh đó: API 463 pass, 1 skip; Vitest 22/22; lint sạch. Plan: `e10-field-pwa.plan.md` |
+| E11 | Auto-Report Studio: báo cáo tuần, meeting note, AI bóc tách biên bản họp | P8 | E3, E4, E9 | L | 4 | **Làm một phần** trên `feat/e11-e12-command-center`: kỳ báo cáo tuần và xuất .docx (commit `b80ec58`), 11 test pass. Chưa thấy code bóc tách biên bản họp bằng AI. Plan: `e11-reports.plan.md` |
+| E12 | Command Center: KPI, thẻ cảnh báo đỏ, đếm ngược hợp đồng | P1.1 | E1–E9 | M | 2 (cơ bản) → 4 | **Bản cơ bản xong** trên `feat/e11-e12-command-center`: API, UI, đếm ngược HĐ. 36 test pass, Playwright 14/14. Phase 4 chưa làm. Plan: `e12-command-center.plan.md` |
+
+Ghi chú: mục Trạng thái trên phản ánh git log và kết quả test ngày 2026-11-01. Các mục "chưa xác minh" là việc chưa thấy bằng chứng trong code hoặc test, không phải đã xác nhận là chưa làm.
+
+### Kết quả kiểm thử (2026-11-01)
+
+| Hạng mục | Kết quả |
+|---|---|
+| API pytest, nhánh `feat/e11-e12-command-center` (E0–E9, E11, E12) | 472 pass, 1 skip. Coverage 84,12% (ngưỡng 80%) |
+| Vitest web, nhánh hiện tại | 15/15 pass |
+| Playwright E2E (chromium và mobile-chrome) | 14/14 pass. Chỉ E12 có E2E trình duyệt |
+| ESLint web | Sạch |
+| API pytest, nhánh `feat/e10-field-pwa` (E10) | 463 pass, 1 skip |
+| Vitest web, nhánh `feat/e10-field-pwa` | 22/22 pass |
+
+Test API chạy trên PostgreSQL 16 riêng (không dùng DB dev), vì fixture integration xóa schema `public`.
+
+## Rủi ro đang mở
 
 Các câu hỏi cần chốt trước khi bắt đầu, tổng hợp từ 9 plan trên:
 - **Lệch lát cắt cấp tốc:** E11 đứng sau E9 nhưng cần E4. Đề xuất đưa E4 lên trước E11 (`e11-reports.plan.md` Q4).
@@ -87,7 +104,7 @@ Kết quả kiểm chứng (2026-10-31): API 43/43 test xanh trên PostgreSQL 16
 - [ ] Template engine sinh M1–M9, H0–H9, CL-01..10, 89 hồ sơ: chờ E3, E4 (D5).
 - [ ] Seed dữ liệu thật: chuyển sang E2.
 - [ ] Chạy lại `docker compose up` với migration E1.
-- [ ] Commit E1 (chờ xác nhận; nhánh theo quy định phải tạo từ `main`, xem D7).
+- [x] Đã merge qua PR #2 (`e970026`). Các mục template engine và seed thật nêu ở trên vẫn mở.
 
 ## Rủi ro đang mở
 
@@ -103,10 +120,14 @@ Kết quả kiểm chứng (2026-10-31): API 43/43 test xanh trên PostgreSQL 16
 
 ## Bước tiếp theo
 
-1. E0: chạy CI sau khi push (compose đã kiểm chứng).
-2. Chờ xác nhận commit E0 lên `origin`.
-3. Chốt số trường (1.670 hay 1.732) với người phụ trách dự án.
-4. Bắt đầu E2 (đơn vị thụ hưởng, seed 62 đơn vị Lâm Đồng và 8 đơn vị khảo sát HCM).
+1. Review và merge `feat/e11-e12-command-center` (E11 phần báo cáo tuần, E12 bản cơ bản) vào `main` qua PR, sau khi có xác nhận. Không tự merge.
+2. Merge `feat/e10-field-pwa` vào `main`. Cần kiểm tra xung đột với `main` trước.
+3. Xác minh seed 62 đơn vị Lâm Đồng (E2), đường găng và slippage (E3), seed S5 (E7). Hiện chưa có bằng chứng trong code.
+4. E11: làm phần AI bóc tách biên bản họp. E12: làm phase 4.
+5. E6: chốt Q1–Q5 trong `e06-ai-auditor.plan.md` rồi mới bắt đầu code.
+6. Chốt số trường (1.670 hay 1.732) và số đơn vị đợt 1 (60 hay 62) với người phụ trách dự án.
+7. E0: chạy CI sau khi push. Commit E0 lên `origin` chờ xác nhận.
+8. Bổ sung E2E trình duyệt cho luồng E0–E9. Hiện chỉ E12 có.
 
 ## Acceptance
 
