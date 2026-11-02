@@ -14,7 +14,7 @@
 | API CRUD đơn vị theo dự án, lọc theo cụm và loại trường | `app/api/v1/beneficiary_units.py` | ✅ Có |
 | Hiển thị kép "Tên mới (Tên cũ)" dùng chung cho API và biên bản sau này | `display_dual_name()` trong service | ✅ Có |
 | Seed 8 đơn vị khảo sát TP.HCM (spec §7) | `app/db/seed_real_projects.py` + file dữ liệu | ✅ Có |
-| Seed 62 đơn vị Lâm Đồng, 4 cụm | Cùng script | ❌ Bị chặn: chưa có danh sách (B1) |
+| Seed 62 đơn vị Lâm Đồng, 4 cụm | Cùng script | ✅ B1 đã giải quyết: danh sách từ `DS 62 trường hiệu trưởng cập nhật.xlsx` (Drive) |
 | Seed hai dự án `SGD-HCM-CSVC-2026` và `SGD-LD-TB10-2026` (chỉ thông tin dự án) | Cùng script | ✅ Có, theo §7 |
 | Ma trận 62×4×3, lịch giao hàng 3 đợt | — | ⏸ E9 |
 | Lịch xe, nhân sự Tổ nghiệm thu/TVGS đi theo cụm | — | ⏸ E9 (Phân hệ 2 mục 2) |
@@ -22,7 +22,7 @@
 | Giao diện web (trang danh sách trường và cụm) | `apps/web` | ⏸ Làm sau khi API ổn định, không thuộc DoD backend của E2 |
 | Commit, push, merge PR | — | ⏸ Chỉ làm khi người dùng yêu cầu (CLAUDE.md) |
 
-**E2 được đánh ✅ khi:** migration round-trip sạch và `alembic check` không drift; API có test xanh (đọc, ghi, 403, 404, 409, audit); seed idempotent chạy hai lần cho ra cùng số bản ghi; coverage ≥ 80%; ruff sạch; plan epic được cập nhật. Riêng mục seed Lâm Đồng chỉ đánh ✅ khi B1 được giải quyết.
+**E2 được đánh ✅ khi:** migration round-trip sạch và `alembic check` không drift; API có test xanh (đọc, ghi, 403, 404, 409, audit); seed idempotent chạy hai lần cho ra cùng số bản ghi; coverage ≥ 80%; ruff sạch; plan epic được cập nhật. Mục seed Lâm Đồng đã đánh ✅ (B1 đã giải quyết). Riêng `total_investment` của dự án Lâm Đồng đang tạm lấy bằng giá gói thầu chính; cần thay bằng TMĐT của QĐ 2891/QĐ-UBND.
 
 ## 2. Đánh giá hiện trạng
 
@@ -33,14 +33,14 @@
 | RBAC theo dự án | ✅ | `project_role_guard`, `ANY_PROJECT_ROLE` trong `app/api/deps.py` |
 | Audit trong cùng transaction | ✅ | `record_audit` trong `app/services/audit.py` (cho phép `actor_id=None` cho thao tác hệ thống) |
 | Rate limit thao tác ghi | ✅ | `WriteRateLimitDep` trong `app/api/deps.py` |
-| Dữ liệu 62 trường Lâm Đồng | ❌ | Repo không có file xlsx/csv/docx nào. Spec chỉ có số lượng theo cụm và vài ví dụ tên (B1) |
+| Dữ liệu 62 trường Lâm Đồng | ✅ | Ban đầu repo không có file; đã có từ Drive (`DS 62 trường hiệu trưởng cập nhật.xlsx`), xem B1 |
 | Dữ liệu 8 đơn vị TP.HCM | ✅ có trong spec | Spec §7 dòng 626 liệt kê đủ 8 tên. Chưa có mã đơn vị (B3) |
 
 ## 3. Dữ liệu và mâu thuẫn cần xác nhận (chặn hoặc ảnh hưởng)
 
 | ID | Mức | Vấn đề | Đề xuất xử lý |
 |---|---|---|---|
-| B1 | CAO | Thiếu danh sách 62 đơn vị Lâm Đồng: mã, tên hiện tại, tên cũ, cụm, xã/phường, đầu mối. Spec chỉ có số lượng 15/19/14/14 và 2 ví dụ | Người dùng cung cấp file (xlsx hoặc csv) theo mẫu cột ở D8. Trong lúc chờ: làm xong code, migration, API, seed TP.HCM. Không bịa tên trường |
+| B1 | ✅ ĐÃ GIẢI QUYẾT | Thiếu danh sách 62 đơn vị Lâm Đồng. Đã dùng `DS 62 trường hiệu trưởng cập nhật.xlsx` (Drive, thư mục `DS trường`): 62 dòng, cụm 15/19/14/14, 9 trường đã sáp nhập giữ nguyên và ghi "đã sáp nhập vào …" | Đã seed. Không bổ sung số điện thoại hiệu trưởng vì E2 không có trường tương ứng |
 | B2 | TB | Tên cụm không khớp giữa spec: §3 dòng 125 ghi "Cụm 1 Cư Jút – Đắk Mil – Krông Nô", "Cụm 2 Đắk Song – Gia Nghĩa – Đắk Glong". §7 dòng 626 ghi "Cụm 1: 15 đơn vị Bắc Đắk Nông cũ", "Cụm 2: 19 đơn vị Nam Đắk Nông cũ". Tên theo địa bàn và tên theo tỉnh cũ không cùng một tiêu chí | Lưu cả `cluster_code` (Cụm 1..4, theo §7) và `cluster_name` (theo địa bàn, lấy từ dữ liệu thật). Không suy đoán tên địa bàn |
 | B3 | TB | Spec không cho mã đơn vị TP.HCM | Đặt `unit_code` tạm `HCM-01`..`HCM-08` theo thứ tự §7, đánh dấu tạm trong dữ liệu. Đổi khi có mã thật |
 | B4 | TB | Số trường mâu thuẫn: 1.670 (§1.1, §5.1) và 1.732 (KPI §5.1). E2 seed nên chốt số trước | Không ảnh hưởng schema. Hỏi người phụ trách trước khi seed; không tự chọn |
@@ -94,7 +94,8 @@ Không có mẫu nào cho seed hay đọc file dữ liệu trong repo. Seed sẽ
 | `apps/api/app/api/v1/__init__.py` | UPDATE | Include router |
 | `apps/api/app/db/seed_real_projects.py` | CREATE | Script seed idempotent (D7) |
 | `apps/api/app/db/seed_data/hcm_survey_units.json` | CREATE | 8 đơn vị TP.HCM, mã tạm (B3) |
-| `apps/api/app/db/seed_data/lam_dong_units.json` | CREATE sau khi có B1 | 62 đơn vị Lâm Đồng |
+| `apps/api/app/db/seed_data/lam_dong_units.json` | CREATE | 62 đơn vị Lâm Đồng (đã làm) |
+| `apps/api/app/db/seed_data/lam_dong_contracts.json` | CREATE | Hợp đồng gói thầu chính (đã làm) |
 | `apps/api/tests/unit/test_beneficiary_units_rules.py` | CREATE | Tên kép, số lượng theo cụm, miền enum |
 | `apps/api/tests/integration/test_beneficiary_units_api.py` | CREATE | CRUD, 403, 404, 409, audit, lọc |
 | `apps/api/tests/integration/test_seed_real_projects.py` | CREATE | Seed chạy hai lần cho cùng số bản ghi |
@@ -135,10 +136,11 @@ Quy ước: mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), r
 ### Pha 3 – Seed dữ liệu thật
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 3.1 | Test đỏ unit: 8 đơn vị HCM; 62 đơn vị Lâm Đồng chia 15/19/14/14; mã không trùng trong một dự án | 🟡 | Phần Lâm Đồng đỏ đến khi có B1 |
+| 3.1 | Test đỏ unit: 8 đơn vị HCM; 62 đơn vị Lâm Đồng chia 15/19/14/14; mã không trùng trong một dự án | ✅ | Đã xanh: 255 unit pass |
 | 3.2 | Đọc schema tạo dự án của E1 để điền đúng trường cho hai dự án theo §7 | ✅ | Trước khi viết seed |
 | 3.3 | File `hcm_survey_units.json` (8 đơn vị, mã tạm `HCM-01..08`) | ✅ | Không bịa tên ngoài spec |
-| 3.4 | File `lam_dong_units.json` (62 đơn vị) | ❌ | **Bị chặn B1**: chờ danh sách từ người dùng |
+| 3.4 | File `lam_dong_units.json` (62 đơn vị) | ✅ | Từ file DS 62 trường (B1). Mã `LD-01..LD-62` theo STT |
+| 3.4b | Dự án `SGD-LD-TB10-2026` và hợp đồng gói thầu chính từ HĐ `HD2600226555_2609110905` (`lam_dong_contracts.json`) | ✅ | `total_investment` tạm = 106.225.000.000 đ (giá gói thầu chính), chờ TMĐT của QĐ 2891/QĐ-UBND |
 | 3.5 | `seed_real_projects.py`: tìm hoặc tạo dự án theo mã, tạo đơn vị còn thiếu theo `(project_id, unit_code)` (bản đã có được bỏ qua, không cập nhật), audit `actor_id=None` | ✅ | Dữ liệu nằm trong file, không hard-code trong logic |
 | 3.6 | IT: chạy seed hai lần, số bản ghi không đổi; dự án và đơn vị đúng số lượng | ✅ | |
 
@@ -167,9 +169,9 @@ Quy ước: mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), r
 | Tên kép | ✅ | ✅ | 1, 2 |
 | Cụm địa lý | ✅ | ✅ (thuộc tính, không có lịch) | 1, 2 |
 | Seed 8 đơn vị TP.HCM | ✅ | ✅ | 3 |
-| Seed 62 đơn vị Lâm Đồng | ❌ | ✅ | 3 (chờ B1) |
+| Seed 62 đơn vị Lâm Đồng | ✅ | ✅ | 3 |
 | Seed dự án TP.HCM | ✅ | ✅ | 3 |
-| Seed dự án Lâm Đồng (cần TMĐT, xem câu hỏi) | ❌ | ✅ | 3 (chờ B1, TMĐT) |
+| Seed dự án Lâm Đồng | 🟡 (TMĐT tạm bằng giá gói thầu chính) | ✅ | 3 (chờ TMĐT) |
 | Coverage ≥ 80%, ruff, alembic | ✅ (89,39%) | ✅ | 4 |
 
 ## 9. Rủi ro
@@ -193,6 +195,7 @@ Quy ước: mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), r
 | 2026-10-31 | Pha 1 (TDD): unit đỏ `ModuleNotFoundError` → `display_dual_name` 3/3 xanh. Model `BeneficiaryUnit` và hai enum. Migration `2a5dbfd319bf`: round-trip sạch, enum được `DROP TYPE` khi downgrade, `alembic check` không drift. Thêm bảng vào `TRUNCATE` |
 | 2026-10-31 | Pha 2 (TDD): 9 IT đỏ (1 test 404 xanh giả vì route chưa có, kiểm lại sau khi có guard: xanh thật). Schema, service, router `/projects/{id}/beneficiary-units`. Sửa import vòng schema ↔ service: service nhận `dict`, không import schema. Thêm test GET một đơn vị sau khi viết endpoint (không đúng thứ tự TDD, ghi nhận) → 11/11 xanh |
 | 2026-10-31 | Pha 3: unit seed đỏ (module chưa có) → 8 đơn vị TP.HCM và `seed_real_projects.py` xanh; test Lâm Đồng skip có lý do B1. IT seed: 3/3 xanh ngay từ lần chạy đầu vì module đã có (không đỏ trước). Lệnh `make seed-projects`, mục README |
+| 2026-11-02 | B1 giải quyết bằng `DS 62 trường hiệu trưởng cập nhật.xlsx` (option A: giữ 62 dòng, 9 trường sáp nhập có nhãn). Thêm `seed_lam_dong_project`, hợp đồng gói thầu chính, test unit (255 xanh) và IT (7 xanh trên `pmis_test`). Seed chạy hai lần trên `pmis_test` và qua `make seed-projects` trong worktree: lần 2 thêm 0. Số bản ghi: 2 dự án, 70 đơn vị, 4 hợp đồng. Chưa commit |
 | 2026-10-31 | Pha 4: 130 xanh, 1 skip (B1), coverage 89,39%, ruff sạch, `alembic check` không drift. Số dòng coverage theo file của `services/beneficiary_units.py` không khớp code (nghi `.pyc` cũ); không xác minh được vì lệnh xóa cache bị chặn. Nhánh 409 được chứng minh bằng test hành vi xanh |
 | 2026-10-31 | Cập nhật trạng thái plan trước khi commit. Mục chưa kiểm: `/openapi.json` (2.5), tự review đầy đủ (4.4), review bảo mật chính thức (4.5) |
 | 2026-10-31 | Lệch so với D7: seed chỉ bỏ qua bản ghi đã có, không cập nhật. Chạy seed trên DB test: lần 1 thêm 7 (HCM-01 còn sót từ test API), lần 2 thêm 0 |
