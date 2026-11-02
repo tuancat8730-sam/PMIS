@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 
 import { fetchProjectOverview, type ProjectSummary } from "../../lib/overview";
+import { ProjectBackLink } from "./project-back-link";
 import { readStoredToken } from "./matrix-page";
 import { ProjectTabs } from "./project-tabs";
 
@@ -34,6 +35,7 @@ export function ProjectShell({ projectId, children }: ProjectShellProps) {
   return (
     <div className="flex flex-col">
       <header className="flex flex-col gap-1 px-6 pt-4 pb-3">
+        <ProjectBackLink />
         {project !== null && (
           <Link href={`/projects/${projectId}`} className="flex flex-col gap-0.5">
             <span className="text-sm text-text-muted">{project.code}</span>
