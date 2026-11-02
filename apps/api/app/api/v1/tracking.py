@@ -6,8 +6,14 @@ from fastapi import APIRouter, Depends
 
 from app.api.deps import ANY_PROJECT_ROLE, SessionDep, project_role_guard
 from app.models.project import Project
-from app.schemas.milestones import MilestoneOut
-from app.schemas.tracking import RiskMatrixOut, RiskMatrixRow, ScheduleMatrixOut
+from app.schemas.tracking import (
+    RiskMatrixOut,
+    RiskMatrixRow,
+    ScheduleMatrixOut,
+    ScheduleRowOut,
+)
+from app.services.milestone_notes import list_notes_by_milestone
+from app.services.milestone_tasks import list_tasks_by_milestone
 from app.services.tracking_matrix import list_risk_rows, list_schedule_rows
 
 router = APIRouter(prefix="/projects/{project_id}", tags=["tracking"])
@@ -21,7 +27,13 @@ async def schedule_matrix_endpoint(
 ) -> ScheduleMatrixOut:
     today = date.today()
     milestones = await list_schedule_rows(session, project_id)
-    rows = [MilestoneOut.from_milestone(milestone, today) for milestone in milestones]
+    milestone_ids = [milestone.id for milestone in milestones]
+    tasks = await list_tasks_by_milestone(session, milestone_ids)
+    notes = await list_notes_by_milestone(session, milestone_ids)
+    rows = [
+        ScheduleRowOut.build(milestone, today, tasks[milestone.id], notes[milestone.id])
+        for milestone in milestones
+    ]
     return ScheduleMatrixOut(total=len(rows), rows=rows)
 
 

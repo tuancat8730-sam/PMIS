@@ -104,6 +104,8 @@ const SCHEDULE_MATRIX = {
       acceptance_conditions: null,
       tvgs_checkpoint: null,
       pm_comment: null,
+      tasks: [],
+      notes: [],
     },
   ],
 };

@@ -19,6 +19,8 @@ from app.api.v1 import (
     it_system,
     it_system_quality,
     legal_documents,
+    milestone_notes,
+    milestone_tasks,
     milestones,
     penalties,
     personnel,
@@ -43,6 +45,8 @@ api_router.include_router(personnel.router)
 api_router.include_router(beneficiary_units.router)
 api_router.include_router(command_center.router)
 api_router.include_router(milestones.router)
+api_router.include_router(milestone_tasks.router)
+api_router.include_router(milestone_notes.router)
 api_router.include_router(hold_points.router)
 api_router.include_router(penalties.router)
 api_router.include_router(finance.router)

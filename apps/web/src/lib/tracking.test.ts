@@ -40,6 +40,8 @@ const SCHEDULE: ScheduleMatrixData = {
       acceptance_conditions: null,
       tvgs_checkpoint: "W1",
       pm_comment: null,
+      tasks: [],
+      notes: [],
     },
   ],
 };

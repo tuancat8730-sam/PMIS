@@ -26,6 +26,8 @@ const MILESTONE: ScheduleRow = {
   acceptance_conditions: "CO, CQ đủ",
   tvgs_checkpoint: "W1 kiểm tra kho",
   pm_comment: "Chờ serial",
+  tasks: [],
+  notes: [],
 };
 
 const RISK: RiskRow = {
@@ -45,7 +47,9 @@ const RISK: RiskRow = {
 describe("ScheduleTable", () => {
   it("hiển thị mốc với nhãn trạng thái tiếng Việt và các cột theo dõi", () => {
     // Arrange / Act
-    const html = renderToStaticMarkup(<ScheduleTable rows={[MILESTONE]} />);
+    const html = renderToStaticMarkup(
+      <ScheduleTable rows={[MILESTONE]} projectId="p1" onChanged={() => undefined} />,
+    );
 
     // Assert
     expect(html).toContain("M1");
@@ -57,7 +61,9 @@ describe("ScheduleTable", () => {
 
   it("hiển thị thông báo khi không có mốc nào", () => {
     // Arrange / Act
-    const html = renderToStaticMarkup(<ScheduleTable rows={[]} />);
+    const html = renderToStaticMarkup(
+      <ScheduleTable rows={[]} projectId="p1" onChanged={() => undefined} />,
+    );
 
     // Assert
     expect(html).toContain("Chưa có mốc tiến độ");
