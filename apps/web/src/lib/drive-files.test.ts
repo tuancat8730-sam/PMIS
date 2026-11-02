@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
   driveFileKind,
+  fetchDriveFileBlob,
   fetchDriveFiles,
   filterDriveFiles,
   formatFileSize,
@@ -212,5 +213,57 @@ describe("latestSyncedAt", () => {
     // Act / Assert
     expect(latestSyncedAt(files)).toBe("2026-11-02T09:30:00Z");
     expect(latestSyncedAt([])).toBeNull();
+  });
+});
+
+describe("fetchDriveFileBlob", () => {
+  it("fetches the inline content with the bearer token", async () => {
+    // Arrange
+    const fetchImpl = vi.fn(async () => new Response("%PDF", { status: 200 }));
+
+    // Act
+    const blob = await fetchDriveFileBlob(
+      "p1",
+      "drive-1",
+      "token-abc",
+      { download: false },
+      fetchImpl,
+      "http://api.test",
+    );
+
+    // Assert
+    expect(blob.size).toBe(4);
+    const [url, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit];
+    expect(url).toBe("http://api.test/api/v1/projects/p1/drive/files/drive-1/content");
+    expect(init.headers).toEqual({ Authorization: "Bearer token-abc" });
+  });
+
+  it("adds the download flag when the file is requested as an attachment", async () => {
+    // Arrange
+    const fetchImpl = vi.fn(async () => new Response("docx", { status: 200 }));
+
+    // Act
+    await fetchDriveFileBlob("p1", "drive-1", "token", { download: true }, fetchImpl, "http://api.test");
+
+    // Assert
+    const [url] = fetchImpl.mock.calls[0] as unknown as [string];
+    expect(url).toBe(
+      "http://api.test/api/v1/projects/p1/drive/files/drive-1/content?download=true",
+    );
+  });
+
+  it.each([
+    [404, "Không tìm thấy file trong dự án này"],
+    [413, "File vượt quá giới hạn xem trực tiếp"],
+    [415, "Loại file này không xem trực tiếp được, hãy tải về"],
+    [502, "Google Drive đang từ chối yêu cầu, hãy thử lại sau"],
+  ])("maps HTTP %i to a Vietnamese message", async (status, message) => {
+    // Arrange
+    const fetchImpl = vi.fn(async () => new Response("{}", { status }));
+
+    // Act / Assert
+    await expect(
+      fetchDriveFileBlob("p1", "drive-1", "token", { download: false }, fetchImpl, "http://api.test"),
+    ).rejects.toThrow(message);
   });
 });

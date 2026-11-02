@@ -31,6 +31,13 @@ def preview_media_type(kind: DriveFileKind | None) -> str:
     return KIND_MIME_TYPES[kind]
 
 
+def download_media_type(kind: DriveFileKind | None) -> str:
+    """Trả về MIME type khi tải về. Mọi loại đồng bộ được đều tải được, chỉ cần biết loại."""
+    if kind is None:
+        raise DrivePreviewNotAllowedError("Không xác định được loại file")
+    return KIND_MIME_TYPES[kind]
+
+
 def check_preview_size(file_size: int | None) -> None:
     """Kiểm tra kích thước trước khi tải.
 

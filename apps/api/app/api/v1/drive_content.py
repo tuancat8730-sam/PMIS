@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/projects/{project_id}/drive", tags=["drive"])
 
 NO_STORE_CACHE_CONTROL = "private, no-store"
+INLINE_DISPOSITION = "inline"
+ATTACHMENT_DISPOSITION = "attachment"
 
 
 @router.get("/files/{drive_file_id}/content")
@@ -27,9 +29,12 @@ async def get_drive_file_content_endpoint(
     _project: Annotated[Project, Depends(project_role_guard(*ANY_PROJECT_ROLE))],
     session: SessionDep,
     gateway: DriveGatewayDep,
+    download: bool = False,
 ) -> Response:
     try:
-        preview = await load_drive_file_preview(session, gateway, project_id, drive_file_id)
+        preview = await load_drive_file_preview(
+            session, gateway, project_id, drive_file_id, attachment=download
+        )
     except DriveFileNotFoundError:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Không tìm thấy file trong dự án này"
@@ -50,11 +55,12 @@ async def get_drive_file_content_endpoint(
             status_code=status.HTTP_502_BAD_GATEWAY, detail=DRIVE_UNAVAILABLE_DETAIL
         ) from None
 
+    disposition = ATTACHMENT_DISPOSITION if download else INLINE_DISPOSITION
     return Response(
         content=preview.content,
         media_type=preview.media_type,
         headers={
-            "Content-Disposition": f"inline; filename*=UTF-8''{quote(preview.file_name)}",
+            "Content-Disposition": f"{disposition}; filename*=UTF-8''{quote(preview.file_name)}",
             "Cache-Control": NO_STORE_CACHE_CONTROL,
             "X-Content-Type-Options": "nosniff",
         },

@@ -119,6 +119,41 @@ export async function triggerDriveSync(
   return body;
 }
 
+export interface DriveFileBlobOptions {
+  /** true: tải về dạng đính kèm, cho mọi loại file. false: xem inline, chỉ PDF và ảnh. */
+  download: boolean;
+}
+
+const CONTENT_ERROR_MESSAGES: Readonly<Record<number, string>> = {
+  404: "Không tìm thấy file trong dự án này",
+  413: "File vượt quá giới hạn xem trực tiếp",
+  415: "Loại file này không xem trực tiếp được, hãy tải về",
+  502: "Google Drive đang từ chối yêu cầu, hãy thử lại sau",
+};
+
+/** Tải nội dung một file Drive để xem hoặc tải về. Ném lỗi tiếng Việt theo mã HTTP. */
+export async function fetchDriveFileBlob(
+  projectId: string,
+  driveFileId: string,
+  token: string,
+  options: DriveFileBlobOptions,
+  fetchImpl: typeof fetch = fetch,
+  baseUrl: string | undefined = process.env.NEXT_PUBLIC_API_URL,
+): Promise<Blob> {
+  const path = `/api/v1/projects/${encodeURIComponent(projectId)}/drive/files/${encodeURIComponent(driveFileId)}/content`;
+  const query = options.download ? "?download=true" : "";
+  const response = await fetchImpl(resolveApiUrl(`${path}${query}`, baseUrl), {
+    cache: "no-store",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!response.ok) {
+    throw new Error(
+      CONTENT_ERROR_MESSAGES[response.status] ?? `Không tải được file (mã ${response.status})`,
+    );
+  }
+  return response.blob();
+}
+
 /** Nhóm file theo thư mục. Thư mục gốc là `folder: null` và luôn đứng đầu. Không sửa mảng đầu vào. */
 export function groupDriveFilesByFolder(files: readonly DriveFileRow[]): DriveFolderGroup[] {
   const filesByFolder = new Map<string | null, DriveFileRow[]>();

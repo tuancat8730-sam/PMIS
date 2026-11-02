@@ -6,6 +6,7 @@ from app.core.drive_preview_rules import (
     DrivePreviewNotAllowedError,
     DrivePreviewTooLargeError,
     check_preview_size,
+    download_media_type,
     preview_media_type,
 )
 
@@ -44,6 +45,20 @@ def test_file_over_size_limit_is_rejected() -> None:
     # Arrange / Act / Assert
     with pytest.raises(DrivePreviewTooLargeError):
         check_preview_size(PREVIEW_MAX_BYTES + 1)
+
+
+def test_download_media_type_covers_every_synced_kind() -> None:
+    # Arrange / Act / Assert: tải về không bị giới hạn ở PDF và ảnh
+    assert download_media_type(DriveFileKind.DOCX).startswith(
+        "application/vnd.openxmlformats-officedocument.wordprocessingml"
+    )
+    assert download_media_type(DriveFileKind.AUDIO) == "audio/mp4"
+
+
+def test_download_media_type_rejects_unknown_kind() -> None:
+    # Arrange / Act / Assert
+    with pytest.raises(DrivePreviewNotAllowedError):
+        download_media_type(None)
 
 
 def test_file_with_unknown_size_is_not_previewable() -> None:

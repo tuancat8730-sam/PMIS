@@ -265,3 +265,32 @@ async def test_user_outside_project_gets_403(
 
     # Assert
     assert response.status_code == 403
+
+
+async def test_download_flag_serves_docx_as_attachment(
+    client: httpx.AsyncClient,
+    make_user: UserFactory,
+    override_gateway: Callable[[Any], None],
+) -> None:
+    # Arrange
+    docx_bytes = b"PK\x03\x04 noi dung docx"
+    project_id, token = await _pm_project_with_files(
+        client,
+        make_user,
+        override_gateway,
+        [_entry("doc-1", "bao_cao.docx", ROOT)],
+        {"doc-1": docx_bytes},
+    )
+
+    # Act
+    response = await client.get(
+        f"{_content_url(project_id, 'doc-1')}?download=true", headers=_bearer(token)
+    )
+
+    # Assert
+    assert response.status_code == 200, response.text
+    assert response.content == docx_bytes
+    assert response.headers["content-type"].startswith(
+        "application/vnd.openxmlformats-officedocument.wordprocessingml"
+    )
+    assert response.headers["content-disposition"].startswith("attachment")

@@ -16,6 +16,7 @@ from app.core.drive_preview_rules import (
     PREVIEW_MAX_BYTES,
     DrivePreviewTooLargeError,
     check_preview_size,
+    download_media_type,
     preview_media_type,
 )
 from app.integrations.drive_gateway import DriveGateway
@@ -38,9 +39,13 @@ async def load_drive_file_preview(
     gateway: DriveGateway,
     project_id: UUID,
     drive_file_id: str,
+    *,
+    attachment: bool = False,
 ) -> DrivePreview:
+    """Tải file để xem inline (PDF, ảnh), hoặc để tải về khi `attachment` là True (mọi loại)."""
     row = await _find_active_file(session, project_id, drive_file_id)
-    media_type = preview_media_type(classify_file(row.file_name))
+    kind = classify_file(row.file_name)
+    media_type = download_media_type(kind) if attachment else preview_media_type(kind)
     check_preview_size(row.file_size)
     content = await run_in_threadpool(gateway.download, drive_file_id)
     if len(content) > PREVIEW_MAX_BYTES:

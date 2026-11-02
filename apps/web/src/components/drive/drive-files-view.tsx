@@ -13,6 +13,7 @@ import {
 } from "../../lib/drive-files";
 import { readStoredToken } from "../tracking/matrix-page";
 import { DriveFileGroups } from "./drive-file-groups";
+import { DriveFileViewer } from "./drive-file-viewer";
 import { DriveSyncBar } from "./drive-sync-bar";
 
 interface DriveFilesViewProps {
@@ -46,6 +47,7 @@ export function DriveFilesView({ projectId }: DriveFilesViewProps) {
   const [syncing, setSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<DriveFileRow | null>(null);
 
   useEffect(() => {
     const token = readStoredToken();
@@ -102,7 +104,7 @@ export function DriveFilesView({ projectId }: DriveFilesViewProps) {
   }
 
   function handleOpen(file: DriveFileRow) {
-    window.open(file.web_view_link ?? undefined, "_blank", "noopener,noreferrer");
+    setSelectedFile(file);
   }
 
   return (
@@ -142,6 +144,13 @@ export function DriveFilesView({ projectId }: DriveFilesViewProps) {
         <p className="text-neutral-700">Không có file khớp bộ lọc.</p>
       )}
       <DriveFileGroups groups={visibleGroups} onOpen={handleOpen} />
+      {selectedFile !== null && (
+        <DriveFileViewer
+          projectId={projectId}
+          file={selectedFile}
+          onClose={() => setSelectedFile(null)}
+        />
+      )}
     </section>
   );
 }
