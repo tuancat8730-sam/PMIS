@@ -1,0 +1,6 @@
+[
+  {"kind": "PROJECT_APPROVAL", "decision_no": "1595/QĐ-SGDĐT", "decision_date": "2026-05-22", "issuing_authority": "Sở GD&ĐT TP.HCM", "amount": "5999498939.00", "funding_source": "Nguồn kinh phí chi sự nghiệp giáo dục năm 2026 (Ngân sách Nhà nước)", "execution_period": "Năm 2026 – 2027 (thi công gói chính 120 ngày làm việc)", "note": "Cơ quan quyết định đầu tư: UBND TP.HCM. Tổng mức đầu tư 5.999.498.939 đồng"},
+  {"kind": "BCKTKT_APPROVAL", "decision_no": "1421/QĐ-SGDĐT", "decision_date": "2026-05-12", "issuing_authority": "Sở GD&ĐT TP.HCM", "note": "Phê duyệt báo cáo kinh tế kỹ thuật"},
+  {"kind": "KHLCNT_APPROVAL", "decision_no": "1889/QĐ-SGDĐT", "decision_date": "2026-06-12", "issuing_authority": "Sở GD&ĐT TP.HCM", "note": "Phê duyệt kế hoạch lựa chọn nhà thầu"},
+  {"kind": "BIDDING_RESULT_APPROVAL", "decision_no": "4452/QĐ-SGDĐT", "decision_date": "2026-09-07", "issuing_authority": "Sở GD&ĐT TP.HCM", "note": "Phê duyệt kết quả lựa chọn nhà thầu. Trúng thầu: Liên danh DVN"}
+]

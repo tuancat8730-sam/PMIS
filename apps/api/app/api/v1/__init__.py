@@ -21,6 +21,7 @@ from app.api.v1 import (
     milestones,
     penalties,
     personnel,
+    project_legal_decisions,
     project_members,
     projects,
     risk_issues,
@@ -54,5 +55,6 @@ api_router.include_router(it_system.router)
 api_router.include_router(it_system_quality.router)
 api_router.include_router(legal_documents.router)
 api_router.include_router(file_register.router)
+api_router.include_router(project_legal_decisions.router)
 api_router.include_router(drive.router)
 api_router.include_router(drive_uploads.router)
