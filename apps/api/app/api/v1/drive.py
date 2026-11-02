@@ -61,7 +61,12 @@ async def sync_drive_endpoint(
             status_code=status.HTTP_502_BAD_GATEWAY, detail=DRIVE_UNAVAILABLE_DETAIL
         ) from None
 
-    output = DriveSyncOut(scanned=result.scanned, created=result.created, updated=result.updated)
+    output = DriveSyncOut(
+        scanned=result.scanned,
+        created=result.created,
+        updated=result.updated,
+        removed=result.removed,
+    )
     await record_audit(
         session,
         actor_id=principal.user_id,

@@ -8,7 +8,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.integrations.drive_gateway import DriveEntry
 from app.models.drive_file import DriveFile
 from app.models.project import Project, ProjectArchetype
-from app.services.drive_sync import DriveRootNotConfiguredError, sync_project_drive
+from app.services.drive_sync import (
+    DriveRootNotConfiguredError,
+    list_project_drive_files,
+    sync_project_drive,
+)
 from tests.fakes.fake_drive_gateway import FakeDriveGateway
 
 pytestmark = pytest.mark.integration
@@ -142,3 +146,57 @@ async def test_sync_without_root_folder_is_rejected(session: AsyncSession) -> No
     # Act / Assert
     with pytest.raises(DriveRootNotConfiguredError):
         await sync_project_drive(session, gateway, project)
+
+
+async def test_file_missing_from_tree_is_marked_removed_and_hidden_from_list(
+    session: AsyncSession,
+) -> None:
+    # Arrange
+    project = await _make_project(session, ROOT)
+    await sync_project_drive(
+        session,
+        FakeDriveGateway({ROOT: [_pdf("a", "tong_hop.pdf", ROOT), _pdf("b", "cu.pdf", ROOT)]}),
+        project,
+    )
+    await session.commit()
+
+    # Act
+    result = await sync_project_drive(
+        session, FakeDriveGateway({ROOT: [_pdf("a", "tong_hop.pdf", ROOT)]}), project
+    )
+    await session.commit()
+
+    # Assert
+    assert (result.created, result.updated, result.removed) == (0, 0, 1)
+    stored = {row.drive_file_id: row for row in await _stored_files(session, project)}
+    assert stored["b"].removed_at is not None
+    assert stored["a"].removed_at is None
+    visible = await list_project_drive_files(session, project.id)
+    assert [row.drive_file_id for row in visible] == ["a"]
+
+
+async def test_removed_file_that_returns_is_restored_and_next_scan_is_quiet(
+    session: AsyncSession,
+) -> None:
+    # Arrange
+    project = await _make_project(session, ROOT)
+    full_tree = FakeDriveGateway(
+        {ROOT: [_pdf("a", "tong_hop.pdf", ROOT), _pdf("b", "cu.pdf", ROOT)]}
+    )
+    partial_tree = FakeDriveGateway({ROOT: [_pdf("a", "tong_hop.pdf", ROOT)]})
+    await sync_project_drive(session, full_tree, project)
+    await sync_project_drive(session, partial_tree, project)
+    await session.commit()
+
+    # Act
+    restored = await sync_project_drive(session, full_tree, project)
+    await session.commit()
+    quiet = await sync_project_drive(session, full_tree, project)
+    await session.commit()
+
+    # Assert
+    assert (restored.created, restored.updated, restored.removed) == (0, 1, 0)
+    assert (quiet.created, quiet.updated, quiet.removed) == (0, 0, 0)
+    visible = await list_project_drive_files(session, project.id)
+    # Sắp theo drive_path: "cu.pdf" đứng trước "tong_hop.pdf".
+    assert [row.drive_file_id for row in visible] == ["b", "a"]

@@ -27,6 +27,7 @@ class DriveSyncResult:
     scanned: int
     created: int
     updated: int
+    removed: int
 
 
 async def sync_project_drive(
@@ -47,11 +48,14 @@ async def sync_project_drive(
         session.add(_new_row(project.id, snapshot, synced_at))
     for snapshot in plan.to_update:
         _apply_snapshot(stored_rows[snapshot.drive_file_id], snapshot, synced_at)
+    for drive_file_id in plan.to_remove:
+        stored_rows[drive_file_id].removed_at = synced_at
 
     return DriveSyncResult(
         scanned=len(snapshots),
         created=len(plan.to_create),
         updated=len(plan.to_update),
+        removed=len(plan.to_remove),
     )
 
 
@@ -62,7 +66,8 @@ async def suggest_drive_matches(
     """Gợi ý file Drive khớp đầu mục checklist. Chỉ đọc, không đổi trạng thái hồ sơ."""
     file_rows = await session.execute(
         select(DriveFile.drive_file_id, DriveFile.file_name).where(
-            DriveFile.project_id == project_id
+            DriveFile.project_id == project_id,
+            DriveFile.removed_at.is_(None),
         )
     )
     document_rows = await session.execute(
@@ -84,7 +89,9 @@ async def suggest_drive_matches(
 
 async def list_project_drive_files(session: AsyncSession, project_id: Any) -> list[DriveFile]:
     result = await session.execute(
-        select(DriveFile).where(DriveFile.project_id == project_id).order_by(DriveFile.drive_path)
+        select(DriveFile)
+        .where(DriveFile.project_id == project_id, DriveFile.removed_at.is_(None))
+        .order_by(DriveFile.drive_path)
     )
     return list(result.scalars().all())
 
@@ -100,6 +107,7 @@ def _stored_fields(rows: dict[str, DriveFile]) -> dict[str, dict[str, Any]]:
             "file_name": row.file_name,
             "drive_path": row.drive_path,
             "modified_time": row.modified_time,
+            "is_removed": row.removed_at is not None,
         }
         for drive_file_id, row in rows.items()
     }
@@ -129,3 +137,4 @@ def _apply_snapshot(row: DriveFile, snapshot: DriveFileSnapshot, synced_at: date
     row.web_view_link = snapshot.web_view_link
     row.modified_time = snapshot.modified_time
     row.last_synced_at = synced_at
+    row.removed_at = None

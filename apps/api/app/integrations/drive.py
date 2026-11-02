@@ -88,6 +88,18 @@ def _check_folder_id(folder_id: str) -> None:
         raise ValueError("Mã thư mục Drive không hợp lệ")
 
 
+def _check_drive_id(drive_file_id: str) -> None:
+    if not FOLDER_ID_PATTERN.fullmatch(drive_file_id):
+        raise ValueError("Mã file Drive không hợp lệ")
+
+
+def _download_media(service: Any, drive_file_id: str) -> bytes:
+    content: bytes = (
+        service.files().get_media(fileId=drive_file_id, supportsAllDrives=True).execute()
+    )
+    return content
+
+
 def _escape_query_value(value: str) -> str:
     return value.replace("\\", "\\\\").replace("'", "\\'")
 
@@ -109,10 +121,10 @@ def _is_retryable(status: int, reason: str | None) -> bool:
 
 
 def _run_with_retry(
-    call: Callable[[], dict[str, Any]],
+    call: Callable[[], Any],
     sleep: Callable[[float], None],
     max_retries: int,
-) -> dict[str, Any]:
+) -> Any:
     attempt = 0
     while True:
         try:
@@ -188,6 +200,15 @@ class GoogleDriveGateway:
             page_token = page.get("nextPageToken")
             if page_token is None:
                 return entries
+
+    def download(self, drive_file_id: str) -> bytes:
+        _check_drive_id(drive_file_id)
+        content: bytes = _run_with_retry(
+            partial(_download_media, self._service, drive_file_id),
+            self._sleep,
+            self._max_retries,
+        )
+        return content
 
 
 class GoogleDriveWriter:

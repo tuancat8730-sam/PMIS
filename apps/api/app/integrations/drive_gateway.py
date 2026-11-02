@@ -26,6 +26,10 @@ class DriveGateway(Protocol):
         """Liệt kê con trực tiếp của một thư mục. Ném lỗi có kiểu khi Drive trả lỗi."""
         ...
 
+    def download(self, drive_file_id: str) -> bytes:
+        """Tải toàn bộ nội dung một file. Gọi sau khi đã kiểm tra kích thước."""
+        ...
+
 
 @dataclass(frozen=True)
 class UpsertResult:

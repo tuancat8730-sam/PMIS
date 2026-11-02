@@ -23,18 +23,21 @@ class _FilesResource:
     def update(self, **params: Any) -> _Request:
         return _Request(self._service, params)
 
+    def get_media(self, **params: Any) -> _Request:
+        return _Request(self._service, params)
+
 
 class FakeGoogleDriveService:
     """Thay thế service `googleapiclient`: trả lần lượt phản hồi, ném lỗi nếu gặp Exception."""
 
-    def __init__(self, responses: list[dict[str, Any] | Exception]) -> None:
+    def __init__(self, responses: list[Any]) -> None:
         self._responses = list(responses)
         self.calls: list[dict[str, Any]] = []
 
     def files(self) -> _FilesResource:
         return _FilesResource(self)
 
-    def next_response(self, params: dict[str, Any]) -> dict[str, Any]:
+    def next_response(self, params: dict[str, Any]) -> Any:
         self.calls.append(params)
         response = self._responses.pop(0)
         if isinstance(response, Exception):

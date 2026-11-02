@@ -12,6 +12,7 @@ export const PROJECT_SECTIONS: readonly ProjectSection[] = [
   { label: "Rủi ro", description: "Rủi ro và vấn đề đang theo dõi", path: "risks" },
   { label: "Pháp lý", description: "Hồ sơ pháp lý theo giai đoạn", path: "legal" },
   { label: "File", description: "Danh mục file và bằng chứng", path: "files" },
+  { label: "Tệp Drive", description: "File Drive của dự án, xem trực tiếp", path: "drive" },
   { label: "Quyết định", description: "Quyết định phê duyệt của dự án", path: "decisions" },
   { label: "Hợp đồng", description: "Ma trận hợp đồng và giá trị", path: "contracts" },
 ];

@@ -34,6 +34,7 @@ class DriveFileSnapshot:
 class SyncPlan:
     to_create: list[DriveFileSnapshot] = field(default_factory=list)
     to_update: list[DriveFileSnapshot] = field(default_factory=list)
+    to_remove: list[str] = field(default_factory=list)
 
 
 def walk_tree(
@@ -106,20 +107,33 @@ def plan_sync(
     existing: Mapping[str, Mapping[str, Any]],
     snapshots: list[DriveFileSnapshot],
 ) -> SyncPlan:
-    """Phân loại từng snapshot thành tạo mới hoặc cập nhật.
+    """Phân loại snapshot thành tạo mới, cập nhật, và đánh dấu đã xóa.
 
     `existing` ánh xạ `drive_file_id` tới các trường đã lưu (`file_name`, `drive_path`,
-    `modified_time`). File không đổi thì bỏ qua, nên lần quét lặp lại không ghi gì thêm.
+    `modified_time`, `is_removed`). File không đổi thì bỏ qua, nên lần quét lặp lại
+    không ghi gì thêm. File đã lưu nhưng vắng mặt trong cây thì vào `to_remove`,
+    trừ khi đã được đánh dấu từ trước.
     """
     to_create: list[DriveFileSnapshot] = []
     to_update: list[DriveFileSnapshot] = []
+    seen_ids: set[str] = set()
     for snapshot in snapshots:
+        seen_ids.add(snapshot.drive_file_id)
         stored = existing.get(snapshot.drive_file_id)
         if stored is None:
             to_create.append(snapshot)
-        elif _has_changed(stored, snapshot):
+        elif _needs_update(stored, snapshot):
             to_update.append(snapshot)
-    return SyncPlan(to_create=to_create, to_update=to_update)
+    to_remove = [
+        drive_file_id
+        for drive_file_id, stored in existing.items()
+        if drive_file_id not in seen_ids and not stored.get("is_removed", False)
+    ]
+    return SyncPlan(to_create=to_create, to_update=to_update, to_remove=to_remove)
+
+
+def _needs_update(stored: Mapping[str, Any], snapshot: DriveFileSnapshot) -> bool:
+    return _has_changed(stored, snapshot) or bool(stored.get("is_removed", False))
 
 
 def _has_changed(stored: Mapping[str, Any], snapshot: DriveFileSnapshot) -> bool:

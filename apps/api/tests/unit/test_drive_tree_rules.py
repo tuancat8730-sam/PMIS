@@ -152,3 +152,68 @@ def test_plan_updates_renamed_file_without_creating_duplicate() -> None:
     # Assert
     assert plan.to_create == []
     assert [entry.drive_file_id for entry in plan.to_update] == ["a"]
+
+
+def test_plan_marks_stored_file_missing_from_tree_for_removal() -> None:
+    # Arrange
+    existing = {
+        "a": {
+            "file_name": "tong_hop.pdf",
+            "drive_path": "tong_hop.pdf",
+            "modified_time": datetime(2026, 10, 1, tzinfo=UTC),
+            "is_removed": False,
+        },
+        "gone": {
+            "file_name": "cu.pdf",
+            "drive_path": "cu.pdf",
+            "modified_time": datetime(2026, 9, 1, tzinfo=UTC),
+            "is_removed": False,
+        },
+    }
+    walked = walk_tree(FakeDriveGateway({ROOT: [_file("a", "tong_hop.pdf", ROOT)]}), ROOT)
+
+    # Act
+    plan = plan_sync(existing, walked)
+
+    # Assert
+    assert plan.to_remove == ["gone"]
+    assert plan.to_update == []
+
+
+def test_plan_does_not_mark_already_removed_file_again() -> None:
+    # Arrange
+    existing = {
+        "gone": {
+            "file_name": "cu.pdf",
+            "drive_path": "cu.pdf",
+            "modified_time": datetime(2026, 9, 1, tzinfo=UTC),
+            "is_removed": True,
+        }
+    }
+
+    # Act
+    plan = plan_sync(existing, [])
+
+    # Assert
+    assert plan.to_remove == []
+
+
+def test_plan_restores_removed_file_that_reappears_in_tree() -> None:
+    # Arrange
+    existing = {
+        "a": {
+            "file_name": "tong_hop.pdf",
+            "drive_path": "tong_hop.pdf",
+            "modified_time": datetime(2026, 10, 1, tzinfo=UTC),
+            "is_removed": True,
+        }
+    }
+    walked = walk_tree(FakeDriveGateway({ROOT: [_file("a", "tong_hop.pdf", ROOT)]}), ROOT)
+
+    # Act
+    plan = plan_sync(existing, walked)
+
+    # Assert
+    assert plan.to_create == []
+    assert [entry.drive_file_id for entry in plan.to_update] == ["a"]
+    assert plan.to_remove == []
