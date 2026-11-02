@@ -76,6 +76,8 @@ Lưu ý khi deploy:
 - Caddy trên server chỉ chuyển `/api/*` tới API, còn lại tới web (Next.js). OpenAPI của FastAPI nằm ở `/openapi.json` gốc, không phải `/api/v1/openapi.json`.
 - Compose trên VPS **không có service `worker` (ARQ) và Redis**. Lịch quét Drive 15 phút chưa chạy trên server; chỉ có nút "Quét ngay". Muốn bật lịch tự quét phải thêm service worker và Redis vào `deploy/vps/docker-compose.yml`.
 - Rollback chưa được kiểm thử: về lý thuyết là đặt `IMAGE_TAG` về tag cũ rồi `docker compose up -d`, nhưng migration đã chạy không tự lùi được.
+- Khóa service account Drive không nằm trong image. Trên server ở `~/pmis/secrets/pmis-drive.json`, thư mục `secrets` quyền `700`, file thuộc uid `10001` (user `appuser` của container API) với quyền `400` hoặc `600`. Compose mount file này vào `/run/secrets/pmis-drive.json` (chỉ đọc) và đặt `DRIVE_SERVICE_ACCOUNT_FILE`. Nếu không có file này, "Quét ngay" trả 503. Chép khóa lên server bằng `scp`, không commit, không in nội dung.
+- `projects.drive_root_folder_id` là dữ liệu trong DB, deploy script không đặt. Cần cập nhật bằng SQL trên server; nếu trống, "Quét ngay" trả 409.
 - Xem log khi lỗi: `ssh deploy@103.9.78.91 'cd pmis && docker compose logs --tail=50'`.
 
 ## Architecture
