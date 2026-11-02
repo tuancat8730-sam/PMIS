@@ -1,170 +1,148 @@
 # Kế hoạch: Quản lý file Drive theo dự án (xem trực tiếp, tự cập nhật)
 
 **Nguồn:** `.claude/plans/e05-drive.plan.md` (E5 đã merge, mục 1 ghi "Xem trước file" là ⏸); `PROJECT_MANAGEMENT_SOFTWARE_SPEC.md` Phân hệ 3 mục 3.
-**Độ phức tạp:** Trung bình–Lớn (có backend mới cho nội dung file, UI mới, và một quyết định về độ trễ đồng bộ).
-**Ngày lập:** 2026-11-02.
-**Nhánh dự kiến:** `feat/e05-drive-files-ui`, tạo từ `main`.
-**Phương pháp:** TDD. Test Drive dùng bản giả (`tests/fakes/fake_drive_gateway.py`), không gọi mạng. Chưa viết mã; chờ người dùng chốt mục 6.
+**Độ phức tạp:** Trung bình–Lớn.
+**Ngày lập:** 2026-11-02. **Trạng thái:** Pha 0–4 và 6 xong; Pha 5 hoãn (không cần, xem mục 6).
+**Nhánh:** `feat/e05-drive-files-ui` (đã push). Commit theo pha: `d306dd3` (Pha 1), `c26f7c3` (Pha 2), `3a25cd3` (Pha 3), `52a5aa5` (Pha 4).
+**Phương pháp:** TDD. Test Drive dùng bản giả, không gọi mạng. Kiểm thử đọc thật (chỉ đọc) đã chạy một lần bằng khóa dịch vụ.
 **Chú giải:** ✅ xong · 🟡 một phần · ⬜ chưa làm · ⏸ hoãn · ❓ chờ quyết định
 
 ## 1. Yêu cầu và phạm vi
 
 Yêu cầu gốc (người dùng, 2026-11-02): mỗi dự án có trang quản lý file; hiển thị các file trên Google Drive; xem trực tiếp được trên tool; khi thêm file mới vào thư mục Drive thì tool cũng cập nhật theo.
 
-| Nhóm | Nội dung | Thuộc phạm vi? |
+| Nhóm | Nội dung | Trạng thái |
 |---|---|---|
-| Trang "Tệp Drive" trong từng dự án, hiển thị cây thư mục và danh sách file | `apps/web` | ✅ |
-| Tìm kiếm và lọc theo loại file (DOCX, PDF, XLSX, ảnh, âm thanh) | `apps/web` | ✅ |
-| Xem trực tiếp PDF và ảnh trong tool | API stream + `apps/web` | ✅ |
-| Tự cập nhật khi có file mới, đổi tên, sửa đổi, hoặc bị xóa trên Drive | worker + `drive_sync` | ✅ (xem mục 2.3) |
-| Xem trực tiếp DOCX, XLSX, M4A | Cần thư viện render hoặc chuyển đổi | ❓ Q-D |
-| Upload, sửa, xóa file từ tool | E5 Pha 4.3 | ⏸ Không thuộc |
-| Trích xuất nội dung, AI kiểm toán | E6 | ⏸ Không thuộc |
-| Google Docs, Sheets gốc (không có đuôi) | Đã chốt Q5 của E5: bỏ qua | ⏸ Không thuộc |
+| Trang "Tệp Drive" trong từng dự án, cây thư mục và danh sách file | `apps/web` | ✅ Pha 3 |
+| Tìm kiếm và lọc theo loại file | `apps/web` | ✅ Pha 3 |
+| Xem trực tiếp PDF và ảnh trong tool | API stream + `apps/web` | ✅ Pha 2, 4 |
+| Tải về DOCX, XLSX, M4A | API `download=true` + nút "Tải về" | ✅ Pha 4 |
+| Tự cập nhật (file mới, đổi tên, sửa, xóa) | worker 15 phút, nút "Quét ngay", đánh dấu đã xóa | ✅ Pha 1, 3 |
+| Upload, sửa, xóa file từ tool | E5 Pha 4.3 | ⏸ Ngoài phạm vi |
+| Trích xuất nội dung, AI kiểm toán | E6 | ⏸ Ngoài phạm vi |
+| Google Docs, Sheets gốc (không có đuôi) | Đã chốt Q5 của E5: bỏ qua | ⏸ Ngoài phạm vi |
 
-**Đặt tên:** trang hiện có tên "File & bằng chứng" (file register, `components/tracking/file-register-table.tsx`). Trang mới đặt tên "Tệp Drive" để không nhầm với file register.
+**Đặt tên:** trang mới tên "Tệp Drive", khác với "File & bằng chứng" (file register).
 
-**Hoàn thành khi:** PM và thành viên dự án xem được cây file Drive của dự án và mở được PDF, ảnh trong tool; file mới trên Drive xuất hiện trong tool sau độ trễ đã chốt ở Q-A; file bị xóa không còn hiện; dự án A không xem được file của dự án B; test và lint xanh; mobile không cuộn ngang.
+**Hoàn thành khi:** PM và thành viên xem được cây file và mở được PDF, ảnh trong tool; file mới trên Drive xuất hiện sau tối đa 15 phút hoặc ngay sau "Quét ngay"; file đã xóa không còn hiện; dự án A không xem được file dự án B; test, lint, build xanh; không cuộn ngang ở 375px.
 
-## 2. Hiện trạng
+## 2. Hiện trạng ban đầu (trước khi làm)
 
-### 2.1 Đã có
-
-| Thành phần | Bằng chứng |
+| Thành phần | Trạng thái lúc bắt đầu |
 |---|---|
-| Đồng bộ Drive → DB theo cây, idempotent theo `drive_file_id` | `apps/api/app/services/drive_sync.py` (`sync_project_drive`), `apps/api/app/core/drive_tree.py` (`walk_tree`, `plan_sync`) |
-| Bảng `drive_files` có `file_name`, `drive_path`, `mime_type`, `file_size`, `web_view_link`, `modified_time` | `apps/api/app/models/drive_file.py` |
-| Worker ARQ quét mỗi 15 phút | `apps/api/app/worker/settings.py` (`DRIVE_SWEEP_MINUTES`), `apps/api/app/worker/drive_jobs.py` |
-| API liệt kê file và nút quét ngay (PM, có rate limit) | `apps/api/app/api/v1/drive.py`: `GET /projects/{id}/drive/files`, `POST /projects/{id}/drive/sync` |
-| Phân loại định dạng theo đuôi | `apps/api/app/core/drive_file_kinds.py` |
-| Adapter Drive có retry và backoff, chỉ đọc | `apps/api/app/integrations/drive.py`, scope `drive.readonly` |
-| Mẫu test: unit thuần, integration trên PostgreSQL thật, bản giả Drive | `tests/integration/test_drive_sync_service.py`, `tests/fakes/fake_drive_gateway.py` |
-| Tab dự án | `apps/web/src/components/tracking/project-sections.ts` |
+| Đồng bộ Drive → DB theo cây, idempotent theo `drive_file_id` | ✅ có (E5) |
+| Worker ARQ quét 15 phút, API liệt kê và quét ngay | ✅ có (E5) |
+| UI danh sách file Drive | ⬜ không có |
+| Tải và xem nội dung | ⬜ không có (E5 ghi ⏸) |
+| Xử lý file đã xóa hoặc di chuyển | ❌ `plan_sync` không đánh dấu, file cũ hiện mãi |
 
-### 2.2 Chưa có
+## 3. Thiết kế đã triển khai
 
-| Yêu cầu | Trạng thái | Ghi chú |
-|---|---|---|
-| UI danh sách file Drive | ⬜ | Web không gọi `GET .../drive/files`. `apps/web/src/lib/file-register.ts` chỉ dùng `drive_file_id` của file register |
-| Tải nội dung file | ⬜ | `integrations/drive.py` chưa có hàm tải, `DriveGateway` chỉ có `list_children` |
-| Xem trực tiếp trong tool | ⬜ | E5 ghi ⏸ |
-| Xử lý file bị xóa hoặc di chuyển | ❌ | `plan_sync` chỉ phân loại tạo mới hoặc cập nhật. File đã xóa trên Drive vẫn nằm trong DB và sẽ hiện mãi |
-| Cập nhật gần thời gian thực | ⬜ | Hiện chỉ quét 15 phút. Chưa dùng Drive `changes` API hay webhook |
+### 3.1 Đồng bộ đầy đủ (Pha 1)
+- Cột `removed_at` (nullable) trong `drive_files`, migration `d5e9b3a7f1c2`.
+- `plan_sync` trả thêm `to_remove`; file quay lại thì được khôi phục.
+- Danh sách và gợi ý khớp bỏ qua file đã xóa.
+- API `POST /drive/sync` trả thêm trường `removed`.
 
-### 2.3 Lỗ hổng cần sửa để "tự cập nhật" đúng
+### 3.2 Tải nội dung (Pha 2, 4)
+- `DriveGateway.download(drive_file_id) -> bytes`, adapter Google dùng `files().get_media(...).execute()` có retry.
+- **Thay đổi so với bản gốc:** không stream theo khối mà đọc toàn bộ nội dung vào bộ nhớ. Bù lại bằng giới hạn 25 MB, kiểm tra `file_size` trước khi tải, và kiểm tra lại độ dài sau khi tải. Lý do: đơn giản hơn, và giới hạn đã chặn rủi ro bộ nhớ.
+- Endpoint `GET /projects/{id}/drive/files/{drive_file_id}/content`:
+  - Kiểm tra file thuộc dự án và chưa bị xóa (404 nếu không).
+  - Mặc định (`inline`): chỉ PDF và ảnh (415 với loại khác).
+  - `?download=true` (`attachment`): mọi loại đã đồng bộ, dùng cho nút "Tải về". Thay đổi này bổ sung cho bản gốc để Q-D được thực hiện đúng.
+  - Header: `Cache-Control: private, no-store`, `X-Content-Type-Options: nosniff`, `Content-Disposition` với tên UTF-8.
+- Không dùng iframe của Google hay redirect sang Drive (người xem có thể không có quyền Google).
+- Không ghi audit khi xem (Q-C).
 
-Khi file bị xóa hoặc chuyển ra khỏi cây dự án, `walk_tree` không trả về nó, nhưng `plan_sync` không đánh dấu. Kết quả: danh sách sẽ sai dần. Phải sửa trước khi làm UI, nếu không UI sẽ hiển thị file đã mất.
-
-## 3. Thiết kế
-
-### 3.1 Backend: đồng bộ đầy đủ
-- Thêm cột `removed_at` (nullable, timestamptz) vào `drive_files`. Migration mới.
-- `sync_project_drive` đánh dấu `removed_at = now` cho các dòng có `drive_file_id` không còn trong snapshot. Nếu file quay lại thì xóa `removed_at`.
-- API liệt kê mặc định chỉ trả dòng có `removed_at IS NULL`.
-- Lý do dùng đánh dấu thay vì xóa cứng: giữ lịch sử để sau này E6 và E4 có thể tham chiếu, và tránh mất liên kết với `legal_documents` đã khớp.
-
-### 3.2 Backend: tải nội dung có kiểm soát
-- Thêm `download(drive_file_id) -> Iterator[bytes]` vào Protocol `DriveGateway` và adapter (`MediaIoBaseDownload`, theo từng khối).
-- Endpoint mới: `GET /projects/{project_id}/drive/files/{drive_file_id}/content`.
-  - Tra file trong DB theo `project_id` và `drive_file_id`, không tìm được thì 404. Không để truy cập file của dự án khác.
-  - Quyền: `ANY_PROJECT_ROLE` (chờ Q-C).
-  - Chỉ cho phép loại xem trực tiếp: PDF, ảnh. Loại khác trả 415 và web hiện nút tải về (sẽ làm ở Q-D).
-  - Giới hạn kích thước theo cấu hình (đề xuất 25 MB). Vượt thì trả 413. Kiểm tra `file_size` từ DB trước khi gọi Drive.
-  - Trả `StreamingResponse` với `Content-Type` từ loại file, `Content-Disposition: inline`, `Cache-Control: private, no-store`, và `X-Content-Type-Options: nosniff`.
-- Không dùng iframe preview của Google và không redirect sang link Drive. Lý do: người xem trong tool có thể không có quyền Google trên thư mục, và file không được nằm ngoài xác thực của app.
-- Audit: ghi `drive.view` khi tải nội dung? Chờ Q-C. Mặc định không ghi, vì đọc nhiều sẽ làm audit log phình to.
-
-### 3.3 Worker và độ trễ cập nhật
-- Mặc định (G2 của E5): giữ quét 15 phút, thêm nút "Quét ngay" trên UI.
-- Phương án B: lưu `changes` page token theo dự án và dùng `changes.list` thay cho duyệt toàn cây. Nhanh hơn và tốn quota ít hơn. Cần migration thêm cột token và có quy tắc khởi tạo lại khi token hết hạn.
-- Phương án C: `changes.watch` (webhook). Cần endpoint HTTPS công khai, kênh hết hạn sau khoảng một tuần nên phải có job gia hạn. Phụ thuộc việc triển khai VPS (thư mục `deploy/` hiện chưa commit).
-- Trong mọi phương án, UI tự làm mới danh sách khi tab được focus lại và sau khi bấm "Quét ngay".
+### 3.3 Cập nhật tự động (Pha 3)
+- Worker 15 phút (giữ nguyên, Q-A) và nút "Quét ngay" (PM).
+- Trang tự tải lại khi cửa sổ lấy lại focus, và sau khi quét xong.
 
 ### 3.4 Web
-- Route: `apps/web/src/app/projects/[projectId]/drive/page.tsx`. Thêm tab "Tệp Drive" vào `project-sections.ts`.
-- Lớp API: `apps/web/src/lib/drive-files.ts`, theo mẫu `lib/file-register.ts`, dùng `lib/api.ts`.
-- Component:
-  - `DriveFileList`: nhóm theo `drive_path`, tìm kiếm theo tên, lọc theo loại, cỡ và ngày sửa hiển thị theo `vi-VN`.
-  - `DriveFileViewer`: dialog. PDF và ảnh được tải bằng `fetch` kèm Bearer token, rồi tạo `URL.createObjectURL`. Không dùng `<iframe src>` trực tiếp vì không gửi được header. Thu hồi URL khi đóng dialog.
-  - Nút "Quét ngay" hiện với PM (hoặc mọi vai trò, chờ Q-C).
-- Mobile first, nút chạm tối thiểu theo quy ước PMIS, không cuộn ngang.
-- Trạng thái lỗi: 409 "Dự án chưa khai báo thư mục gốc", 503 "Máy chủ chưa cấu hình tài khoản dịch vụ", 502 "Google Drive đang từ chối yêu cầu, hãy thử lại sau". Tất cả tiếng Việt có dấu.
+- `lib/drive-files.ts`: fetch danh sách, quét ngay (thông điệp tiếng Việt theo mã HTTP), tải nội dung dạng blob, nhóm theo thư mục, lọc, định dạng.
+- `components/drive/`: `DriveSyncBar`, `DriveFileGroups`, `DriveFileViewer` (hộp thoại; PDF và ảnh qua object URL, thu hồi khi đóng; nút "Tải về"), `DriveFilesView` (container).
+- Route `/projects/[projectId]/drive`, tab "Tệp Drive" sau tab "File".
 
-## 4. Kế hoạch thực hiện
-
-Mỗi việc viết test trước (đỏ), rồi sửa mã (xanh), rồi refactor.
+## 4. Kế hoạch thực hiện và trạng thái
 
 ### Pha 0: Chuẩn bị
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 0.1 | Chốt Q-A đến Q-D | ✅ | Xem mục 6 |
-| 0.2 | Nhánh `feat/e05-drive-files-ui` từ `main` | ✅ | Đã tạo, chưa commit |
-| 0.3 | Baseline: pytest, ruff, vitest, lint, alembic head | 🟡 | API: 549 passed, ruff sạch, head `c4f8a2d6e1b9`. Dùng PostgreSQL local, database `pmis_test`. Vitest và lint web chưa chạy, sẽ chạy ở Pha 3 |
+| 0.1 | Chốt Q-A đến Q-D | ✅ | Mục 6 |
+| 0.2 | Nhánh `feat/e05-drive-files-ui` từ `main` | ✅ | |
+| 0.3 | Baseline API, web, migration | ✅ | API 549 pass lúc bắt đầu. PostgreSQL local, database `pmis_test` |
 
 ### Pha 1: Đánh dấu file đã xóa (backend)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 1.1 | Test đỏ: file biến mất khỏi cây thì `removed_at` được đặt; file quay lại thì xóa `removed_at`; quét lặp không ghi thêm | ✅ | `tests/integration/test_drive_sync_service.py` |
-| 1.2 | Test đỏ: API liệt kê không trả file đã `removed_at` | 🟡 | Phủ ở mức service (`list_project_drive_files`), endpoint dùng hàm này. Gợi ý khớp (`suggest_drive_matches`) cũng đã lọc nhưng chưa có test riêng |
-| 1.3 | Migration thêm `removed_at`, cập nhật model và `sync_project_drive` | ✅ | Migration `d5e9b3a7f1c2`. Round-trip sạch, `alembic check` sạch, dev DB đã nâng lên head. API 554 passed, coverage 84.52%, ruff sạch |
+| 1.1 | Test đỏ: file biến mất thì `removed_at` được đặt; quay lại thì xóa; quét lặp không ghi thêm | ✅ | `test_drive_sync_service.py`, `test_drive_tree_rules.py` |
+| 1.2 | Test đỏ: API liệt kê không trả file đã xóa | 🟡 | Phủ ở mức service. Gợi ý khớp đã lọc nhưng chưa có test riêng |
+| 1.3 | Migration, model, `sync_project_drive` | ✅ | Round-trip sạch, `alembic check` sạch, dev DB đã lên head |
 
-### Pha 2: Tải nội dung file (backend)
+### Pha 2: Tải nội dung (backend)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 2.1 | Test đỏ: file dự án khác trả 404; file không có trong DB trả 404; loại không xem được trả 415; file vượt giới hạn trả 413 | ⬜ | `tests/unit/` cho quy tắc thuần, integration cho endpoint |
-| 2.2 | `download` vào Protocol, bản giả và adapter Google | ⬜ | Test adapter không gọi mạng, dùng bản giả của `MediaIoBaseDownload` |
-| 2.3 | Endpoint stream với header bảo mật | ⬜ | Test header `Content-Type`, `Content-Disposition`, `Cache-Control` |
-| 2.4 | Cập nhật OpenAPI | ⬜ | FastAPI tự sinh tại `/openapi.json` |
+| 2.1 | Test đỏ: 404, 415, 413, 403, 502 | ✅ | `test_drive_content_api.py`, `test_drive_preview_rules.py` |
+| 2.2 | `download` vào Protocol, bản giả, adapter Google | ✅ | `test_drive_adapter_download.py` |
+| 2.3 | Endpoint stream với header bảo mật | ✅ | Kiểm tra trong test API |
+| 2.4 | OpenAPI | ✅ | FastAPI tự sinh |
 
 ### Pha 3: Danh sách và cây file (web)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 3.1 | Test đỏ: `lib/drive-files.ts` ánh xạ đúng response và xử lý các mã lỗi | ⬜ | Mẫu: `lib/file-register.test.ts` |
-| 3.2 | Route `drive/page.tsx`, tab trong `project-sections.ts` | ⬜ | |
-| 3.3 | `DriveFileList`: cây, tìm kiếm, lọc loại, nút "Quét ngay", tự làm mới khi focus | ⬜ | Mẫu: `file-register-table.test.tsx` |
+| 3.1 | Test đỏ: `lib/drive-files` | ✅ | `drive-files.test.ts` |
+| 3.2 | Route và tab | ✅ | `project-home-view.test.tsx` cập nhật thứ tự tab có chủ đích (tab Drive không thuộc sheet Excel) |
+| 3.3 | Component danh sách, quét ngay, tự làm mới | ✅ | `drive-sync-bar.test.tsx`, `drive-file-groups.test.tsx`, `drive-files-view.test.tsx` |
 
 ### Pha 4: Xem trực tiếp (web)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 4.1 | Test đỏ: viewer gọi `fetch` với Bearer token và thu hồi object URL khi đóng | ⬜ | |
-| 4.2 | `DriveFileViewer` cho PDF và ảnh; loại khác hiện nút tải về | ⬜ | Thêm DOCX, XLSX nếu chốt Q-D |
-| 4.3 | Kiểm tra mobile width, không cuộn ngang | ⬜ | Playwright, mẫu `e2e/tracking-pages.spec.ts` |
+| 4.1 | Test đỏ: fetch có token, thu hồi object URL | ✅ | `drive-files.test.ts` (fetch blob), `drive-file-viewer.test.tsx`. Việc thu hồi URL nằm trong cleanup của effect, được kiểm chứng bằng E2E |
+| 4.2 | Viewer PDF, ảnh; tải về mọi loại | ✅ | Bổ sung cờ `download` ở API (mục 3.2) |
+| 4.3 | Mobile 375px, không cuộn ngang | ✅ | `e2e/drive-files.spec.ts`, 5 kịch bản × desktop và mobile |
 
-### Pha 5: Độ trễ cập nhật (tùy theo Q-A)
+### Pha 5: Độ trễ cập nhật
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 5.1 | Nếu chọn B: `changes` token theo dự án, migration, test khởi tạo lại khi token hết hạn | ⏸ | Chỉ làm nếu Q-A chọn B |
-| 5.2 | Nếu chọn C: endpoint webhook, xác thực kênh, job gia hạn | ⏸ | Chỉ làm nếu Q-A chọn C, cần HTTPS công khai |
+| 5.1 | Drive `changes` API | ⏸ | Q-A chốt phương án A (quét 15 phút + nút quét ngay). Không làm |
+| 5.2 | Webhook `changes.watch` | ⏸ | Không làm |
 
 ### Pha 6: Kiểm chứng và đóng việc
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 6.1 | `make api-test` với coverage ≥ 80%, `make api-lint`, `make web-test`, `make web-lint`, `make web-build` | ⬜ | |
-| 6.2 | Kiểm tra bí mật: không có khóa, không log token | ⬜ | |
-| 6.3 | Cập nhật `pmis-epics.plan.md` (E5) và file plan này | ⬜ | |
-| 6.4 | Commit theo từng pha, không tự merge PR | ⬜ | Chỉ khi người dùng yêu cầu |
+| 6.1 | API: pytest, coverage, ruff, migration | ✅ | 576 pass, coverage 84.59%, ruff sạch, `alembic check` sạch |
+| 6.1 | Web: vitest, lint, tsc, build | ✅ | 169 test pass, lint sạch, `tsc` sạch, `pnpm build` thành công |
+| 6.1 | E2E toàn bộ | ✅ | 42 pass (kể cả các spec cũ) |
+| 6.2 | Kiểm tra bí mật | ✅ | Quét diff của nhánh: không có khóa, token, client secret |
+| 6.2b | Kiểm thử đọc thật trên Drive (chỉ đọc) | ✅ | Liệt kê 52 file hỗ trợ trong cây SGD-HCM và tải PDF: `%PDF-`, cỡ khớp metadata. Xác nhận `get_media().execute()` trả về bytes |
+| 6.3 | Cập nhật `pmis-epics.plan.md` (E5) | ✅ | Xem mục 8 |
+| 6.4 | Commit theo pha và push | ✅ | Chưa merge PR (theo quy ước repo) |
 
-## 5. Rủi ro
+## 5. Rủi ro (còn lại)
 
-| Mức | Rủi ro | Giảm thiểu |
+| Mức | Rủi ro | Trạng thái |
 |---|---|---|
-| CAO | Lộ file dự án cho người không có quyền | Kiểm tra `project_id` ở mọi truy vấn, test 404 cho dự án khác, không redirect sang Drive |
-| CAO | Lộ JSON khóa service account (đã dán trong chat và chưa xoay, theo E5 Q7) | Xoay khóa trước khi đưa lên máy chủ thật. Ghi chú này đã có trong E5 |
-| TB | File lớn làm nặng server (audio, PDF scan) | Giới hạn 25 MB, stream theo khối, kiểm tra `file_size` trước khi gọi Drive |
-| TB | Quota Drive khi nhiều người xem cùng lúc | Tải theo yêu cầu, không cache nội dung trên server ở phiên bản đầu |
-| TB | File đã xóa vẫn hiện | Pha 1 xử lý trước khi làm UI |
-| TB | Người dùng hiểu 15 phút là gần thời gian thực | Hiển thị "Cập nhật lúc HH:mm" lấy từ `last_synced_at`, và nút "Quét ngay" |
-| THẤP | Nhầm với trang "File & bằng chứng" | Đặt tên "Tệp Drive" và mô tả riêng trong tab |
+| CAO | Lộ khóa service account (đã dán trong chat, chưa xoay theo E5 Q7; người dùng chỉ thị không xoay) | Chấp nhận theo chỉ thị. Ghi nhận lại trước khi đưa lên máy chủ thật |
+| TB | Dự án chưa có `drive_root_folder_id` trong DB dev | Cần nhập ID trước khi dùng thật (xem mục 7) |
+| TB | File lớn làm nặng bộ nhớ server | Giới hạn 25 MB, kiểm tra hai lần |
+| THẤP | Trễ 15 phút bị hiểu nhầm là thời gian thực | Hiển thị "Cập nhật lúc" và nút "Quét ngay" |
 
-## 6. Câu hỏi cần người dùng chốt
+## 6. Quyết định đã chốt
 
-| # | Câu hỏi | Đề xuất | Trạng thái |
-|---|---|---|---|
-| Q-A | Độ trễ cập nhật khi có file mới trên Drive là bao nhiêu? | **A (khuyến nghị):** giữ quét 15 phút, thêm nút "Quét ngay". Ít thay đổi nhất. B: `changes` API, khoảng 1–2 phút. C: webhook, gần thời gian thực, cần HTTPS công khai | ✅ Chốt 2026-11-02: A, quét 15 phút + nút "Quét ngay". Pha 5 không làm |
-| Q-B | Cách xem trực tiếp? | **Xem trong tool qua backend** (stream PDF và ảnh, đúng quyền của app). Phương án khác: mở link Google Drive, nhưng người xem cần có quyền Google trên thư mục | ✅ Chốt 2026-11-02: xem trong tool qua backend |
-| Q-C | Ai được xem file, và ai được bấm "Quét ngay"? | **Mọi thành viên dự án xem được. Chỉ PM bấm "Quét ngay"** (khớp với endpoint sync hiện tại). Có ghi audit khi xem không? Đề xuất: không | ✅ Chốt 2026-11-02: mọi thành viên xem; chỉ PM bấm Quét ngay; không ghi audit khi xem |
-| Q-D | Ngoài PDF và ảnh, có cần xem DOCX, XLSX trong tool không? | **Chưa.** Hai loại này chỉ tải về ở phiên bản đầu. Xem trực tiếp cần thêm thư viện render phía trình duyệt, nặng hơn đáng kể | ✅ Chốt 2026-11-02: chưa, PDF và ảnh trước |
+| # | Câu hỏi | Quyết định |
+|---|---|---|
+| Q-A | Độ trễ cập nhật | A: quét 15 phút + nút "Quét ngay" |
+| Q-B | Cách xem | Xem trong tool qua backend |
+| Q-C | Quyền | Mọi thành viên xem, chỉ PM quét ngay, không ghi audit khi xem |
+| Q-D | Định dạng xem trực tiếp | PDF và ảnh xem trong tool; loại khác tải về |
 
-## 7. Ghi chú
-- Phạm vi đã loại trừ upload, sửa, xóa từ tool. Nếu muốn, đó là E5 Pha 4.3 và cần quyền `drive` đầy đủ.
-- Nếu Q-A chọn C, phải xác nhận lại triển khai VPS trước khi làm Pha 5.
+## 7. Việc còn lại trước khi dùng thật
+- Nhập `drive_root_folder_id` cho các dự án trong DB (hiện trống cho cả SGD-HCM và SGD-LD). ID đã có trong spec §Phân hệ 3; chưa nhập để tránh đổi dữ liệu dev khi chưa được yêu cầu.
+- Đưa lên máy chủ thật: xoay khóa service account (E5 Q7) và `chmod 600` file khóa.
+- Merge PR: chỉ khi người dùng yêu cầu.
+
+## 8. Nhật ký và cập nhật liên quan
+- 2026-11-02: Pha 0–1 commit `d306dd3`, push. Pha 2 `c26f7c3`. Pha 3 `3a25cd3`. Pha 4 `52a5aa5`.
+- Kiểm thử đọc thật: script chỉ đọc trong scratchpad, không nằm trong repo.
+- `pmis-epics.plan.md` (E5): cập nhật dòng E5 để phản ánh tính năng này.
