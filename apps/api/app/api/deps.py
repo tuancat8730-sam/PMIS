@@ -3,16 +3,18 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import Depends, HTTPException, Request, status
+from fastapi import Depends, Header, HTTPException, Request, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import Settings
 from app.core.crypto import FieldCipher
+from app.core.field_rules import is_valid_device_id
 from app.core.rate_limit import SlidingWindowRateLimiter
 from app.core.rbac import Principal, Role, get_current_principal
 from app.models.contract import Contract
 from app.models.project import Project
 from app.services.contracts import get_contract
+from app.services.field_sync import FieldWriteHeaders
 from app.services.memberships import get_member_role
 from app.services.projects import get_project
 
@@ -84,6 +86,32 @@ def get_field_cipher(settings: SettingsDep) -> FieldCipher:
 
 
 CipherDep = Annotated[FieldCipher, Depends(get_field_cipher)]
+
+INVALID_DEVICE_ID_DETAIL = "X-Device-Id không hợp lệ"
+INVALID_IDEMPOTENCY_KEY_DETAIL = "Idempotency-Key phải là UUID"
+
+
+def get_field_write_headers(
+    idempotency_key: Annotated[str, Header(alias="Idempotency-Key")],
+    device_id: Annotated[str, Header(alias="X-Device-Id")],
+) -> FieldWriteHeaders:
+    """Kiểm hai header của lệnh ghi từ thiết bị. Header thiếu đã được FastAPI trả 422."""
+    if not is_valid_device_id(device_id):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=INVALID_DEVICE_ID_DETAIL,
+        )
+    try:
+        parsed_key = UUID(idempotency_key)
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=INVALID_IDEMPOTENCY_KEY_DETAIL,
+        ) from None
+    return FieldWriteHeaders(device_id=device_id, idempotency_key=parsed_key)
+
+
+FieldWriteHeadersDep = Annotated[FieldWriteHeaders, Depends(get_field_write_headers)]
 
 
 async def ensure_project_role(

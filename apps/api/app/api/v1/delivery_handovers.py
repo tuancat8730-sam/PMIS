@@ -37,6 +37,7 @@ def _to_out(handover: DeliveryHandover, cluster_code: str) -> DeliveryHandoverOu
         planned_date=handover.planned_date,
         actual_date=handover.actual_date,
         delivery_status=handover.delivery_status,
+        version=handover.version,
     )
 
 

@@ -1,7 +1,7 @@
 import uuid
 from datetime import date
 
-from sqlalchemy import Date, ForeignKey, String, Text, UniqueConstraint, text
+from sqlalchemy import Date, ForeignKey, Integer, String, Text, UniqueConstraint, text
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -43,3 +43,5 @@ class DeliveryHandover(Base):
     site_photos: Mapped[list] = mapped_column(JSONB, server_default=text("'[]'::jsonb"))
     supervisor_name: Mapped[str | None] = mapped_column(String(150))
     inspector_notes: Mapped[str | None] = mapped_column(Text)
+    # Số phiên bản dùng phát hiện xung đột khi nhiều thiết bị cùng sửa (Q5, E10).
+    version: Mapped[int] = mapped_column(Integer, server_default=text("1"), default=1)
