@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { CommandCenterView } from "@/components/command-center/command-center-view";
@@ -48,9 +49,12 @@ export default function CommandCenterPage() {
   }
   if (state.kind === "no-token") {
     return (
-      <p className="p-10 text-neutral-700">
-        Chưa có phiên đăng nhập. Đăng nhập trước khi xem Command Center.
-      </p>
+      <div className="flex flex-col gap-3 p-10 text-neutral-700">
+        <p>Chưa có phiên đăng nhập. Đăng nhập trước khi xem Command Center.</p>
+        <Link href="/login" className="font-semibold underline underline-offset-4">
+          Đi tới trang đăng nhập
+        </Link>
+      </div>
     );
   }
   if (state.kind === "error") {
