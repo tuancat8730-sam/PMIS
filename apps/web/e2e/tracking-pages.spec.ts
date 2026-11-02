@@ -3,6 +3,16 @@ import { expect, test, type Page, type Route } from "@playwright/test";
 const TOKEN_KEY = "pmis.field.token";
 const TEST_TOKEN = "e2e-token-tracking";
 const PROJECT_ID = "p1";
+const OVERFLOW_CHECK_WIDTHS = [375, 1280];
+const TRACKING_SCREENS = [
+  "overview",
+  "schedule",
+  "risks",
+  "legal",
+  "files",
+  "decisions",
+  "contracts",
+];
 
 const PROJECT = {
   id: PROJECT_ID,
@@ -180,13 +190,47 @@ test.describe("Tracking: các màn hình theo dự án", () => {
     await expect(page.getByText("1595_QD phe duyet du an...signed.pdf")).toBeVisible();
   });
 
-  test("tổng quan hiển thị tổng mức đầu tư và hợp đồng", async ({ page }) => {
+  test("tổng quan hiển thị tổng mức đầu tư", async ({ page }) => {
     // Arrange
     // Act
     await openTrackingPage(page, "overview");
 
     // Assert
     await expect(page.getByText("5.999.498.939 đ").first()).toBeVisible();
+  });
+
+  test("quyết định hiển thị số quyết định phê duyệt", async ({ page }) => {
+    // Arrange
+    // Act
+    await openTrackingPage(page, "decisions");
+
+    // Assert
+    await expect(page.getByText("1595/QĐ-SGDĐT")).toBeVisible();
+  });
+
+  test("hợp đồng hiển thị số hợp đồng", async ({ page }) => {
+    // Arrange
+    // Act
+    await openTrackingPage(page, "contracts");
+
+    // Assert
     await expect(page.getByText("29/HĐKT-DVN")).toBeVisible();
   });
+
+  for (const width of OVERFLOW_CHECK_WIDTHS) {
+    test(`không tràn ngang ở ${width}px trên mọi màn hình`, async ({ page }) => {
+      // Arrange
+      await page.setViewportSize({ width, height: 800 });
+
+      // Act and Assert
+      for (const screen of TRACKING_SCREENS) {
+        await openTrackingPage(page, screen);
+        await expect(page.locator("main h1")).toBeVisible();
+        const overflowPx = await page.evaluate(
+          () => document.documentElement.scrollWidth - window.innerWidth,
+        );
+        expect(overflowPx, `màn ${screen}`).toBeLessThanOrEqual(0);
+      }
+    });
+  }
 });

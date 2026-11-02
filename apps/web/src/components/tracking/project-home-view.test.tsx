@@ -1,7 +1,8 @@
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it } from "vitest";
 
-import { ProjectHomeView, PROJECT_SECTIONS } from "./project-home-view";
+import { ProjectHomeView } from "./project-home-view";
+import { PROJECT_SECTIONS } from "./project-sections";
 import { ProjectListView } from "./project-list-view";
 import type { ProjectOverview, ProjectSummary } from "../../lib/overview";
 
@@ -25,17 +26,26 @@ describe("ProjectHomeView", () => {
     const html = renderToStaticMarkup(<ProjectHomeView overview={overview} />);
 
     // Assert
+    expect(html).toContain('href="/projects/p1/overview"');
     expect(html).toContain('href="/projects/p1/schedule"');
     expect(html).toContain('href="/projects/p1/risks"');
     expect(html).toContain('href="/projects/p1/legal"');
     expect(html).toContain('href="/projects/p1/files"');
-    expect(html).toContain('href="/projects/p1/overview#decisions"');
-    expect(html).toContain('href="/projects/p1/overview#contracts"');
+    expect(html).toContain('href="/projects/p1/decisions"');
+    expect(html).toContain('href="/projects/p1/contracts"');
   });
 
-  it("lists the six sections in the order of the Excel sheets", () => {
+  it("lists the overview first, then the six sections in the order of the Excel sheets", () => {
     // Arrange
-    const expectedLabels = ["Mốc", "Rủi ro", "Pháp lý", "File", "Quyết định", "Hợp đồng"];
+    const expectedLabels = [
+      "Tổng quan",
+      "Mốc",
+      "Rủi ro",
+      "Pháp lý",
+      "File",
+      "Quyết định",
+      "Hợp đồng",
+    ];
 
     // Act
     const labels = PROJECT_SECTIONS.map((section) => section.label);

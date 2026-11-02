@@ -1,46 +1,79 @@
-import { sortFileRegister, type FileRegisterRow } from "../../lib/file-register";
+import {
+  groupFileRegisterByFolder,
+  type FileRegisterFolderGroup,
+  type FileRegisterRow,
+} from "../../lib/file-register";
+import { EmptyState } from "./ui/empty-state";
+import { ExpandableItem } from "./ui/expandable-item";
+import { Field } from "./ui/field";
+import { StatusChip } from "./ui/status-chip";
 
-function cellText(value: string | null): string {
-  return value ?? "—";
+const EMPTY_VALUE_TEXT = "—";
+const NO_FOLDER_HEADING = "Chưa phân thư mục";
+
+function FileSummary({ entry }: { entry: FileRegisterRow }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="font-mono text-sm text-primary">STT {entry.stt}</span>
+        <span className="rounded bg-surface-muted px-2 py-0.5 text-xs text-foreground">
+          {entry.file_format ?? EMPTY_VALUE_TEXT}
+        </span>
+        {entry.legal_status !== null && (
+          <StatusChip tone="neutral" label={entry.legal_status} />
+        )}
+      </div>
+      <p className="break-all font-medium text-foreground">{entry.file_name}</p>
+    </div>
+  );
+}
+
+function FileDetails({ entry }: { entry: FileRegisterRow }) {
+  return (
+    <dl className="grid grid-cols-1 gap-3 rounded-md bg-surface-muted p-3 sm:grid-cols-2 lg:grid-cols-4">
+      <Field label="Vị trí lưu" value={entry.storage_location} missingText={EMPTY_VALUE_TEXT} />
+      <Field label="Mục đích" value={entry.purpose} missingText={EMPTY_VALUE_TEXT} />
+      <Field
+        label="Bảo mật / sở hữu"
+        value={entry.security_ownership}
+        missingText={EMPTY_VALUE_TEXT}
+      />
+      <Field
+        label="Hành động tiếp theo"
+        value={entry.next_action}
+        missingText={EMPTY_VALUE_TEXT}
+      />
+    </dl>
+  );
+}
+
+function FolderSection({ group }: { group: FileRegisterFolderGroup }) {
+  return (
+    <section className="flex flex-col gap-2">
+      <h2 className="text-sm font-semibold text-primary">{group.folder ?? NO_FOLDER_HEADING}</h2>
+      <ul className="flex flex-col rounded-lg border border-border-subtle px-4">
+        {group.rows.map((entry) => (
+          <ExpandableItem
+            key={entry.id}
+            summary={<FileSummary entry={entry} />}
+            details={<FileDetails entry={entry} />}
+          />
+        ))}
+      </ul>
+    </section>
+  );
 }
 
 export function FileRegisterTable({ rows }: { rows: FileRegisterRow[] }) {
-  const entries = sortFileRegister(rows);
-  if (entries.length === 0) {
-    return <p className="text-neutral-500">Chưa có file nào trong danh mục.</p>;
+  const groups = groupFileRegisterByFolder(rows);
+  if (groups.length === 0) {
+    return <EmptyState message="Chưa có file nào trong danh mục." />;
   }
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-left text-sm">
-        <thead className="border-b text-neutral-600">
-          <tr>
-            <th className="px-3 py-2">STT</th>
-            <th className="px-3 py-2">Thư mục</th>
-            <th className="px-3 py-2">Tên file</th>
-            <th className="px-3 py-2">Định dạng</th>
-            <th className="px-3 py-2">Vị trí lưu</th>
-            <th className="px-3 py-2">Mục đích</th>
-            <th className="px-3 py-2">Tình trạng pháp lý</th>
-            <th className="px-3 py-2">Bảo mật / sở hữu</th>
-            <th className="px-3 py-2">Hành động tiếp theo</th>
-          </tr>
-        </thead>
-        <tbody>
-          {entries.map((entry) => (
-            <tr key={entry.id} className="border-b align-top">
-              <td className="px-3 py-2">{entry.stt}</td>
-              <td className="px-3 py-2">{cellText(entry.folder_path)}</td>
-              <td className="px-3 py-2">{entry.file_name}</td>
-              <td className="px-3 py-2">{cellText(entry.file_format)}</td>
-              <td className="px-3 py-2">{cellText(entry.storage_location)}</td>
-              <td className="px-3 py-2">{cellText(entry.purpose)}</td>
-              <td className="px-3 py-2">{cellText(entry.legal_status)}</td>
-              <td className="px-3 py-2">{cellText(entry.security_ownership)}</td>
-              <td className="px-3 py-2">{cellText(entry.next_action)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="flex flex-col gap-6">
+      {groups.map((group) => (
+        <FolderSection key={group.folder ?? NO_FOLDER_HEADING} group={group} />
+      ))}
     </div>
   );
 }

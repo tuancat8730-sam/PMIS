@@ -1,22 +1,7 @@
 import Link from "next/link";
 
 import type { ProjectOverview } from "../../lib/overview";
-
-interface ProjectSection {
-  label: string;
-  description: string;
-  /** Đường dẫn con sau /projects/{id}/, có thể kèm anchor. */
-  path: string;
-}
-
-export const PROJECT_SECTIONS: readonly ProjectSection[] = [
-  { label: "Mốc", description: "Kế hoạch và tiến độ nghiệm thu", path: "schedule" },
-  { label: "Rủi ro", description: "Rủi ro và vấn đề đang theo dõi", path: "risks" },
-  { label: "Pháp lý", description: "Hồ sơ pháp lý theo giai đoạn", path: "legal" },
-  { label: "File", description: "Danh mục file và bằng chứng", path: "files" },
-  { label: "Quyết định", description: "Quyết định phê duyệt của dự án", path: "overview#decisions" },
-  { label: "Hợp đồng", description: "Ma trận hợp đồng và giá trị", path: "overview#contracts" },
-];
+import { PROJECT_SECTIONS } from "./project-sections";
 
 export function ProjectHomeView({ overview }: { overview: ProjectOverview }) {
   const { project } = overview;
