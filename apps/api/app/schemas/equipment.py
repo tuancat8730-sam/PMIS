@@ -112,6 +112,7 @@ class DeliveryHandoverOut(BaseModel):
     planned_date: date | None
     actual_date: date | None
     delivery_status: str
+    version: int
 
 
 class HandoverGenerateOut(BaseModel):

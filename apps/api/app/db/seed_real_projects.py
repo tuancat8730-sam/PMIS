@@ -30,6 +30,8 @@ SEED_DATA_DIR = Path(__file__).resolve().parent / "seed_data"
 HCM_UNITS_FILE = SEED_DATA_DIR / "hcm_survey_units.json"
 HCM_MILESTONES_FILE = SEED_DATA_DIR / "hcm_milestones.json"
 HCM_CONTRACTS_FILE = SEED_DATA_DIR / "hcm_contracts.json"
+LAM_DONG_UNITS_FILE = SEED_DATA_DIR / "lam_dong_units.json"
+LAM_DONG_CONTRACTS_FILE = SEED_DATA_DIR / "lam_dong_contracts.json"
 
 HCM_PROJECT = ProjectCreate(
     code="SGD-HCM-CSVC-2026",
@@ -38,6 +40,18 @@ HCM_PROJECT = ProjectCreate(
     archetype=ProjectArchetype.IT_SYSTEM,
     investor_name="Sở GD&ĐT TP.HCM",
     total_investment=Decimal("5999498939.00"),
+)
+
+# total_investment tạm lấy bằng giá gói thầu chính (HĐ HD2600226555); thay bằng TMĐT
+# trong QĐ 2891/QĐ-UBND khi có số liệu, vì TMĐT chưa được xác nhận trong tài liệu.
+LAM_DONG_PROJECT = ProjectCreate(
+    code="SGD-LD-TB10-2026",
+    name="Mua sắm trang thiết bị dạy học tối thiểu trên địa bàn tỉnh Lâm Đồng",
+    short_name="SGD Lâm Đồng - Thiết bị Lớp 10",
+    archetype=ProjectArchetype.GOODS_PROCUREMENT,
+    investor_name="Sở Giáo dục và Đào tạo tỉnh Lâm Đồng",
+    decision_authority="UBND tỉnh Lâm Đồng",
+    total_investment=Decimal("106225000000.00"),
 )
 
 
@@ -155,13 +169,29 @@ async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) ->
     return inserted
 
 
+async def seed_lam_dong_project(session_factory: async_sessionmaker[AsyncSession]) -> int:
+    """Nạp SGD-LD gồm 62 đơn vị và gói thầu chính trong một transaction; trả về số đơn vị mới."""
+    async with session_factory() as session:
+        project = await ensure_project(session, LAM_DONG_PROJECT)
+        inserted = await ensure_units(session, project.id, load_units(LAM_DONG_UNITS_FILE))
+        contracts = await ensure_contracts(
+            session, project.id, load_seed_rows(LAM_DONG_CONTRACTS_FILE)
+        )
+        await session.commit()
+    logger.info("Seed %s: thêm %d hợp đồng", LAM_DONG_PROJECT.code, contracts)
+    logger.info("Seed %s: thêm %d đơn vị thụ hưởng", LAM_DONG_PROJECT.code, inserted)
+    return inserted
+
+
 def main() -> int:
     logging.basicConfig(level=logging.INFO, format="%(message)s")
     engine = create_async_engine(get_settings().database_url, pool_pre_ping=True)
 
     async def _run() -> None:
+        session_factory = async_sessionmaker(engine, expire_on_commit=False)
         try:
-            await seed_hcm_project(async_sessionmaker(engine, expire_on_commit=False))
+            await seed_hcm_project(session_factory)
+            await seed_lam_dong_project(session_factory)
         finally:
             await engine.dispose()
 
