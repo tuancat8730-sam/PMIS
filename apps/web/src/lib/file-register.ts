@@ -45,3 +45,20 @@ export async function fetchFileRegister(
 export function sortFileRegister(entries: readonly FileRegisterRow[]): FileRegisterRow[] {
   return [...entries].sort((left, right) => left.stt - right.stt);
 }
+
+export interface FileRegisterFolderGroup {
+  folder: string | null;
+  rows: FileRegisterRow[];
+}
+
+/** Nhóm theo thư mục; nhóm xếp theo `stt` nhỏ nhất của nó, bên trong xếp theo `stt`. Không sửa mảng đầu vào. */
+export function groupFileRegisterByFolder(
+  entries: readonly FileRegisterRow[],
+): FileRegisterFolderGroup[] {
+  const rowsByFolder = new Map<string | null, FileRegisterRow[]>();
+  for (const entry of sortFileRegister(entries)) {
+    const rows = rowsByFolder.get(entry.folder_path) ?? [];
+    rowsByFolder.set(entry.folder_path, [...rows, entry]);
+  }
+  return [...rowsByFolder].map(([folder, rows]) => ({ folder, rows }));
+}

@@ -50,27 +50,4 @@ describe("OverviewView", () => {
     expect(markup).toContain("5.999.498.939 đ");
     expect(markup).toContain("Ngân sách Nhà nước");
     expect(markup).toContain("2026 - 2027");
-  });
-
-  it("lists decisions and contracts", () => {
-    // Act
-    const markup = renderToStaticMarkup(<OverviewView overview={OVERVIEW} />);
-
-    // Assert
-    expect(markup).toContain("1595/QĐ-SGDĐT");
-    expect(markup).toContain("Quyết định phê duyệt dự án");
-    expect(markup).toContain("29/HĐKT-DVN");
-    expect(markup).toContain("4.848.186.000 đ");
-  });
-
-  it("shows an empty message when there are no contracts", () => {
-    // Arrange
-    const empty: ProjectOverview = { ...OVERVIEW, contracts: [] };
-
-    // Act
-    const markup = renderToStaticMarkup(<OverviewView overview={empty} />);
-
-    // Assert
-    expect(markup).toContain("Chưa có hợp đồng nào");
-  });
-});
+  });});

@@ -102,6 +102,62 @@ export function groupLegalDocumentsByPhase(
   });
 }
 
+export interface LegalStatusSummary {
+  total: number;
+  verifiedClosed: number;
+  signed: number;
+  inProgress: number;
+  discrepancy: number;
+  missing: number;
+  mandatoryMissing: number;
+}
+
+const IN_PROGRESS_STATUSES: readonly LegalMaturityStatus[] = [
+  "DRAFT_DOCX",
+  "SUBMITTED_REVIEW",
+  "WAITING_SIGNATURE",
+];
+
+/** Đếm hồ sơ theo nhóm trạng thái cho thanh tóm tắt. Không sửa mảng đầu vào. */
+export function legalStatusSummary(documents: readonly LegalDocumentRow[]): LegalStatusSummary {
+  const countStatus = (status: LegalMaturityStatus): number =>
+    documents.filter((document) => document.maturity_status === status).length;
+  return {
+    total: documents.length,
+    verifiedClosed: countStatus("VERIFIED_CLOSED"),
+    signed: countStatus("SIGNED_SCAN_PDF"),
+    inProgress: documents.filter((document) =>
+      IN_PROGRESS_STATUSES.includes(document.maturity_status),
+    ).length,
+    discrepancy: countStatus("DISCREPANCY_FOUND"),
+    missing: countStatus("MISSING"),
+    mandatoryMissing: documents.filter(
+      (document) => document.is_mandatory && document.maturity_status === "MISSING",
+    ).length,
+  };
+}
+
+export type LegalFilter = "ALL" | "MISSING" | "DISCREPANCY" | "IN_PROGRESS" | "DONE";
+
+const FILTER_STATUSES: Record<Exclude<LegalFilter, "ALL">, readonly LegalMaturityStatus[]> = {
+  MISSING: ["MISSING"],
+  DISCREPANCY: ["DISCREPANCY_FOUND"],
+  IN_PROGRESS: IN_PROGRESS_STATUSES,
+  DONE: ["SIGNED_SCAN_PDF", "VERIFIED_CLOSED"],
+};
+
+/** Lọc hồ sơ theo nhóm trạng thái đang chọn. Trả về mảng mới. */
+export function filterLegalDocuments(
+  documents: readonly LegalDocumentRow[],
+  filter: LegalFilter,
+): LegalDocumentRow[] {
+  if (filter === "ALL") {
+    return [...documents];
+  }
+  const statuses = FILTER_STATUSES[filter];
+  return documents.filter((document) => statuses.includes(document.maturity_status));
+}
+
 export function legalPhaseLabel(phase: LegalPhaseGroup): string {
   return PHASE_LABELS[phase];
 }

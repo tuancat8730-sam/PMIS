@@ -11,7 +11,7 @@ type LoadState<T> =
   | { kind: "error"; message: string }
   | { kind: "ready"; data: T };
 
-function readStoredToken(): string | null {
+export function readStoredToken(): string | null {
   try {
     return window.localStorage.getItem(SESSION_TOKEN_STORAGE_KEY);
   } catch {

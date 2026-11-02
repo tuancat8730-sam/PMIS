@@ -101,6 +101,28 @@ export async function fetchProjectOverview(
   };
 }
 
+const DECISION_KIND_ORDER: readonly LegalDecisionKind[] = [
+  "PROJECT_APPROVAL",
+  "BCKTKT_APPROVAL",
+  "BUDGET_APPROVAL",
+  "KHLCNT_APPROVAL",
+  "BIDDING_RESULT_APPROVAL",
+  "SUPERVISION_ASSIGNMENT",
+];
+
+export interface DecisionKindGroup {
+  kind: LegalDecisionKind;
+  rows: LegalDecisionRow[];
+}
+
+/** Nhóm quyết định theo loại theo thứ tự cố định, quyết định phê duyệt dự án đứng đầu. Bỏ loại không có dòng nào. */
+export function groupDecisionsByKind(decisions: readonly LegalDecisionRow[]): DecisionKindGroup[] {
+  return DECISION_KIND_ORDER.flatMap((kind) => {
+    const rows = decisions.filter((decision) => decision.kind === kind);
+    return rows.length === 0 ? [] : [{ kind, rows }];
+  });
+}
+
 /** Định dạng số tiền (chuỗi thập phân từ API) theo vi-VN, ví dụ "5.999.498.939 đ". */
 export function formatVnd(amount: string): string {
   return `${VND_FORMATTER.format(Number(amount))} đ`;

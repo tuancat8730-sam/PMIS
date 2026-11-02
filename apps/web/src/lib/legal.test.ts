@@ -4,7 +4,9 @@ import {
   fetchLegalDocuments,
   groupLegalDocumentsByPhase,
   legalPhaseLabel,
+  filterLegalDocuments,
   legalStatusLabel,
+  legalStatusSummary,
   type LegalDocumentRow,
 } from "./legal";
 
@@ -34,6 +36,113 @@ function makeDocument(overrides: Partial<LegalDocumentRow>): LegalDocumentRow {
     ...overrides,
   };
 }
+
+describe("filterLegalDocuments", () => {
+  it("returns every document for the ALL filter", () => {
+    // Arrange
+    const documents = [
+      makeDocument({ id: "a", maturity_status: "MISSING" }),
+      makeDocument({ id: "b", maturity_status: "VERIFIED_CLOSED" }),
+    ];
+
+    // Act
+    const filtered = filterLegalDocuments(documents, "ALL");
+
+    // Assert
+    expect(filtered).toEqual(documents);
+  });
+
+  it("keeps only missing documents for the MISSING filter", () => {
+    // Arrange
+    const missing = makeDocument({ id: "a", maturity_status: "MISSING" });
+    const signed = makeDocument({ id: "b", maturity_status: "SIGNED_SCAN_PDF" });
+
+    // Act
+    const filtered = filterLegalDocuments([missing, signed], "MISSING");
+
+    // Assert
+    expect(filtered).toEqual([missing]);
+  });
+
+  it("groups signed and verified documents under the DONE filter", () => {
+    // Arrange
+    const signed = makeDocument({ id: "a", maturity_status: "SIGNED_SCAN_PDF" });
+    const verified = makeDocument({ id: "b", maturity_status: "VERIFIED_CLOSED" });
+    const draft = makeDocument({ id: "c", maturity_status: "DRAFT_DOCX" });
+
+    // Act
+    const filtered = filterLegalDocuments([signed, verified, draft], "DONE");
+
+    // Assert
+    expect(filtered).toEqual([signed, verified]);
+  });
+
+  it("does not mutate the input array", () => {
+    // Arrange
+    const documents = [makeDocument({ id: "a", maturity_status: "MISSING" })];
+    const snapshot = [...documents];
+
+    // Act
+    filterLegalDocuments(documents, "ALL");
+
+    // Assert
+    expect(documents).toEqual(snapshot);
+  });
+});
+
+describe("legalStatusSummary", () => {
+  it("counts documents into status buckets", () => {
+    // Arrange
+    const documents = [
+      makeDocument({ id: "a", maturity_status: "VERIFIED_CLOSED" }),
+      makeDocument({ id: "b", maturity_status: "SIGNED_SCAN_PDF" }),
+      makeDocument({ id: "c", maturity_status: "DRAFT_DOCX" }),
+      makeDocument({ id: "d", maturity_status: "SUBMITTED_REVIEW" }),
+      makeDocument({ id: "e", maturity_status: "WAITING_SIGNATURE" }),
+      makeDocument({ id: "f", maturity_status: "DISCREPANCY_FOUND" }),
+      makeDocument({ id: "g", maturity_status: "MISSING" }),
+    ];
+
+    // Act
+    const summary = legalStatusSummary(documents);
+
+    // Assert
+    expect(summary).toEqual({
+      total: 7,
+      verifiedClosed: 1,
+      signed: 1,
+      inProgress: 3,
+      discrepancy: 1,
+      missing: 1,
+      mandatoryMissing: 1,
+    });
+  });
+
+  it("counts only mandatory documents that are still missing", () => {
+    // Arrange
+    const documents = [
+      makeDocument({ id: "a", maturity_status: "MISSING", is_mandatory: true }),
+      makeDocument({ id: "b", maturity_status: "MISSING", is_mandatory: false }),
+      makeDocument({ id: "c", maturity_status: "SIGNED_SCAN_PDF", is_mandatory: true }),
+    ];
+
+    // Act
+    const summary = legalStatusSummary(documents);
+
+    // Assert
+    expect(summary.mandatoryMissing).toBe(1);
+    expect(summary.missing).toBe(2);
+  });
+
+  it("returns zero counts for an empty list", () => {
+    // Act
+    const summary = legalStatusSummary([]);
+
+    // Assert
+    expect(summary.total).toBe(0);
+    expect(summary.missing).toBe(0);
+  });
+});
 
 describe("fetchLegalDocuments", () => {
   it("sends the bearer token and returns the document list", async () => {

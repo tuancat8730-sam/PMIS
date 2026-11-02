@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
+/* Dark mode nằm ngoài phạm vi plan thiết kế lại tracking; giao diện luôn sáng. */
 :root {
+  color-scheme: light;
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a2233;
+  --primary: #1b2a4a;
+  --primary-foreground: #ffffff;
+  --accent: #0f7c7e;
+  --surface-muted: #f3f5f9;
+  --border-subtle: #7d879b;
+  --text-muted: #5b6577;
+  --tone-neutral-bg: #eef1f5;
+  --tone-neutral-fg: #3d4656;
+  --tone-low-bg: #dff3ea;
+  --tone-low-fg: #0d6b4f;
+  --tone-medium-bg: #fcefd2;
+  --tone-medium-fg: #6e4a00;
+  --tone-high-bg: #fde3d3;
+  --tone-high-fg: #9a3a0c;
+  --tone-critical-bg: #fbdcdc;
+  --tone-critical-fg: #9d1b22;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-text-muted: var(--text-muted);
+  --color-tone-neutral-bg: var(--tone-neutral-bg);
+  --color-tone-neutral-fg: var(--tone-neutral-fg);
+  --color-tone-low-bg: var(--tone-low-bg);
+  --color-tone-low-fg: var(--tone-low-fg);
+  --color-tone-medium-bg: var(--tone-medium-bg);
+  --color-tone-medium-fg: var(--tone-medium-fg);
+  --color-tone-high-bg: var(--tone-high-bg);
+  --color-tone-high-fg: var(--tone-high-fg);
+  --color-tone-critical-bg: var(--tone-critical-bg);
+  --color-tone-critical-fg: var(--tone-critical-fg);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
