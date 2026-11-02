@@ -21,6 +21,7 @@ from app.models.nfr_measurement import NfrMeasurement
 from app.models.penalty_rule import PenaltyRule
 from app.models.pentest_finding import PentestFinding
 from app.models.project import Project
+from app.models.project_file_register import ProjectFileRegisterEntry
 from app.models.project_member import ProjectMember
 from app.models.project_stakeholder import ProjectStakeholder
 from app.models.risk_issue import RiskIssue
@@ -53,6 +54,7 @@ __all__ = [
     "PenaltyRule",
     "PentestFinding",
     "Project",
+    "ProjectFileRegisterEntry",
     "RiskIssue",
     "RtmLink",
     "ProjectMember",
