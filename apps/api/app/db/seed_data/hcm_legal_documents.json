@@ -1,0 +1,822 @@
+[
+  {
+    "stt": 1,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1204/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt dự toán giai đoạn chuẩn bị đầu tư",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2025-08-20",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có file\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 2,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1320/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt KHLCNT giai đoạn chuẩn bị đầu tư",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2025-09-03",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có file\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 3,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "Báo giá tư vấn lập BCKTKT",
+    "issuing_authority": "Cty Sài Gòn Mới",
+    "issue_date": "2025-08-07",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 235.000.000 đ\nĐánh giá PM: Ngày báo giá trước ngày QĐ 1320\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 4,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "Báo giá tư vấn thẩm tra BCKTKT",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": "2025-09-07",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 11.000.000 đ\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 5,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "BB thương thảo HĐ lập BCKTKT",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2025-09-10",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 6,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "BB thương thảo HĐ thẩm tra BCKTKT",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2025-09-10",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 7,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1427/QĐ-SGDĐT",
+    "doc_name": "QĐ chỉ định thầu tư vấn lập BCKTKT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2025-09-15",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cty Sài Gòn Mới - 235.000.000 đ\nĐánh giá PM: Đã điều chỉnh giá còn 214.148.189 đ (PL 13/05/2026)\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 8,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1425/QĐ-SGDĐT",
+    "doc_name": "QĐ chỉ định thầu tư vấn thẩm tra BCKTKT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2025-09-15",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cty Trường Thịnh - 11.000.000 đ\nĐánh giá PM: Đã điều chỉnh giá còn 7.560.000 đ (PL 13/05/2026)\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 9,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "01-2025/HĐ/SGDHCM-SGM",
+    "doc_name": "HĐ tư vấn lập BCKTKT",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2025-09-16",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 235.000.000 đ - 45 ngày\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 10,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "01.2025/HĐTTDA-SGD-TT",
+    "doc_name": "HĐ tư vấn thẩm tra BCKTKT",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2025-09-17",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 11.000.000 đ - 45 ngày\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 11,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục gia hạn HĐ thẩm tra (lần 1)",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2025-11-01",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Gia hạn đến 28/02/2026\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 12,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục gia hạn HĐ lập BCKTKT (lần 1)",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2025-11-18",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Gia hạn đến 28/02/2026\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 13,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "BCKTKT lần 1",
+    "issuing_authority": "Cty Sài Gòn Mới",
+    "issue_date": "2025-11-11",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 14,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1120.2025/BC-TrT",
+    "doc_name": "BC thẩm tra BCKTKT lần 1",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": "2025-11-20",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 15,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "5112/SGDĐT-VP",
+    "doc_name": "CV trình Sở KH&CN thẩm định lần 1",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2025-11-26",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 16,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "6187/SKHCN-CĐS",
+    "doc_name": "CV góp ý lần 1",
+    "issuing_authority": "Sở KH&CN",
+    "issue_date": "2025-12-24",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Chưa đủ điều kiện, yêu cầu bổ sung\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 17,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "BCKTKT lần 2",
+    "issuing_authority": "Cty Sài Gòn Mới",
+    "issue_date": "2025-12-30",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Chỉnh sửa theo CV 6187\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 18,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "0115.2026/BC-TrT",
+    "doc_name": "BC thẩm tra BCKTKT lần 2",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": "2026-01-15",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 19,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "517/SGDĐT-VP",
+    "doc_name": "CV trình Sở KH&CN thẩm định lần 2",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-01-19",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có file\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 20,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1070/SKHCN-CĐS",
+    "doc_name": "CV góp ý lần 2",
+    "issuing_authority": "Sở KH&CN",
+    "issue_date": "2026-02-06",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cơ bản thống nhất\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 21,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": null,
+    "doc_name": "BCKTKT lần 3",
+    "issuing_authority": "Cty Sài Gòn Mới",
+    "issue_date": "2026-02-06",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Nội dung: Chỉnh sửa theo CV 1070\nĐánh giá PM: Bản word, chưa có bản scan\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 22,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "0206.2026/BC-TrT",
+    "doc_name": "BC thẩm tra BCKTKT lần 3",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": "2026-02-06",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Đánh giá PM: Bản word, chưa có bản scan. Nội dung còn ghi \"lần 2\", ngày 06/02/2025\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 23,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1244/UBND-VX",
+    "doc_name": "CV chủ trương nhiệm vụ CĐS năm 2026",
+    "issuing_authority": "UBND TP",
+    "issue_date": "2026-02-23",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có file\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 24,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "906A/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt nhiệm vụ, dự toán CĐS năm 2026",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-03-27",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có file\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 25,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1421/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt BCKTKT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-05-12",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: TMĐT 5.999.498.939 đ\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 26,
+    "phase_group": "PREPARATION",
+    "doc_code_symbol": "1595/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt dự án",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-05-22",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Đã có file scan ký chính thức của Giám đốc Sở trên Drive\nTình trạng gốc: Đã có (Scan ký)"
+  },
+  {
+    "stt": 27,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": "02.2026/PLHĐ-SGDHCM-SGM",
+    "doc_name": "Phụ lục gia hạn HĐ (lần 2)",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2026-02-25",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Gia hạn thêm 122 ngày, đến 30/06/2026\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 28,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": "03.2026/PLHĐ-SGDHCM-SGM",
+    "doc_name": "Phụ lục điều chỉnh giá HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2026-05-13",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 235.000.000 đ -> 214.148.189 đ theo QĐ 1421\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 29,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": "015-2026/BBNT/SGDHCM-SGM",
+    "doc_name": "BB nghiệm thu và thanh lý HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2026-06-19",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 214.148.189 đ\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 30,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Mẫu 08a - Bảng xác định giá trị KLHT",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 214.148.189 đ\nĐánh giá PM: Đã ký, chưa ghi ngày\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 31,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Hóa đơn",
+    "issuing_authority": "Cty Sài Gòn Mới",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Nội dung: 214.148.189 đ\nĐánh giá PM: Chưa có\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 32,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": "01.2026/PLHĐTTDA-SGD-TT",
+    "doc_name": "Phụ lục gia hạn HĐ (lần 2)",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-02-26",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Gia hạn thêm 122 ngày, đến 30/06/2026\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 33,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": "02.2026/PLHĐTTDA-SGD-TT",
+    "doc_name": "Phụ lục điều chỉnh giá HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-05-13",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 11.000.000 đ -> 7.560.000 đ theo QĐ 1421\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 34,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": "19.6.2026/BBNT/SGD-TT",
+    "doc_name": "BB nghiệm thu và thanh lý HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-06-19",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 7.560.000 đ\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 35,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Mẫu 08a - Bảng xác định giá trị KLHT",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 7.560.000 đ\nĐánh giá PM: Cty TT đã ký, Sở chưa ký; chưa ghi ngày\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 36,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Hóa đơn",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Nội dung: 7.560.000 đ\nĐánh giá PM: Chưa có\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 37,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "1889/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt KHLCNT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-06-12",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Giá gói thầu 5.447.400.000 đ\nĐánh giá PM: Đã có file scan QĐ phê duyệt KHLCNT trên Drive\nTình trạng gốc: Đã có (Scan ký)"
+  },
+  {
+    "stt": 38,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "2399/QĐ-SGDĐT",
+    "doc_name": "QĐ chỉ định thầu tư vấn lập HSMT, đánh giá HSDT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-07-10",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cty Hoàng Minh Vi\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 39,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "2400/QĐ-SGDĐT",
+    "doc_name": "QĐ chỉ định thầu tư vấn thẩm định",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-07-10",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cty Trường Thịnh\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 40,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "01-2026/HĐTV-SGD-HMV",
+    "doc_name": "HĐ tư vấn lập HSMT, đánh giá HSDT",
+    "issuing_authority": "Sở GD&ĐT - Cty Hoàng Minh Vi",
+    "issue_date": "2026-07-10",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 23.000.000 đ - 60 ngày\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 41,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "01-26/HĐTĐ-SGD-TT",
+    "doc_name": "HĐ tư vấn thẩm định",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-07-10",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 11.000.000 đ\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 42,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "1793/QĐ-HMV",
+    "doc_name": "QĐ thành lập tổ chuyên gia",
+    "issuing_authority": "Cty Hoàng Minh Vi",
+    "issue_date": "2026-07-10",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa thấy bản cứng\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 43,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "1821/TTr-HMV",
+    "doc_name": "Tờ trình phê duyệt E-HSMT",
+    "issuing_authority": "Cty Hoàng Minh Vi",
+    "issue_date": "2026-07-20",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 44,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "725/BC.TT",
+    "doc_name": "BC thẩm định E-HSMT",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": "2026-07-22",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 45,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "3681/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt E-HSMT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-08-05",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 46,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "IB2600399770",
+    "doc_name": "Thông báo mời thầu",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-08-05",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Đóng thầu 08h30 ngày 17/08/2026\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 47,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "IB2600399770",
+    "doc_name": "Biên bản mở thầu",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-08-17",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 01 nhà thầu - LD DVN\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 48,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "1942/BC-HMV",
+    "doc_name": "BC đánh giá E-HSDT",
+    "issuing_authority": "Cty Hoàng Minh Vi",
+    "issue_date": "2026-08-21",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 49,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Thông báo mời đối chiếu tài liệu",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có số, ngày\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 50,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "BB đối chiếu tài liệu",
+    "issuing_authority": "Sở GD&ĐT - Cty Hoàng Minh Vi - LD DVN",
+    "issue_date": "2026-08-25",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Thống nhất, mời thương thảo HĐ\nĐánh giá PM: Đã ký. Nhà thầu do P.GĐ Phạm Văn Phương ký, cần giấy ủy quyền\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 51,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "1984/TTr-HMV",
+    "doc_name": "Tờ trình phê duyệt KQLCNT",
+    "issuing_authority": "Cty Hoàng Minh Vi",
+    "issue_date": "2026-08-25",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 52,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "831/BC.TT",
+    "doc_name": "BC thẩm định KQLCNT",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": "2026-08-26",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Đánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 53,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "4452/QĐ-SGDĐT",
+    "doc_name": "QĐ phê duyệt KQLCNT",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-09-07",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: LD DVN - 4.848.186.000 đ - 120 ngày\nĐánh giá PM: Bản ký ghi số E-TBMT IB2600171395, đúng là IB2600399770\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 54,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Thư chấp thuận E-HSDT và trao HĐ",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-09-17",
+    "maturity_status": "MISSING",
+    "notes": "Nội dung: BĐTHHĐ 145.445.580 đ\nĐánh giá PM: Chưa có số\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 55,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Đơn dự thầu",
+    "issuing_authority": "LD DVN (Cty DTH ký)",
+    "issue_date": "2026-08-17",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 4.848.186.000 đ - hiệu lực E-HSDT 60 ngày\nĐánh giá PM: Bản gốc, đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 56,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Thỏa thuận liên danh",
+    "issuing_authority": "Cty CP Phần mềm DTH - Cty CP Công nghệ VietFuture",
+    "issue_date": "2026-08-14",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: DTH đứng đầu 95% (4.605.776.000 đ), VietFuture 5% (242.410.000 đ)\nĐánh giá PM: Bản gốc, đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 57,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "0108776239",
+    "doc_name": "Giấy chứng nhận ĐKDN Cty DTH",
+    "issuing_authority": "Sở KH&ĐT Hà Nội",
+    "issue_date": "2024-04-08",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Đăng ký thay đổi lần 4\nĐánh giá PM: Bản sao công chứng ngày 21/08/2026\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 58,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "5000894571",
+    "doc_name": "Giấy chứng nhận ĐKDN Cty VietFuture",
+    "issuing_authority": "Sở KH&ĐT Tuyên Quang",
+    "issue_date": "2023-12-06",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Đăng ký thay đổi lần 2\nĐánh giá PM: Bản sao công chứng ngày 21/08/2026\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 59,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "BLDT.THT.43906.140826",
+    "doc_name": "Bảo lãnh dự thầu",
+    "issuing_authority": "ACB - PGD Pháp Vân",
+    "issue_date": "2026-08-14",
+    "maturity_status": "DISCREPANCY_FOUND",
+    "notes": "Nội dung: 81.711.000 đ - hiệu lực 90 ngày từ 17/08/2026\nĐánh giá PM: Bản gốc. Người ký theo UQ 13280, UQ này hết hiệu lực từ 01/08/2026\nTình trạng gốc: Cần đính chính / xử lý"
+  },
+  {
+    "stt": 60,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": "13280/UQ-DIC.25",
+    "doc_name": "QĐ ủy quyền của ACB",
+    "issuing_authority": "ACB - CN Định Công",
+    "issue_date": "2025-08-04",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Ủy quyền ông Trương Quang Thành ký bảo lãnh\nĐánh giá PM: Bản sao y. Hiệu lực đến 01/08/2026\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 61,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Bằng cấp, HĐLĐ nhân sự chủ chốt",
+    "issuing_authority": "LD DVN",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 07 nhân sự\nĐánh giá PM: Có\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 62,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Bằng cấp, HĐLĐ nhân sự dự phòng",
+    "issuing_authority": "LD DVN",
+    "issue_date": null,
+    "maturity_status": "DISCREPANCY_FOUND",
+    "notes": "Nội dung: 07 nhân sự\nĐánh giá PM: Có. HĐ ông Nguyễn Quang Hân ghi CCCD trùng số với ông Nguyễn Đình Đạt\nTình trạng gốc: Cần đính chính / xử lý"
+  },
+  {
+    "stt": 63,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Các bản cam kết của nhà thầu",
+    "issuing_authority": "LD DVN",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 08 bản cam kết\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 64,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Hợp đồng tương tự",
+    "issuing_authority": "LD DVN",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 02 HĐ\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 65,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Tài liệu giải pháp kỹ thuật",
+    "issuing_authority": "LD DVN",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Thuyết minh giải pháp, tiến độ, kế hoạch nhân sự, bảng đáp ứng Chương V\nĐánh giá PM: Có\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 67,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Bảo lãnh thực hiện HĐ",
+    "issuing_authority": "Ngân hàng bảo lãnh",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Nội dung: 145.445.580 đ - hiệu lực 150 ngày\nĐánh giá PM: Chưa thấy\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 68,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "HĐ thực hiện gói thầu",
+    "issuing_authority": "Sở GD&ĐT - LD DVN",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Nội dung: 4.848.186.000 đ - 120 ngày\nĐánh giá PM: Chưa thấy\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 69,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "BB thương thảo HĐ tư vấn QLDA",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2026-08-24",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 109.000.000 đ - 150 ngày\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 70,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": "4145/QĐ-SGDĐT",
+    "doc_name": "QĐ chỉ định thầu tư vấn QLDA",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-08-24",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cty Sài Gòn Mới - 109.000.000 đ\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 71,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": "248/HĐKT-QLDA",
+    "doc_name": "HĐ tư vấn QLDA",
+    "issuing_authority": "Sở GD&ĐT - Cty Sài Gòn Mới",
+    "issue_date": "2026-08-24",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 109.000.000 đ - 150 ngày\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 72,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "BB thương thảo HĐ tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT - Cty Crystal",
+    "issue_date": "2026-08-20",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 120.000.000 đ - 150 ngày\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 73,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": "4146/QĐ-SGDĐT",
+    "doc_name": "QĐ chỉ định thầu tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT",
+    "issue_date": "2026-08-24",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: Cty Crystal - 120.000.000 đ\nĐánh giá PM: Hồ sơ hợp lệ\nTình trạng gốc: Đã có"
+  },
+  {
+    "stt": 74,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": "24.8.26/HĐTV/SGDĐT-CRYSTAL",
+    "doc_name": "HĐ tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT - Cty Crystal",
+    "issue_date": "2026-08-24",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 120.000.000 đ - 150 ngày\nĐánh giá PM: Đã ký\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 75,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Đề cương giám sát",
+    "issuing_authority": "Cty Crystal",
+    "issue_date": null,
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Nội dung: 3 bản cứng\nĐánh giá PM: Có\nTình trạng gốc: Đã có (Bản ký)"
+  },
+  {
+    "stt": 76,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "BB bàn giao, nghiệm thu HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Hoàng Minh Vi",
+    "issue_date": "2026-09-24",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Đã có, chưa có bản scan. Thiếu Điều 2\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 77,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "BB thanh lý HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Hoàng Minh Vi",
+    "issue_date": "2026-09-24",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Đã có, chưa có bản scan\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 80,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Mẫu 03.c/TT",
+    "issuing_authority": "Sở GD&ĐT - Cty Hoàng Minh Vi",
+    "issue_date": "2026-09-24",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Đã có, chưa có bản scan\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 81,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Hóa đơn",
+    "issuing_authority": "Cty Hoàng Minh Vi",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 83,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "BB bàn giao, nghiệm thu HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-09-24",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Đã có, chưa có bản scan. Thiếu Điều 2\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 84,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "BB thanh lý HĐ",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-09-24",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Đã có, chưa có bản scan\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 87,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Mẫu 03.c/TT",
+    "issuing_authority": "Sở GD&ĐT - Cty Trường Thịnh",
+    "issue_date": "2026-09-24",
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Đã có, chưa có bản scan. Ghi sai tên gói thầu\nTình trạng gốc: Chưa có file"
+  },
+  {
+    "stt": 88,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Hóa đơn",
+    "issuing_authority": "Cty Trường Thịnh",
+    "issue_date": null,
+    "maturity_status": "MISSING",
+    "notes": "Đánh giá PM: Chưa có\nTình trạng gốc: Chưa có file"
+  }
+]

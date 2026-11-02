@@ -1,0 +1,352 @@
+[
+  {
+    "stt": 1,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Quyết định phê duyệt kết quả lựa chọn nhà thầu (chỉ định thầu rút gọn) gói thầu Tư vấn giám sát hàng hóa",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-10-08",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Mã file: 01\nSố hiệu / căn cứ: QĐ số 3505/QĐ-SGDĐT ngày 08/10/2026; nhà thầu Sài Gòn Mới; giá 360.000.000 đồng; 120 ngày\nĐơn vị phối hợp: Sài Gòn Mới\nGhi chú: Căn cứ pháp lý"
+  },
+  {
+    "stt": 2,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Hợp đồng tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng và Sài Gòn Mới",
+    "issue_date": "2026-10-12",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 02\nSố hiệu / căn cứ: HĐ số 80/2026/HĐTV/SDGĐTLĐ-SGM; giá 360.000.000 đồng; 120 ngày\nĐơn vị phối hợp: —\nGhi chú: Bản docx chưa điền ngày ký — cần bổ sung ngày ký chính thức"
+  },
+  {
+    "stt": 3,
+    "phase_group": "BIDDING",
+    "doc_code_symbol": null,
+    "doc_name": "Quyết định phê duyệt kết quả lựa chọn nhà thầu gói thầu Mua sắm thiết bị tối thiểu lớp 10",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-08-29",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 03\nSố hiệu / căn cứ: QĐ số 3036/QĐ-SGDĐT ngày 29/8/2026; kèm Thông báo chấp thuận E-HSDT và trao HĐ ngày 03/9/2026\nĐơn vị phối hợp: Liên danh Nguyên Luân\nGhi chú: Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 4,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Hợp đồng nhà thầu cung cấp, lắp đặt thiết bị (văn bản hợp đồng điện tử)",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-10-06",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Mã file: 04\nSố hiệu / căn cứ: HĐ số HD2600226555_2609110905; giá 106.225.000.000 đồng; 120 ngày; hiệu lực từ 09/10/2026; E-TBMT IB2600343052\nĐơn vị phối hợp: Liên danh Nguyên Luân\nGhi chú: Số HĐ HD2600226555_2609110905"
+  },
+  {
+    "stt": 5,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Điều kiện cụ thể của hợp đồng (Hợp đồng nhà thầu)",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-10-06",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Mã file: 04.1\nSố hiệu / căn cứ: Thành phần HĐ điện tử HD2600226555_2609110905; tạm ứng 30% = 31.867.500.000 đồng; thanh toán 3 đợt\nĐơn vị phối hợp: Liên danh Nguyên Luân\nGhi chú: Thành phần hợp đồng"
+  },
+  {
+    "stt": 6,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục bảng giá – danh mục hàng hóa (Hợp đồng nhà thầu)",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-10-06",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Mã file: 04.2\nSố hiệu / căn cứ: Thành phần HĐ điện tử HD2600226555_2609110905\nĐơn vị phối hợp: Liên danh Nguyên Luân\nGhi chú: Thành phần hợp đồng; căn cứ kiểm tra chủng loại, số lượng"
+  },
+  {
+    "stt": 7,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục tiến độ cung cấp (Hợp đồng nhà thầu)",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-10-06",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Mã file: 04.3\nSố hiệu / căn cứ: Thành phần HĐ điện tử HD2600226555_2609110905; giao hàng trong 120 ngày kể từ ngày HĐ có hiệu lực\nĐơn vị phối hợp: Liên danh Nguyên Luân\nGhi chú: Thành phần hợp đồng"
+  },
+  {
+    "stt": 8,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Giấy ủy quyền của Liên danh (thành viên đứng đầu nhận tạm ứng, thanh toán)",
+    "issuing_authority": "Liên danh Nguyên Luân",
+    "issue_date": "2026-09-11",
+    "maturity_status": "SIGNED_SCAN_PDF",
+    "notes": "Mã file: 04.4\nSố hiệu / căn cứ: Giấy ủy quyền số 01/2026/GUQ-LD ngày 11/9/2026; file PDF scan\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng\nGhi chú: Tài liệu kèm hợp đồng"
+  },
+  {
+    "stt": 9,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Kế hoạch triển khai cung cấp, bàn giao và lắp đặt thiết bị (chi tiết từng trường)",
+    "issuing_authority": "Liên danh Nguyên Luân",
+    "issue_date": "2026-10-16",
+    "maturity_status": "SUBMITTED_REVIEW",
+    "notes": "Mã file: 05\nSố hiệu / căn cứ: Văn bản số 02/2026/CV-NL ngày 16/10/2026; triển khai 14/10/2026 – 05/02/2027\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới\nGhi chú: Do nhà thầu trình. KH ghi HĐ ký 09/10 trong khi HĐ ghi 06/10 — đề nghị nhà thầu sửa"
+  },
+  {
+    "stt": 10,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Đề cương tư vấn giám sát công tác triển khai",
+    "issuing_authority": "Sài Gòn Mới",
+    "issue_date": "2026-10-13",
+    "maturity_status": "SUBMITTED_REVIEW",
+    "notes": "Mã file: 06\nSố hiệu / căn cứ: Số 1310/ĐC-TVGS-SGM ngày 13/10/2026\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Liên danh Nguyên Luân\nGhi chú: Ngày đề cương (13/10) trước ngày KH triển khai (16/10) — cần rà soát tiến độ cho khớp KH"
+  },
+  {
+    "stt": 11,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Quyết định phê duyệt Đề cương tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2026-10-20",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 06.1\nSố hiệu / căn cứ: Dự thảo QĐ số ……/QĐ-SGDĐT ngày 20/10/2026 (chưa có số, chưa ký); phê duyệt Đề cương số 1310/ĐC-TVGS-SGM\nĐơn vị phối hợp: An Lập Thịnh (TVQLDA); Sài Gòn Mới\nGhi chú: Dự thảo. Ngày QĐ (20/10) trước bản đề cương cuối (21/10) — cần chốt lại ngày"
+  },
+  {
+    "stt": 12,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Nhật ký công tác triển khai",
+    "issuing_authority": "Liên danh Nguyên Luân",
+    "issue_date": "2026-10-14",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 07\nSố hiệu / căn cứ: Suy ra: ngày bắt đầu triển khai theo KH 02/2026/CV-NL; ghi từ 14/10/2026 đến 05/02/2027\nĐơn vị phối hợp: Sài Gòn Mới; Sở GD&ĐT Lâm Đồng\nGhi chú: Mẫu 1 và 1.1. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 13,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Nhật ký giám sát công tác triển khai",
+    "issuing_authority": "Sài Gòn Mới",
+    "issue_date": "2026-10-14",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 08\nSố hiệu / căn cứ: Suy ra: ngày bắt đầu triển khai; ghi từ 14/10/2026 đến 05/02/2027\nĐơn vị phối hợp: Liên danh Nguyên Luân; Sở GD&ĐT Lâm Đồng\nGhi chú: Mẫu 2 (bìa quyển) và Mẫu 2.1. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 14,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Báo cáo giám sát định kỳ (tuần)",
+    "issuing_authority": "Sài Gòn Mới",
+    "issue_date": "2026-10-14",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 08.1\nSố hiệu / căn cứ: Suy ra: sản phẩm số 2 tại Điều 2.3 HĐ TVGS; lập theo từng kỳ từ 14/10/2026\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng\nGhi chú: Hồ sơ phát sinh theo HĐ TVGS. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 15,
+    "phase_group": "CONTRACT_KICKOFF",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản họp triển khai thực hiện gói thầu Mua sắm thiết bị tối thiểu lớp 10",
+    "issuing_authority": "Sài Gòn Mới",
+    "issue_date": "2026-10-21",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 09\nSố hiệu / căn cứ: Biên bản họp ngày 21/10/2026 (số ……/BB-…… để trống)\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Liên danh Nguyên Luân; An Lập Thịnh (TVQLDA)\nGhi chú: Hồ sơ phát sinh. Chưa có số, chưa ký"
+  },
+  {
+    "stt": 16,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản kiểm tra hiện trường (điều kiện lắp đặt)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2026-10-25",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 10\nSố hiệu / căn cứ: Suy ra: kết thúc khảo sát hiện trạng phòng học bộ môn 21/10–25/10/2026 theo KH\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân\nGhi chú: Mẫu 3; kèm Danh sách đơn vị thụ hưởng và Phụ lục TSKT. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 17,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Tờ trình ban hành công văn gửi các trường triển khai giao nhận, lắp đặt thiết bị",
+    "issuing_authority": "An Lập Thịnh (TVQLDA)",
+    "issue_date": "2026-10-26",
+    "maturity_status": "SUBMITTED_REVIEW",
+    "notes": "Mã file: 11\nSố hiệu / căn cứ: Tờ trình số 2610/TTr-ALT ngày 26/10/2026\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng\nGhi chú: Công văn của Sở kèm theo Tờ trình không đưa vào chỉ mục"
+  },
+  {
+    "stt": 18,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục danh mục thiết bị giao theo từng đợt tại 62 đơn vị thụ hưởng",
+    "issuing_authority": "An Lập Thịnh (TVQLDA)",
+    "issue_date": "2026-10-26",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 11.1\nSố hiệu / căn cứ: Kèm Công văn ……/SGDĐT-KHTC (dự thảo ngày 26/10/2026); nguồn KH 02/2026/CV-NL\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Liên danh Nguyên Luân\nGhi chú: Tài liệu kèm Tờ trình/Công văn"
+  },
+  {
+    "stt": 19,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản kiểm tra thiết bị trước khi lắp đặt – Đợt 1 (thiết bị môn Tin học)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2026-11-05",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 12\nSố hiệu / căn cứ: Suy ra: kết thúc kiểm tra thiết bị Đợt 1 (26/10–05/11/2026) theo KH\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân\nGhi chú: Mẫu 4; kèm Danh mục thiết bị. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 20,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Phiếu kiểm tra thông số kỹ thuật bộ máy tính mẫu (STT 107 – H4350G; STT 206)",
+    "issuing_authority": "Sài Gòn Mới",
+    "issue_date": "2026-10-26",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 12.1\nSố hiệu / căn cứ: Suy ra: ngày bắt đầu kiểm tra Đợt 1; file lập ngày 23/10/2026 (pdf + xlsx)\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Liên danh Nguyên Luân\nGhi chú: Tài liệu kèm BB kiểm tra Đợt 1. Chưa điền kết quả, chưa ký"
+  },
+  {
+    "stt": 21,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Danh sách số serial 320 bộ máy tính FPT Elead",
+    "issuing_authority": "Liên danh Nguyên Luân",
+    "issue_date": "2026-10-26",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 12.2\nSố hiệu / căn cứ: Theo thuộc tính file (cập nhật 26/10/2026); 320 dòng S/N thùng PC và S/N màn hình\nĐơn vị phối hợp: Sài Gòn Mới\nGhi chú: Tệp Excel; tài liệu kèm BB kiểm tra Đợt 1"
+  },
+  {
+    "stt": 22,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản bàn giao thiết bị Đợt 1 (Tin học) tại từng đơn vị sử dụng (60 đơn vị)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2026-11-10",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 13\nSố hiệu / căn cứ: Dự thảo 60 BB, ngày 27/10/2026 – 10/11/2026\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân; đơn vị sử dụng\nGhi chú: Mẫu bàn giao 11.1 theo từng đơn vị. Dự thảo, chưa ký"
+  },
+  {
+    "stt": 23,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản kiểm tra thiết bị trước khi lắp đặt – Đợt 2 (thiết bị môn Ngoại ngữ)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2026-11-15",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 14\nSố hiệu / căn cứ: Suy ra: kết thúc kiểm tra Đợt 2 (10/11–15/11/2026) theo KH\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân\nGhi chú: Mẫu 4. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 24,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản bàn giao thiết bị Đợt 2 (Ngoại ngữ) tại từng đơn vị sử dụng (37 đơn vị)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2026-11-25",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 15\nSố hiệu / căn cứ: Dự thảo 37 BB, ngày 20/11/2026 – 25/11/2026\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân; đơn vị sử dụng\nGhi chú: Dự thảo, chưa ký"
+  },
+  {
+    "stt": 25,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản kiểm tra thiết bị trước khi lắp đặt – Đợt 3 (thiết bị các môn còn lại)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2026-12-30",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 16\nSố hiệu / căn cứ: Suy ra: kết thúc kiểm tra Đợt 3 (06/12–30/12/2026) theo KH\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân\nGhi chú: Mẫu 4. Chưa có file — cần lập/bổ sung. KH cho giao Đợt 3 từ 15/12 trong khi kiểm tra đến 30/12 — cần kiểm tra trước từng lô giao"
+  },
+  {
+    "stt": 26,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản bàn giao thiết bị Đợt 3 (các môn còn lại) tại từng đơn vị sử dụng (61 đơn vị)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2027-01-15",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 17\nSố hiệu / căn cứ: Dự thảo 61 BB, ngày 15/12/2026 – 15/01/2027\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân; đơn vị sử dụng\nGhi chú: Dự thảo, chưa ký"
+  },
+  {
+    "stt": 27,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản bàn giao tổng thể thiết bị tại từng đơn vị sử dụng (61 đơn vị)",
+    "issuing_authority": "Các bên tham gia",
+    "issue_date": "2027-01-15",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 18\nSố hiệu / căn cứ: Dự thảo 61 BB số xx/BBBG-TT/L10, ngày 15/12/2026 – 15/01/2027; tổng hợp BB các đợt\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; Liên danh Nguyên Luân; đơn vị sử dụng\nGhi chú: Dự thảo, chưa ký. Thiếu Trường THPT Phan Thiết (STT 48 Phụ lục 62 đơn vị) — chưa có BB các đợt và BB tổng thể"
+  },
+  {
+    "stt": 28,
+    "phase_group": "IMPLEMENTATION",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục danh mục thiết bị từng đơn vị (kèm biên bản bàn giao)",
+    "issuing_authority": "Liên danh Nguyên Luân",
+    "issue_date": "2027-01-15",
+    "maturity_status": "DRAFT_DOCX",
+    "notes": "Mã file: 18.1\nSố hiệu / căn cứ: 61 file phụ lục thiết bị từng trường; ngày theo BB bàn giao tổng thể kèm theo\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng; Sài Gòn Mới; đơn vị sử dụng\nGhi chú: Tài liệu kèm BB bàn giao. Bản nháp cũ không lập dòng"
+  },
+  {
+    "stt": 29,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản bàn giao nghiệm thu tổng thể (đưa vào sử dụng)",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2027-02-05",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 19\nSố hiệu / căn cứ: Suy ra: ngày nghiệm thu hoàn thành, bàn giao đưa vào sử dụng theo KH (05/02/2027)\nĐơn vị phối hợp: Sài Gòn Mới; Liên danh Nguyên Luân\nGhi chú: Tổng hợp các BB bàn giao từng đơn vị. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 30,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục 3A – nhà thầu cung cấp, lắp đặt thiết bị",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2027-02-05",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 20\nSố hiệu / căn cứ: Suy ra: ngày nghiệm thu tổng thể (mã 19)\nĐơn vị phối hợp: Liên danh Nguyên Luân; các đơn vị liên quan\nGhi chú: Tệp Excel. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 31,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản thanh lý hợp đồng – nhà thầu cung cấp, lắp đặt thiết bị",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2027-02-08",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 21\nSố hiệu / căn cứ: Suy ra: ngày làm việc kế tiếp sau nghiệm thu tổng thể (05/02/2027 là thứ Sáu)\nĐơn vị phối hợp: Liên danh Nguyên Luân\nGhi chú: Thanh lý HĐ số HD2600226555_2609110905. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 32,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Báo cáo kết quả giám sát công tác triển khai",
+    "issuing_authority": "Sài Gòn Mới",
+    "issue_date": "2027-02-08",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 22\nSố hiệu / căn cứ: Suy ra: sau thanh lý HĐ thi công, trong hạn HĐ TVGS (120 ngày từ 12/10/2026)\nĐơn vị phối hợp: Sở GD&ĐT Lâm Đồng\nGhi chú: Mẫu 2.2. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 33,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản bàn giao nghiệm thu – Tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2027-02-08",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 23\nSố hiệu / căn cứ: Suy ra: cùng ngày Báo cáo kết quả giám sát\nĐơn vị phối hợp: Sài Gòn Mới\nGhi chú: Nghiệm thu dịch vụ TVGS. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 34,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Phụ lục 3A – Tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2027-02-08",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 24\nSố hiệu / căn cứ: Suy ra: cùng ngày nghiệm thu TVGS\nĐơn vị phối hợp: Sài Gòn Mới\nGhi chú: Tệp Excel. Chưa có file — cần lập/bổ sung"
+  },
+  {
+    "stt": 35,
+    "phase_group": "ACCEPTANCE",
+    "doc_code_symbol": null,
+    "doc_name": "Biên bản thanh lý hợp đồng – Tư vấn giám sát",
+    "issuing_authority": "Sở GD&ĐT Lâm Đồng",
+    "issue_date": "2027-02-08",
+    "maturity_status": "MISSING",
+    "notes": "Mã file: 25\nSố hiệu / căn cứ: Suy ra: cùng ngày nghiệm thu TVGS; trùng ngày hết hạn HĐ TVGS\nĐơn vị phối hợp: Sài Gòn Mới\nGhi chú: Thanh lý HĐ số 80/2026/HĐTV/SDGĐTLĐ-SGM. Chưa có file — cần lập/bổ sung. Hạn HĐ TVGS rất sát — cân nhắc phụ lục gia hạn"
+  }
+]
