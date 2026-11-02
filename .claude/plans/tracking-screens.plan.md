@@ -74,12 +74,13 @@
 | 2.2 | Web: `/projects/[id]/legal`, nhóm theo giai đoạn | ✅ | `src/lib/legal.ts`, `src/components/tracking/legal-table.tsx`, `src/app/projects/[projectId]/legal/page.tsx`. Vitest 64 passed (gồm 11 test mới), tsc và eslint sạch |
 | 2.3 | Seed đầu mục pháp lý cho hai dự án | ✅ | HCM: `hcm_legal_documents.json`, 82 dòng từ Excel sheet 4. LD: `lam_dong_legal_documents.json`, 35 dòng từ Chỉ mục hồ sơ LD (Drive), phân giai đoạn theo mục. `make seed-projects` đã chạy trên DB dev: HCM +82, LD +35; chạy lại thêm 0. Test `test_seed_legal_documents.py` (3 test) xanh |
 
-### Pha 3: Quản lý file & bằng chứng (sheet 5)
+### Pha 3: Quản lý file & bằng chứng (sheet 5) — ✅ xong, nhánh `feat/tracking-pha3`
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 3.1 | Migration `project_file_register` | ⬜ | |
-| 3.2 | API đọc và ghi register; liên kết với `drive_files` | ⬜ | |
-| 3.3 | Web: `/projects/[id]/files` | ⬜ | |
+| 3.1 | Migration `project_file_register` | ✅ | Migration `b3e7f1a9c2d5` (nối sau `a1c4e8f2b9d3`). Unique `(project_id, stt)`, `drive_file_id` FK nullable `SET NULL`. Round-trip downgrade/upgrade OK, `alembic check` sạch |
+| 3.2 | API đọc và ghi register; liên kết với `drive_files` | ✅ | `app/api/v1/file_register.py`, `app/services/file_register.py`, `app/schemas/file_register.py`. `GET/POST /projects/{id}/file-register`, `PATCH .../{entry_id}`. Ghi cần PM, đọc cần thành viên. Liên kết `drive_file_id` phải cùng dự án (422). Có audit. API: 544 test xanh, cov 84%, ruff sạch |
+| 3.3 | Web: `/projects/[id]/files` | ✅ | `src/lib/file-register.ts`, `src/components/tracking/file-register-table.tsx`, `src/app/projects/[projectId]/files/page.tsx`. Vitest 72 test xanh, tsc và eslint sạch |
+| 3.4 | Seed sheet 5 HCM (20 dòng) và LD (2 dòng) | ✅ | `hcm_file_register.json` từ Excel sheet 5. LD chỉ có 2 dòng nguồn xác nhận (Serial 320 bộ, Kế hoạch bố trí xe). Cột pháp lý, bảo mật và hành động để trống cho LD, không đoán. Test `test_seed_file_register.py` xanh |
 
 ### Pha 4: Tổng quan dự án (sheet 1)
 | ID | Việc | Trạng thái | Ghi chú |
@@ -192,4 +193,5 @@
 | 2026-11-02 | Lượt 6 (đọc hết theo cấu trúc, mở tài liệu chính): Đề xuất danh sách khảo sát (14/10: 9 trường + 2 phường), Báo cáo nhanh khảo sát (29/10: danh sách khác 14/10), Biên bản họp khởi động (25/09). Cấu trúc LD: 4 cụm, 61 thư mục đơn vị. Cấu trúc HCM: 96 mục con cấp 1–2. Pha 1: 1.1, 1.3 xong; 1.2 cần `make api-migrate` trên DB dev. Ghi chú: danh sách trường khảo sát HCM đổi giữa 14/10 và 29/10 |
 | 2026-11-02 | Lượt 4 và 5: đọc Đề cương TVGS LD, Kế hoạch phối hợp, Công văn mời họp, BCKTKT HCM, 4 báo cáo tuần DVN, 4 biên bản giao ban HCM. Đọc Ra soát lần 3 qua script (tải base64, giải mã, đọc XML bằng thư viện chuẩn) |
 | 2026-11-02 | Pha 0 lượt 3 (ưu tiên Lâm Đồng): đọc Phụ lục danh mục thiết bị, Serial 320 bộ, Kế hoạch bố trí xe, QĐ 3505, Đề cương TVQLDA, Đề cương TVGS trình duyệt, QĐ phê duyệt Đề cương TVGS, Công văn gửi trường (pdf và docx), Triển khai giao nhận. Ghi thêm mâu thuẫn và dữ liệu seed. Plan đã được viết lại gọn, bỏ khối trùng. Chưa sửa code, chưa seed |
+| 2026-11-02 | Pha 3 xong trên nhánh `feat/tracking-pha3` từ `main`. Migration `b3e7f1a9c2d5`, API register, web `/files`, seed HCM 20 dòng và LD 2 dòng. Chưa áp migration và seed lên DB dev (chờ xác nhận). Test trên `pmis_test` |
 | 2026-11-02 | Pha 2 xong. Nhánh `feat/tracking-pha2` từ `main` (63b0929). Migration không cần (bảng `legal_documents` đủ cột). Seed HCM (82) và LD (35). Web `/legal`. API 532 passed, cov 84%. Web 64 passed. Chưa commit/PR tại thời điểm ghi nhật ký |

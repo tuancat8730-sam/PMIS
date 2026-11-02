@@ -16,9 +16,11 @@ from app.models.contract import Contract
 from app.models.legal_document import DocMaturityStatus, LegalDocument
 from app.models.milestone import Milestone
 from app.models.project import Project, ProjectArchetype
+from app.models.project_file_register import ProjectFileRegisterEntry
 from app.models.risk_issue import RiskIssue
 from app.schemas.beneficiary_units import BeneficiaryUnitCreate
 from app.schemas.contracts import ContractCreate
+from app.schemas.file_register import FileRegisterCreate
 from app.schemas.legal_documents import LegalDocumentCreate
 from app.schemas.milestones import MilestoneCreate
 from app.schemas.projects import ProjectCreate
@@ -26,6 +28,7 @@ from app.schemas.risk_issues import RiskIssueCreate
 from app.services.audit import record_audit
 from app.services.beneficiary_units import create_unit, find_unit_by_code
 from app.services.contracts import create_contract
+from app.services.file_register import create_file_entry
 from app.services.legal_documents import create_legal_document
 from app.services.milestones import create_milestone, find_milestone_by_code
 from app.services.projects import create_project
@@ -44,6 +47,8 @@ LAM_DONG_CONTRACTS_FILE = SEED_DATA_DIR / "lam_dong_contracts.json"
 LAM_DONG_MILESTONES_FILE = SEED_DATA_DIR / "lam_dong_milestones.json"
 LAM_DONG_RISKS_FILE = SEED_DATA_DIR / "lam_dong_risks.json"
 LAM_DONG_LEGAL_DOCUMENTS_FILE = SEED_DATA_DIR / "lam_dong_legal_documents.json"
+HCM_FILE_REGISTER_FILE = SEED_DATA_DIR / "hcm_file_register.json"
+LAM_DONG_FILE_REGISTER_FILE = SEED_DATA_DIR / "lam_dong_file_register.json"
 
 HCM_PROJECT = ProjectCreate(
     code="SGD-HCM-CSVC-2026",
@@ -258,6 +263,41 @@ async def ensure_legal_documents(
     return inserted
 
 
+async def ensure_file_register(
+    session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
+) -> int:
+    """Thêm dòng file register còn thiếu theo `stt`, không tạo trùng khi chạy lại."""
+    existing_stts = set(
+        (
+            await session.execute(
+                select(ProjectFileRegisterEntry.stt).where(
+                    ProjectFileRegisterEntry.project_id == project_id
+                )
+            )
+        ).scalars()
+    )
+    inserted = 0
+    for row in rows:
+        payload = FileRegisterCreate(**row)
+        if payload.stt in existing_stts:
+            continue
+        entry = await create_file_entry(
+            session,
+            project_id=project_id,
+            values=payload.model_dump(),
+        )
+        await record_audit(
+            session,
+            actor_id=None,
+            action="file_register.seed",
+            entity_type="file_register",
+            entity_id=str(entry.id),
+            changes={"stt": entry.stt},
+        )
+        inserted += 1
+    return inserted
+
+
 async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) -> int:
     """Nạp SGD-HCM (đơn vị, mốc, hợp đồng, rủi ro, hồ sơ pháp lý) trong một transaction."""
     async with session_factory() as session:
@@ -271,7 +311,11 @@ async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) ->
         legal_documents = await ensure_legal_documents(
             session, project.id, load_seed_rows(HCM_LEGAL_DOCUMENTS_FILE)
         )
+        file_entries = await ensure_file_register(
+            session, project.id, load_seed_rows(HCM_FILE_REGISTER_FILE)
+        )
         await session.commit()
+    logger.info("Seed %s: thêm %d dòng file register", HCM_PROJECT.code, file_entries)
     logger.info("Seed %s: thêm %d hồ sơ pháp lý", HCM_PROJECT.code, legal_documents)
     logger.info("Seed %s: thêm %d rủi ro", HCM_PROJECT.code, risks)
     logger.info("Seed %s: thêm %d hợp đồng", HCM_PROJECT.code, contracts)
@@ -294,7 +338,11 @@ async def seed_lam_dong_project(session_factory: async_sessionmaker[AsyncSession
         legal_documents = await ensure_legal_documents(
             session, project.id, load_seed_rows(LAM_DONG_LEGAL_DOCUMENTS_FILE)
         )
+        file_entries = await ensure_file_register(
+            session, project.id, load_seed_rows(LAM_DONG_FILE_REGISTER_FILE)
+        )
         await session.commit()
+    logger.info("Seed %s: thêm %d dòng file register", LAM_DONG_PROJECT.code, file_entries)
     logger.info("Seed %s: thêm %d hồ sơ pháp lý", LAM_DONG_PROJECT.code, legal_documents)
     logger.info("Seed %s: thêm %d mốc, %d rủi ro", LAM_DONG_PROJECT.code, milestones, risks)
     logger.info("Seed %s: thêm %d hợp đồng", LAM_DONG_PROJECT.code, contracts)

@@ -11,6 +11,7 @@ from app.api.v1 import (
     drive_uploads,
     equipment,
     field,
+    file_register,
     finance,
     health,
     hold_points,
@@ -52,5 +53,6 @@ api_router.include_router(tracking.router)
 api_router.include_router(it_system.router)
 api_router.include_router(it_system_quality.router)
 api_router.include_router(legal_documents.router)
+api_router.include_router(file_register.router)
 api_router.include_router(drive.router)
 api_router.include_router(drive_uploads.router)
