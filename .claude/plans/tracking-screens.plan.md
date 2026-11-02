@@ -67,12 +67,12 @@
 | 1.4 | Web: `/projects/[id]/schedule` và `/projects/[id]/risks` | ✅ | `src/lib/tracking.ts`, `src/components/tracking/` (bảng, khung `matrix-page.tsx`), 2 trang trong `src/app/projects/[projectId]/`. Test vitest 53 passed, tsc và eslint sạch, `next build` biên dịch được 2 route |
 | 1.5 | Seed mốc và rủi ro cho hai dự án | ✅ | `app/db/seed_data/{hcm,lam_dong}_{milestones,risks}.json`, build HCM từ Excel sheet 2 và 3. LD: 5 mốc và 8 rủi ro từ báo cáo tuần và Ra soát (không có mức tác động/khả năng trong nguồn, để trống). `make seed-projects` đã chạy: HCM +12 rủi ro +7 mốc, LD +5 mốc +8 rủi ro. HCM M1, M8, M9 (bản seed cũ) đã được làm mới từ Excel: tên, sản phẩm bàn giao, điều kiện nghiệm thu, mốc TVGS, ghi chú PM. Ngày gốc và ngày bù không đổi, đã đối chiếu với Excel. Seed chỉ ghi đè các trường chữ nguồn, không đụng trạng thái, tiến độ, ngày thực tế. Đã chạy `make seed-projects` trên DB dev và kiểm tra |
 
-### Pha 2: Hồ sơ pháp lý (sheet 4)
+### Pha 2: Hồ sơ pháp lý (sheet 4) — ✅ xong, nhánh `feat/tracking-pha2`
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 2.1 | Kiểm `legal_documents` đủ trường; thêm nếu thiếu | ⬜ | |
-| 2.2 | Web: `/projects/[id]/legal`, nhóm theo giai đoạn | ⬜ | |
-| 2.3 | Seed đầu mục pháp lý cho hai dự án | ⬜ | |
+| 2.1 | Kiểm `legal_documents` đủ trường; thêm nếu thiếu | ✅ | Đủ trường, không cần migration. Excel có 10 nhóm (I–X), enum có 5 giai đoạn. Gộp: I–V → PREPARATION; VII, VIII → BIDDING; mục 66 và IX → CONTRACT_KICKOFF; VI, X → ACCEPTANCE. Tình trạng chữ → enum: "Chưa có file" → MISSING; "Bản word" → DRAFT_DOCX; "Cần đính chính" → DISCREPANCY_FOUND; "Đã có" → SIGNED_SCAN_PDF (cần PM xác nhận, vì "Đã có" không ghi rõ đã ký hay chưa) |
+| 2.2 | Web: `/projects/[id]/legal`, nhóm theo giai đoạn | ✅ | `src/lib/legal.ts`, `src/components/tracking/legal-table.tsx`, `src/app/projects/[projectId]/legal/page.tsx`. Vitest 64 passed (gồm 11 test mới), tsc và eslint sạch |
+| 2.3 | Seed đầu mục pháp lý cho hai dự án | ✅ | HCM: `hcm_legal_documents.json`, 82 dòng từ Excel sheet 4. LD: `lam_dong_legal_documents.json`, 35 dòng từ Chỉ mục hồ sơ LD (Drive), phân giai đoạn theo mục. `make seed-projects` đã chạy trên DB dev: HCM +82, LD +35; chạy lại thêm 0. Test `test_seed_legal_documents.py` (3 test) xanh |
 
 ### Pha 3: Quản lý file & bằng chứng (sheet 5)
 | ID | Việc | Trạng thái | Ghi chú |
@@ -192,3 +192,4 @@
 | 2026-11-02 | Lượt 6 (đọc hết theo cấu trúc, mở tài liệu chính): Đề xuất danh sách khảo sát (14/10: 9 trường + 2 phường), Báo cáo nhanh khảo sát (29/10: danh sách khác 14/10), Biên bản họp khởi động (25/09). Cấu trúc LD: 4 cụm, 61 thư mục đơn vị. Cấu trúc HCM: 96 mục con cấp 1–2. Pha 1: 1.1, 1.3 xong; 1.2 cần `make api-migrate` trên DB dev. Ghi chú: danh sách trường khảo sát HCM đổi giữa 14/10 và 29/10 |
 | 2026-11-02 | Lượt 4 và 5: đọc Đề cương TVGS LD, Kế hoạch phối hợp, Công văn mời họp, BCKTKT HCM, 4 báo cáo tuần DVN, 4 biên bản giao ban HCM. Đọc Ra soát lần 3 qua script (tải base64, giải mã, đọc XML bằng thư viện chuẩn) |
 | 2026-11-02 | Pha 0 lượt 3 (ưu tiên Lâm Đồng): đọc Phụ lục danh mục thiết bị, Serial 320 bộ, Kế hoạch bố trí xe, QĐ 3505, Đề cương TVQLDA, Đề cương TVGS trình duyệt, QĐ phê duyệt Đề cương TVGS, Công văn gửi trường (pdf và docx), Triển khai giao nhận. Ghi thêm mâu thuẫn và dữ liệu seed. Plan đã được viết lại gọn, bỏ khối trùng. Chưa sửa code, chưa seed |
+| 2026-11-02 | Pha 2 xong. Nhánh `feat/tracking-pha2` từ `main` (63b0929). Migration không cần (bảng `legal_documents` đủ cột). Seed HCM (82) và LD (35). Web `/legal`. API 532 passed, cov 84%. Web 64 passed. Chưa commit/PR tại thời điểm ghi nhật ký |

@@ -13,17 +13,20 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 
 from app.core.config import get_settings
 from app.models.contract import Contract
+from app.models.legal_document import DocMaturityStatus, LegalDocument
 from app.models.milestone import Milestone
 from app.models.project import Project, ProjectArchetype
 from app.models.risk_issue import RiskIssue
 from app.schemas.beneficiary_units import BeneficiaryUnitCreate
 from app.schemas.contracts import ContractCreate
+from app.schemas.legal_documents import LegalDocumentCreate
 from app.schemas.milestones import MilestoneCreate
 from app.schemas.projects import ProjectCreate
 from app.schemas.risk_issues import RiskIssueCreate
 from app.services.audit import record_audit
 from app.services.beneficiary_units import create_unit, find_unit_by_code
 from app.services.contracts import create_contract
+from app.services.legal_documents import create_legal_document
 from app.services.milestones import create_milestone, find_milestone_by_code
 from app.services.projects import create_project
 from app.services.risk_issues import create_risk_issue
@@ -35,10 +38,12 @@ HCM_UNITS_FILE = SEED_DATA_DIR / "hcm_survey_units.json"
 HCM_MILESTONES_FILE = SEED_DATA_DIR / "hcm_milestones.json"
 HCM_CONTRACTS_FILE = SEED_DATA_DIR / "hcm_contracts.json"
 HCM_RISKS_FILE = SEED_DATA_DIR / "hcm_risks.json"
+HCM_LEGAL_DOCUMENTS_FILE = SEED_DATA_DIR / "hcm_legal_documents.json"
 LAM_DONG_UNITS_FILE = SEED_DATA_DIR / "lam_dong_units.json"
 LAM_DONG_CONTRACTS_FILE = SEED_DATA_DIR / "lam_dong_contracts.json"
 LAM_DONG_MILESTONES_FILE = SEED_DATA_DIR / "lam_dong_milestones.json"
 LAM_DONG_RISKS_FILE = SEED_DATA_DIR / "lam_dong_risks.json"
+LAM_DONG_LEGAL_DOCUMENTS_FILE = SEED_DATA_DIR / "lam_dong_legal_documents.json"
 
 HCM_PROJECT = ProjectCreate(
     code="SGD-HCM-CSVC-2026",
@@ -214,8 +219,47 @@ async def ensure_contracts(
     return inserted
 
 
+class LegalDocumentSeedRow(LegalDocumentCreate):
+    """Dòng seed hồ sơ pháp lý; khác API tạo mới ở chỗ được nạp kèm trạng thái đã đối chiếu."""
+
+    maturity_status: DocMaturityStatus = DocMaturityStatus.MISSING
+
+
+async def ensure_legal_documents(
+    session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
+) -> int:
+    """Thêm hồ sơ pháp lý còn thiếu theo `stt`, không tạo trùng khi chạy lại."""
+    existing_stts = set(
+        (
+            await session.execute(
+                select(LegalDocument.stt).where(LegalDocument.project_id == project_id)
+            )
+        ).scalars()
+    )
+    inserted = 0
+    for row in rows:
+        payload = LegalDocumentSeedRow(**row)
+        if payload.stt in existing_stts:
+            continue
+        document = await create_legal_document(
+            session,
+            project_id=project_id,
+            values=payload.model_dump(),
+        )
+        await record_audit(
+            session,
+            actor_id=None,
+            action="legal_document.seed",
+            entity_type="legal_document",
+            entity_id=str(document.id),
+            changes={"stt": document.stt},
+        )
+        inserted += 1
+    return inserted
+
+
 async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) -> int:
-    """Nạp SGD-HCM gồm đơn vị, mốc và hợp đồng trong một transaction; trả về số đơn vị mới."""
+    """Nạp SGD-HCM (đơn vị, mốc, hợp đồng, rủi ro, hồ sơ pháp lý) trong một transaction."""
     async with session_factory() as session:
         project = await ensure_project(session, HCM_PROJECT)
         inserted = await ensure_units(session, project.id, load_units(HCM_UNITS_FILE))
@@ -224,7 +268,11 @@ async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) ->
         )
         contracts = await ensure_contracts(session, project.id, load_seed_rows(HCM_CONTRACTS_FILE))
         risks = await ensure_risks(session, project, load_seed_rows(HCM_RISKS_FILE))
+        legal_documents = await ensure_legal_documents(
+            session, project.id, load_seed_rows(HCM_LEGAL_DOCUMENTS_FILE)
+        )
         await session.commit()
+    logger.info("Seed %s: thêm %d hồ sơ pháp lý", HCM_PROJECT.code, legal_documents)
     logger.info("Seed %s: thêm %d rủi ro", HCM_PROJECT.code, risks)
     logger.info("Seed %s: thêm %d hợp đồng", HCM_PROJECT.code, contracts)
     logger.info("Seed %s: thêm %d đơn vị thụ hưởng, %d mốc", HCM_PROJECT.code, inserted, milestones)
@@ -243,7 +291,11 @@ async def seed_lam_dong_project(session_factory: async_sessionmaker[AsyncSession
             session, project.id, load_seed_rows(LAM_DONG_MILESTONES_FILE)
         )
         risks = await ensure_risks(session, project, load_seed_rows(LAM_DONG_RISKS_FILE))
+        legal_documents = await ensure_legal_documents(
+            session, project.id, load_seed_rows(LAM_DONG_LEGAL_DOCUMENTS_FILE)
+        )
         await session.commit()
+    logger.info("Seed %s: thêm %d hồ sơ pháp lý", LAM_DONG_PROJECT.code, legal_documents)
     logger.info("Seed %s: thêm %d mốc, %d rủi ro", LAM_DONG_PROJECT.code, milestones, risks)
     logger.info("Seed %s: thêm %d hợp đồng", LAM_DONG_PROJECT.code, contracts)
     logger.info("Seed %s: thêm %d đơn vị thụ hưởng", LAM_DONG_PROJECT.code, inserted)
