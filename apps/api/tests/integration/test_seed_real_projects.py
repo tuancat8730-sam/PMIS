@@ -7,11 +7,13 @@ from app.models.audit_log import AuditLog
 from app.models.beneficiary_unit import BeneficiaryUnit
 from app.models.milestone import Milestone
 from app.models.project import Project
+from app.models.risk_issue import RiskIssue, RiskLevel
 
 pytestmark = pytest.mark.integration
 
 HCM_UNIT_COUNT = 8
-HCM_MILESTONE_CODES = {"M1", "M8", "M9"}
+HCM_MILESTONE_CODES = {"H0", "M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9"}
+HCM_RISK_COUNT = 12
 
 
 async def test_seed_creates_known_hcm_milestones_with_hard_deadlines(app: FastAPI) -> None:
@@ -103,3 +105,43 @@ async def test_seed_writes_audit_without_actor(app: FastAPI) -> None:
             .all()
         )
     assert actors == [None]
+
+
+async def test_seed_creates_hcm_risks_with_levels_and_runs_idempotently(app: FastAPI) -> None:
+    # Arrange
+    session_factory = app.state.session_factory
+
+    # Act
+    await seed_hcm_project(session_factory)
+    await seed_hcm_project(session_factory)
+
+    # Assert
+    async with session_factory() as session:
+        risks = (await session.execute(select(RiskIssue))).scalars().all()
+    assert len(risks) == HCM_RISK_COUNT
+    r01 = next(risk for risk in risks if risk.title.endswith("(R01)"))
+    assert r01.impact == RiskLevel.VERY_HIGH
+    assert r01.likelihood == RiskLevel.VERY_HIGH
+
+
+async def test_seed_refreshes_source_text_of_existing_milestones(app: FastAPI) -> None:
+    # Arrange: bản seed cũ còn tên placeholder và chưa có dữ liệu tracking
+    session_factory = app.state.session_factory
+    await seed_hcm_project(session_factory)
+    async with session_factory() as session:
+        m1 = (await session.execute(select(Milestone).where(Milestone.code == "M1"))).scalar_one()
+        m1.name = "Mốc M1 (cần xác nhận tên theo hợp đồng)"
+        m1.deliverables = None
+        m1.pm_comment = None
+        await session.commit()
+
+    # Act
+    await seed_hcm_project(session_factory)
+
+    # Assert
+    async with session_factory() as session:
+        m1 = (await session.execute(select(Milestone).where(Milestone.code == "M1"))).scalar_one()
+    assert "cần xác nhận" not in m1.name
+    assert m1.deliverables is not None
+    assert m1.pm_comment is not None
+    assert str(m1.baseline_end) == "2026-10-07"

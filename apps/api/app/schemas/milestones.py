@@ -16,6 +16,7 @@ from app.schemas.base import RequestModel
 MILESTONE_NAME_MAX_LENGTH = 300
 RESPONSIBLE_PARTY_MAX_LENGTH = 300
 EVIDENCE_SUMMARY_MAX_LENGTH = 2000
+TRACKING_TEXT_MAX_LENGTH = 2000
 REASON_MAX_LENGTH = 1000
 PERCENT_MIN = Decimal("0")
 PERCENT_MAX = Decimal("100")
@@ -31,6 +32,10 @@ class MilestoneCreate(RequestModel):
     is_hard_deadline: bool = False
     responsible_party: str | None = Field(default=None, max_length=RESPONSIBLE_PARTY_MAX_LENGTH)
     evidence_summary: str | None = Field(default=None, max_length=EVIDENCE_SUMMARY_MAX_LENGTH)
+    deliverables: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
+    acceptance_conditions: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
+    tvgs_checkpoint: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
+    pm_comment: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
 
 
 class MilestoneUpdate(RequestModel):
@@ -40,6 +45,10 @@ class MilestoneUpdate(RequestModel):
     progress_percent: Decimal | None = Field(default=None, ge=PERCENT_MIN, le=PERCENT_MAX)
     status: StoredMilestoneStatus | None = None
     reason: str | None = Field(default=None, min_length=1, max_length=REASON_MAX_LENGTH)
+    deliverables: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
+    acceptance_conditions: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
+    tvgs_checkpoint: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
+    pm_comment: str | None = Field(default=None, max_length=TRACKING_TEXT_MAX_LENGTH)
 
     @model_validator(mode="after")
     def _reject_null_for_required_fields(self) -> "MilestoneUpdate":
@@ -66,6 +75,10 @@ class MilestoneOut(BaseModel):
     slippage_days: int
     responsible_party: str | None
     evidence_summary: str | None
+    deliverables: str | None
+    acceptance_conditions: str | None
+    tvgs_checkpoint: str | None
+    pm_comment: str | None
 
     @classmethod
     def from_milestone(cls, milestone: Milestone, today: date) -> "MilestoneOut":
@@ -93,4 +106,8 @@ class MilestoneOut(BaseModel):
             slippage_days=slippage_days(due, milestone.actual_end, today),
             responsible_party=milestone.responsible_party,
             evidence_summary=milestone.evidence_summary,
+            deliverables=milestone.deliverables,
+            acceptance_conditions=milestone.acceptance_conditions,
+            tvgs_checkpoint=milestone.tvgs_checkpoint,
+            pm_comment=milestone.pm_comment,
         )

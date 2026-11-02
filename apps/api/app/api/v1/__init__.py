@@ -24,6 +24,7 @@ from app.api.v1 import (
     projects,
     risk_issues,
     stakeholders,
+    tracking,
     users,
 )
 
@@ -47,6 +48,7 @@ api_router.include_router(delivery_handovers.router)
 api_router.include_router(field.router)
 api_router.include_router(disbursements.router)
 api_router.include_router(risk_issues.router)
+api_router.include_router(tracking.router)
 api_router.include_router(it_system.router)
 api_router.include_router(it_system_quality.router)
 api_router.include_router(legal_documents.router)

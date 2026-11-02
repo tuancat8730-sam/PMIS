@@ -8,6 +8,7 @@ from app.models.risk_issue import (
     OWNER_MAX_LENGTH,
     STAKEHOLDER_MAX_LENGTH,
     RecordType,
+    RiskLevel,
     RiskPriority,
     RiskStatus,
 )
@@ -17,6 +18,7 @@ TITLE_MAX_LENGTH = 300
 DESCRIPTION_MAX_LENGTH = 4000
 MITIGATION_MAX_LENGTH = 2000
 RESOLUTION_REF_MAX_LENGTH = 300
+COORDINATING_UNITS_MAX_LENGTH = 1000
 
 
 class RiskIssueCreate(RequestModel):
@@ -29,6 +31,9 @@ class RiskIssueCreate(RequestModel):
     mitigation_action: str | None = Field(default=None, max_length=MITIGATION_MAX_LENGTH)
     owner: str | None = Field(default=None, max_length=OWNER_MAX_LENGTH)
     due_date: date | None = None
+    impact: RiskLevel | None = None
+    likelihood: RiskLevel | None = None
+    coordinating_units: str | None = Field(default=None, max_length=COORDINATING_UNITS_MAX_LENGTH)
 
 
 class RiskIssueUpdate(RequestModel):
@@ -38,6 +43,9 @@ class RiskIssueUpdate(RequestModel):
     owner: str | None = Field(default=None, max_length=OWNER_MAX_LENGTH)
     due_date: date | None = None
     resolution_ref: str | None = Field(default=None, max_length=RESOLUTION_REF_MAX_LENGTH)
+    impact: RiskLevel | None = None
+    likelihood: RiskLevel | None = None
+    coordinating_units: str | None = Field(default=None, max_length=COORDINATING_UNITS_MAX_LENGTH)
 
     @model_validator(mode="after")
     def _reject_null_for_required_fields(self) -> "RiskIssueUpdate":
@@ -64,4 +72,7 @@ class RiskIssueOut(BaseModel):
     owner: str | None
     due_date: date | None
     resolution_ref: str | None
+    impact: RiskLevel | None
+    likelihood: RiskLevel | None
+    coordinating_units: str | None
     created_at: datetime

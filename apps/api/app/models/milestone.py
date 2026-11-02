@@ -75,3 +75,7 @@ class Milestone(Base):
     )
     responsible_party: Mapped[str | None] = mapped_column(Text, default=None)
     evidence_summary: Mapped[str | None] = mapped_column(Text, default=None)
+    deliverables: Mapped[str | None] = mapped_column(Text, default=None)
+    acceptance_conditions: Mapped[str | None] = mapped_column(Text, default=None)
+    tvgs_checkpoint: Mapped[str | None] = mapped_column(Text, default=None)
+    pm_comment: Mapped[str | None] = mapped_column(Text, default=None)
