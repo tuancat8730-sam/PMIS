@@ -4,13 +4,37 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict
 
 from app.core.risk_matrix_rules import risk_score
+from app.models.milestone import Milestone
+from app.models.milestone_note import MilestoneNote
+from app.models.milestone_task import MilestoneTask
 from app.models.risk_issue import RecordType, RiskIssue, RiskLevel, RiskStatus
+from app.schemas.milestone_children import NoteOut, TaskOut
 from app.schemas.milestones import MilestoneOut
+
+
+class ScheduleRowOut(MilestoneOut):
+    tasks: list[TaskOut]
+    notes: list[NoteOut]
+
+    @classmethod
+    def build(
+        cls,
+        milestone: Milestone,
+        today: date,
+        tasks: list[MilestoneTask],
+        notes: list[MilestoneNote],
+    ) -> "ScheduleRowOut":
+        base = MilestoneOut.from_milestone(milestone, today)
+        return cls(
+            **base.model_dump(),
+            tasks=[TaskOut.from_task(task, today) for task in tasks],
+            notes=[NoteOut.from_note(note) for note in notes],
+        )
 
 
 class ScheduleMatrixOut(BaseModel):
     total: int
-    rows: list[MilestoneOut]
+    rows: list[ScheduleRowOut]
 
 
 class RiskMatrixRow(BaseModel):
