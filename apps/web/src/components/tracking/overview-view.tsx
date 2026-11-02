@@ -95,13 +95,13 @@ export function OverviewView({ overview }: { overview: ProjectOverview }) {
           </div>
         </dl>
       </section>
-      <section className="flex flex-col gap-2">
+      <section id="decisions" className="flex flex-col gap-2">
         <h2 className="text-base font-semibold text-neutral-800">Quyết định pháp lý</h2>
         <div className="overflow-x-auto">
           <DecisionsTable decisions={decisions} />
         </div>
       </section>
-      <section className="flex flex-col gap-2">
+      <section id="contracts" className="flex flex-col gap-2">
         <h2 className="text-base font-semibold text-neutral-800">Ma trận hợp đồng</h2>
         <div className="overflow-x-auto">
           <ContractsTable contracts={contracts} />

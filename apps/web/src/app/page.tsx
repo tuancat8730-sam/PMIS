@@ -31,6 +31,9 @@ export default async function Home() {
       <Link href="/login" className="text-base font-semibold text-neutral-900 underline underline-offset-4">
         Đăng nhập
       </Link>
+      <Link href="/projects" className="text-base font-semibold text-neutral-900 underline underline-offset-4">
+        Danh sách dự án
+      </Link>
     </main>
   );
 }
