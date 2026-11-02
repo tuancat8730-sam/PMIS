@@ -48,6 +48,10 @@ class Project(Base):
     )
     investor_name: Mapped[str] = mapped_column(Text)
     decision_authority: Mapped[str | None] = mapped_column(Text)
+    # Thông tin mục I của báo cáo tổng quan; giữ dạng chữ theo văn bản gốc.
+    legal_representative: Mapped[str | None] = mapped_column(Text)
+    qlda_form: Mapped[str | None] = mapped_column(Text)
+    disbursement_deadline: Mapped[str | None] = mapped_column(Text)
     total_investment: Mapped[Decimal] = mapped_column(Numeric(18, 2))
     start_date: Mapped[date | None] = mapped_column(Date)
     end_date: Mapped[date | None] = mapped_column(Date)

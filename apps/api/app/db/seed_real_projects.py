@@ -16,6 +16,7 @@ from app.models.contract import Contract
 from app.models.legal_document import DocMaturityStatus, LegalDocument
 from app.models.milestone import Milestone
 from app.models.project import Project, ProjectArchetype
+from app.models.project_budget_item import ProjectBudgetItem
 from app.models.project_file_register import ProjectFileRegisterEntry
 from app.models.project_legal_decision import ProjectLegalDecision
 from app.models.risk_issue import RiskIssue
@@ -24,6 +25,7 @@ from app.schemas.contracts import ContractCreate
 from app.schemas.file_register import FileRegisterCreate
 from app.schemas.legal_documents import LegalDocumentCreate
 from app.schemas.milestones import MilestoneCreate
+from app.schemas.project_budget_items import ProjectBudgetItemCreate
 from app.schemas.project_legal_decisions import ProjectLegalDecisionCreate
 from app.schemas.projects import ProjectCreate
 from app.schemas.risk_issues import RiskIssueCreate
@@ -52,6 +54,7 @@ LAM_DONG_LEGAL_DOCUMENTS_FILE = SEED_DATA_DIR / "lam_dong_legal_documents.json"
 HCM_FILE_REGISTER_FILE = SEED_DATA_DIR / "hcm_file_register.json"
 LAM_DONG_FILE_REGISTER_FILE = SEED_DATA_DIR / "lam_dong_file_register.json"
 HCM_LEGAL_DECISIONS_FILE = SEED_DATA_DIR / "hcm_legal_decisions.json"
+HCM_BUDGET_ITEMS_FILE = SEED_DATA_DIR / "hcm_budget_items.json"
 LAM_DONG_LEGAL_DECISIONS_FILE = SEED_DATA_DIR / "lam_dong_legal_decisions.json"
 
 HCM_PROJECT = ProjectCreate(
@@ -60,6 +63,10 @@ HCM_PROJECT = ProjectCreate(
     short_name="SGD-HCM CSVC 2026",
     archetype=ProjectArchetype.IT_SYSTEM,
     investor_name="Sở GD&ĐT TP.HCM",
+    decision_authority="Ủy ban nhân dân Thành phố Hồ Chí Minh",
+    legal_representative="Ông Nguyễn Văn Hiếu — Giám đốc Sở GD&ĐT",
+    qlda_form="Chủ đầu tư thuê tư vấn quản lý dự án (Công ty Sài Gòn Mới)",
+    disbursement_deadline="09/12/2026 (Hạn chót giải ngân niên độ tài chính năm 2026)",
     total_investment=Decimal("5999498939.00"),
 )
 
@@ -93,9 +100,26 @@ async def find_project_by_code(session: AsyncSession, code: str) -> Project | No
     return result.scalar_one_or_none()
 
 
+PROJECT_FILLABLE_FIELDS = (
+    "decision_authority",
+    "legal_representative",
+    "qlda_form",
+    "disbursement_deadline",
+)
+
+
+def _fill_empty_project_fields(project: Project, payload: ProjectCreate) -> None:
+    """Điền trường còn trống của dự án đã có từ seed; không ghi đè giá trị đã nhập."""
+    for field in PROJECT_FILLABLE_FIELDS:
+        value = getattr(payload, field)
+        if getattr(project, field) is None and value is not None:
+            setattr(project, field, value)
+
+
 async def ensure_project(session: AsyncSession, payload: ProjectCreate) -> Project:
     existing = await find_project_by_code(session, payload.code)
     if existing is not None:
+        _fill_empty_project_fields(existing, payload)
         return existing
     project = await create_project(session, payload=payload)
     await record_audit(
@@ -204,27 +228,66 @@ async def ensure_risks(session: AsyncSession, project: Project, rows: list[dict[
     return inserted
 
 
+CONTRACT_FILLABLE_FIELDS = (
+    "contract_number",
+    "signed_date",
+    "expiration_date",
+    "role_label",
+    "contractor_name",
+    "contact_person",
+    "status_note",
+)
+
+
+def _fill_empty_contract_fields(contract: Contract, payload: ContractCreate) -> None:
+    """Điền trường còn trống từ seed; không ghi đè giá trị đã có trong DB."""
+    for field in CONTRACT_FILLABLE_FIELDS:
+        value = getattr(payload, field)
+        if getattr(contract, field) is None and value is not None:
+            setattr(contract, field, value)
+
+
 async def ensure_contracts(
     session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
 ) -> int:
-    """Thêm hợp đồng còn thiếu theo tên gói, không tạo trùng khi chạy lại."""
-    existing_names = set(
+    """Thêm hợp đồng còn thiếu theo tên gói và điền trường còn trống của hợp đồng đã có."""
+    existing_by_name = {
+        contract.package_name: contract
+        for contract in (
+            await session.execute(select(Contract).where(Contract.project_id == project_id))
+        ).scalars()
+    }
+    inserted = 0
+    for row in rows:
+        payload = ContractCreate.model_validate(row)
+        existing = existing_by_name.get(payload.package_name)
+        if existing is not None:
+            _fill_empty_contract_fields(existing, payload)
+            continue
+        await create_contract(session, project_id=project_id, payload=payload)
+        inserted += 1
+    return inserted
+
+
+async def ensure_budget_items(
+    session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
+) -> int:
+    """Thêm khoản chi còn thiếu theo nhóm, không tạo trùng khi chạy lại."""
+    existing_categories = set(
         (
             await session.execute(
-                select(Contract.package_name).where(Contract.project_id == project_id)
+                select(ProjectBudgetItem.category).where(ProjectBudgetItem.project_id == project_id)
             )
         ).scalars()
     )
     inserted = 0
     for row in rows:
-        if row["package_name"] in existing_names:
+        payload = ProjectBudgetItemCreate(**row)
+        if payload.category in existing_categories:
             continue
-        await create_contract(
-            session,
-            project_id=project_id,
-            payload=ContractCreate.model_validate(row),
-        )
+        session.add(ProjectBudgetItem(project_id=project_id, **payload.model_dump()))
         inserted += 1
+    await session.flush()
     return inserted
 
 
@@ -354,7 +417,11 @@ async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) ->
         decisions = await ensure_legal_decisions(
             session, project.id, load_seed_rows(HCM_LEGAL_DECISIONS_FILE)
         )
+        budget_items = await ensure_budget_items(
+            session, project.id, load_seed_rows(HCM_BUDGET_ITEMS_FILE)
+        )
         await session.commit()
+    logger.info("Seed %s: thêm %d khoản chi", HCM_PROJECT.code, budget_items)
     logger.info("Seed %s: thêm %d quyết định pháp lý", HCM_PROJECT.code, decisions)
     logger.info("Seed %s: thêm %d dòng file register", HCM_PROJECT.code, file_entries)
     logger.info("Seed %s: thêm %d hồ sơ pháp lý", HCM_PROJECT.code, legal_documents)

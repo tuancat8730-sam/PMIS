@@ -13,6 +13,7 @@ PROJECT_NAME_MAX_LENGTH = 500
 PROJECT_SHORT_NAME_MAX_LENGTH = 150
 INVESTOR_NAME_MAX_LENGTH = 300
 DECISION_AUTHORITY_MAX_LENGTH = 300
+OVERVIEW_TEXT_MAX_LENGTH = 1000
 INVESTMENT_MAX_DIGITS = 18
 INVESTMENT_DECIMAL_PLACES = 2
 DRIVE_ID_MAX_LENGTH = 128
@@ -25,6 +26,9 @@ class ProjectCreate(RequestModel):
     archetype: ProjectArchetype
     investor_name: str = Field(min_length=1, max_length=INVESTOR_NAME_MAX_LENGTH)
     decision_authority: str | None = Field(default=None, max_length=DECISION_AUTHORITY_MAX_LENGTH)
+    legal_representative: str | None = Field(default=None, max_length=OVERVIEW_TEXT_MAX_LENGTH)
+    qlda_form: str | None = Field(default=None, max_length=OVERVIEW_TEXT_MAX_LENGTH)
+    disbursement_deadline: str | None = Field(default=None, max_length=OVERVIEW_TEXT_MAX_LENGTH)
     total_investment: Decimal = Field(
         gt=0,
         max_digits=INVESTMENT_MAX_DIGITS,
@@ -54,6 +58,9 @@ class ProjectOut(BaseModel):
     health_status: ProjectHealth
     investor_name: str
     decision_authority: str | None
+    legal_representative: str | None
+    qlda_form: str | None
+    disbursement_deadline: str | None
     total_investment: Decimal
     start_date: date | None
     end_date: date | None

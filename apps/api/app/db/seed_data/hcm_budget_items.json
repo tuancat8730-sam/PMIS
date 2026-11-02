@@ -1,0 +1,37 @@
+[
+  {
+    "category": "SOFTWARE",
+    "label": "Chi phí phần mềm",
+    "amount": "5447400000.00",
+    "note": "Giá trúng HĐ trên khai 4.848.186.000 đ, tiết kiệm ~600 triệu",
+    "sort_order": 1
+  },
+  {
+    "category": "PROJECT_MANAGEMENT",
+    "label": "Chi phí quản lý dự án (QLDA)",
+    "amount": "109133212.00",
+    "note": "Hợp đồng tư vấn QLDA Sài Gòn Mới: 109.000.000 đ",
+    "sort_order": 2
+  },
+  {
+    "category": "CONSULTING",
+    "label": "Chi phí tư vấn đầu tư",
+    "amount": "380919349.00",
+    "note": "Tổng theo ảnh báo cáo; các dòng tư vấn cộng lại 375.708.189 đ, chưa khớp",
+    "sort_order": 3
+  },
+  {
+    "category": "OTHER",
+    "label": "Chi phí khác",
+    "amount": "62046379.00",
+    "note": null,
+    "sort_order": 4
+  },
+  {
+    "category": "CONTINGENCY",
+    "label": "Chi phí dự phòng",
+    "amount": "0.00",
+    "note": null,
+    "sort_order": 5
+  }
+]

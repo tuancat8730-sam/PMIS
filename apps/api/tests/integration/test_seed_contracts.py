@@ -16,6 +16,8 @@ EXPECTED_HCM_CONTRACTS = {
     "Gói TVGS": ("CONSULTING", Decimal("120000000.00")),
     "Gói TVQLDA": ("CONSULTING", Decimal("109000000.00")),
 }
+# Bốn gói tư vấn chỉ có trong ảnh báo cáo tổng quan (02/11/2026), chưa có trong spec §7.
+IMAGE_ONLY_CONTRACT_COUNT = 4
 
 
 async def _hcm_contracts(app: FastAPI) -> dict[str, tuple[str, Decimal]]:
@@ -38,7 +40,8 @@ async def test_seed_contracts_match_spec_section_7_values(app: FastAPI) -> None:
     await seed_hcm_project(session_factory)
 
     # Assert
-    assert await _hcm_contracts(app) == EXPECTED_HCM_CONTRACTS
+    actual = await _hcm_contracts(app)
+    assert {name: actual[name] for name in EXPECTED_HCM_CONTRACTS} == EXPECTED_HCM_CONTRACTS
 
 
 async def test_seed_contracts_are_not_duplicated_when_run_again(app: FastAPI) -> None:
@@ -52,4 +55,4 @@ async def test_seed_contracts_are_not_duplicated_when_run_again(app: FastAPI) ->
     # Assert
     async with session_factory() as session:
         count = (await session.execute(select(func.count()).select_from(Contract))).scalar_one()
-    assert count == len(EXPECTED_HCM_CONTRACTS)
+    assert count == len(EXPECTED_HCM_CONTRACTS) + IMAGE_ONLY_CONTRACT_COUNT

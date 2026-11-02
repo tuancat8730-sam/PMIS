@@ -11,6 +11,8 @@ PACKAGE_NAME_MAX_LENGTH = 500
 CONTRACT_NUMBER_MAX_LENGTH = 100
 CONTRACT_VALUE_MAX_DIGITS = 18
 CONTRACT_VALUE_DECIMAL_PLACES = 2
+OVERVIEW_TEXT_MAX_LENGTH = 1000
+ROLE_LABEL_MAX_LENGTH = 100
 
 
 PackageKind = Literal["MAIN", "CONSULTING"]
@@ -27,6 +29,10 @@ class ContractCreate(RequestModel):
         max_digits=CONTRACT_VALUE_MAX_DIGITS,
         decimal_places=CONTRACT_VALUE_DECIMAL_PLACES,
     )
+    contractor_name: str | None = Field(default=None, max_length=OVERVIEW_TEXT_MAX_LENGTH)
+    role_label: str | None = Field(default=None, max_length=ROLE_LABEL_MAX_LENGTH)
+    contact_person: str | None = Field(default=None, max_length=OVERVIEW_TEXT_MAX_LENGTH)
+    status_note: str | None = Field(default=None, max_length=OVERVIEW_TEXT_MAX_LENGTH)
 
     @model_validator(mode="after")
     def _check_date_order(self) -> "ContractCreate":
@@ -46,3 +52,7 @@ class ContractOut(BaseModel):
     signed_date: date | None
     expiration_date: date | None
     contract_value: Decimal
+    contractor_name: str | None
+    role_label: str | None
+    contact_person: str | None
+    status_note: str | None
