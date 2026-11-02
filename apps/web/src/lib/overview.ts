@@ -14,6 +14,9 @@ export interface ProjectSummary {
   name: string;
   investor_name: string;
   decision_authority: string | null;
+  legal_representative: string | null;
+  qlda_form: string | null;
+  disbursement_deadline: string | null;
   total_investment: string;
   start_date: string | null;
   end_date: string | null;
@@ -39,6 +42,10 @@ export interface ContractSummaryRow {
   signed_date: string | null;
   expiration_date: string | null;
   contract_value: string;
+  contractor_name: string | null;
+  role_label: string | null;
+  contact_person: string | null;
+  status_note: string | null;
 }
 
 export interface ProjectOverview {

@@ -37,6 +37,16 @@ const DECISION = {
   note: null,
 };
 
+const BUDGET_ITEM = {
+  id: "b1",
+  project_id: PROJECT_ID,
+  category: "SOFTWARE",
+  label: "Chi phí phần mềm",
+  amount: "5447400000.00",
+  note: "Giá trúng HĐ trên khai 4.848.186.000 đ",
+  sort_order: 1,
+};
+
 const CONTRACT = {
   id: "c1",
   project_id: PROJECT_ID,
@@ -134,6 +144,8 @@ function bodyForPath(path: string): unknown {
   if (path.endsWith("/risk-matrix")) return RISK_MATRIX;
   if (path.endsWith("/legal-documents")) return [LEGAL_DOCUMENT];
   if (path.endsWith("/file-register")) return [FILE_ENTRY];
+  if (path.endsWith("/budget-items")) return [BUDGET_ITEM];
+  if (path.endsWith("/technical-requirements")) return [];
   if (path.endsWith("/legal-decisions")) return [DECISION];
   if (path.endsWith("/contracts")) return [CONTRACT];
   return PROJECT;
@@ -199,6 +211,19 @@ test.describe("Tracking: các màn hình theo dự án", () => {
 
     // Assert
     await expect(page.getByText("5.999.498.939 đ").first()).toBeVisible();
+  });
+
+  test("tổng quan hiển thị ba mục và khoản chi theo số tiền", async ({ page }) => {
+    // Arrange
+    // Act
+    await openTrackingPage(page, "overview");
+
+    // Assert
+    await expect(page.getByRole("heading", { name: /^I\. Thông tin pháp lý/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^II\. Ma trận hợp đồng/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^III\. Quy mô kỹ thuật/ })).toBeVisible();
+    await expect(page.getByText("Chi phí phần mềm")).toBeVisible();
+    await expect(page.getByText("5.447.400.000 đ")).toBeVisible();
   });
 
   test("quyết định hiển thị số quyết định phê duyệt", async ({ page }) => {

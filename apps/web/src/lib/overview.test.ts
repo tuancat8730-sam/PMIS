@@ -22,6 +22,9 @@ const PROJECT: ProjectSummary = {
   name: "Xây dựng hệ thống quản lý dữ liệu về cơ sở vật chất",
   investor_name: "Sở GD&ĐT TP.HCM",
   decision_authority: "UBND TP.HCM",
+  legal_representative: null,
+  qlda_form: null,
+  disbursement_deadline: null,
   total_investment: "5999498939.00",
   start_date: null,
   end_date: null,
@@ -47,6 +50,10 @@ const CONTRACT: ContractSummaryRow = {
   signed_date: "2026-09-21",
   expiration_date: null,
   contract_value: "4848186000.00",
+  contractor_name: null,
+  role_label: null,
+  contact_person: null,
+  status_note: null,
 };
 
 function routeByPath(path: string): Response {

@@ -12,6 +12,10 @@ const CONTRACT: ContractSummaryRow = {
   signed_date: "2026-09-21",
   expiration_date: null,
   contract_value: "4848186000.00",
+  contractor_name: null,
+  role_label: null,
+  contact_person: null,
+  status_note: null,
 };
 
 describe("ContractsView", () => {
