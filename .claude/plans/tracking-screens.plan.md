@@ -82,11 +82,12 @@
 | 3.3 | Web: `/projects/[id]/files` | ✅ | `src/lib/file-register.ts`, `src/components/tracking/file-register-table.tsx`, `src/app/projects/[projectId]/files/page.tsx`. Vitest 72 test xanh, tsc và eslint sạch |
 | 3.4 | Seed sheet 5 HCM (20 dòng) và LD (2 dòng) | ✅ | `hcm_file_register.json` từ Excel sheet 5. LD chỉ có 2 dòng nguồn xác nhận (Serial 320 bộ, Kế hoạch bố trí xe). Cột pháp lý, bảo mật và hành động để trống cho LD, không đoán. Test `test_seed_file_register.py` xanh |
 
-### Pha 4: Tổng quan dự án (sheet 1)
+### Pha 4: Tổng quan dự án (sheet 1) — ✅ xong, nhánh `feat/tracking-pha4` (xếp chồng trên `feat/tracking-pha3`)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 4.1 | Migration `project_legal_decisions` | ⬜ | |
-| 4.2 | Web: `/projects/[id]/overview`, hiển thị TMĐT, nguồn vốn, ma trận hợp đồng | ⬜ | |
+| 4.1 | Migration `project_legal_decisions` | ✅ | Migration `c4f8a2d6e1b9` (nối sau `b3e7f1a9c2d5`). Enum `legal_decision_kind`, unique `(project_id, decision_no)`. Cột `amount`, `funding_source`, `execution_period` nằm ở đây theo plan |
+| 4.2 | Web: `/projects/[id]/overview`, hiển thị TMĐT, nguồn vốn, ma trận hợp đồng | ✅ | `src/lib/overview.ts`, `src/components/tracking/overview-view.tsx`, `src/app/projects/[projectId]/overview/page.tsx`. Gọi song song `/projects/{id}`, `/legal-decisions`, `/contracts`. Vitest 79 test xanh, tsc và eslint sạch |
+| 4.3 | API đọc `GET /projects/{id}/legal-decisions`; seed HCM 4 quyết định, LD 2 quyết định | ✅ | Chỉ có đọc. Chưa có API ghi, seed là nguồn duy nhất. LD không có dòng phê duyệt dự án (QĐ 2891 chưa đọc), nên nguồn vốn và thời gian thực hiện LD để trống. API: 549 test xanh, ruff sạch |
 
 ### Pha 5: Seed và kiểm chứng
 | ID | Việc | Trạng thái | Ghi chú |
