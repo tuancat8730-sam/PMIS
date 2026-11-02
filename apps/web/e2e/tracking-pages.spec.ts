@@ -226,6 +226,17 @@ test.describe("Tracking: các màn hình theo dự án", () => {
     await expect(page.getByText("5.447.400.000 đ")).toBeVisible();
   });
 
+  test("trang chi tiết dự án có nút quay lại danh sách dự án", async ({ page }) => {
+    // Arrange
+    await openTrackingPage(page, "");
+
+    // Act
+    await page.getByRole("link", { name: "Quay lại danh sách dự án" }).click();
+
+    // Assert
+    await expect(page).toHaveURL(/\/projects$/);
+  });
+
   test("quyết định hiển thị số quyết định phê duyệt", async ({ page }) => {
     // Arrange
     // Act
