@@ -52,6 +52,32 @@ Frontend đọc URL API từ `NEXT_PUBLIC_API_URL` (mặc định `http://localh
 
 `make up` / `make down` chạy `docker compose` (Postgres 16, Redis 7, api, web). Compose đọc `.env` ở gốc nên phải tạo `.env` từ `.env.example` trước. Chưa kiểm chứng `docker compose up` end-to-end trên máy phát triển hiện tại.
 
+### Triển khai lên VPS
+
+Máy chủ: `deploy@103.9.78.91` (1 GB RAM, dùng chung với dự án `qlda`). PMIS chạy như project compose `pmis` tại `~/pmis` trên server, truy cập qua `http://103.9.78.91:8080` (chưa có tên miền, chưa có HTTPS). `qlda` giữ cổng 80, không đụng vào.
+
+```bash
+scripts/deploy-vps.sh                      # build, gửi image, migrate, khởi động, kiểm tra health
+SEED_ADMIN=1 scripts/deploy-vps.sh         # chỉ lần đầu: tạo ADMIN và in mật khẩu tạm một lần
+```
+
+Yêu cầu trên máy local: SSH key tới `deploy@103.9.78.91` (BatchMode, không hỏi mật khẩu), Docker build `linux/amd64`, `openssl`, `rsync`, `curl`. Nếu dùng Colima và `DOCKER_HOST` đã được đặt, phải trỏ đúng socket: `DOCKER_HOST=unix://$HOME/.colima/default/docker.sock scripts/deploy-vps.sh`, nếu không Docker CLI bỏ qua context Colima và lỗi.
+
+Cách script hoạt động:
+- Build image API (`apps/api`) và web (`apps/web`) trên máy local vì server không đủ RAM để build. Web nhận `NEXT_PUBLIC_API_URL=http://103.9.78.91:8080` lúc build.
+- Gửi image qua SSH bằng `docker save | gzip | ssh gunzip | docker load`. Gửi `deploy/vps/docker-compose.yml` và `deploy/vps/Caddyfile` vào `~/pmis`.
+- `.env` trên server chỉ được tạo một lần, với bí mật ngẫu nhiên (mật khẩu DB, `JWT_SECRET`, `CCCD_ENCRYPTION_KEY`). Các lần sau chỉ cập nhật `IMAGE_TAG`. Không xóa `.env` trên server, nếu không DB và bí mật sẽ không khớp.
+- Chạy `alembic upgrade head` (service `migrate`) trước khi khởi động API. Migration được áp dụng trên DB thật của server.
+- `docker compose up -d --remove-orphans` trong project `pmis`, rồi `docker image prune -f` (chỉ xóa image dangling).
+- Kiểm tra `GET /api/v1/health` tối đa 20 lần, mỗi lần cách 3 giây.
+
+Lưu ý khi deploy:
+- Script build từ **thư mục làm việc hiện tại**, không từ git. Nhánh đang checkout và các thay đổi chưa commit đều được deploy. Nên deploy từ `main` (hoặc nhánh đã merge) để server khớp với lịch sử git.
+- Caddy trên server chỉ chuyển `/api/*` tới API, còn lại tới web (Next.js). OpenAPI của FastAPI nằm ở `/openapi.json` gốc, không phải `/api/v1/openapi.json`.
+- Compose trên VPS **không có service `worker` (ARQ) và Redis**. Lịch quét Drive 15 phút chưa chạy trên server; chỉ có nút "Quét ngay". Muốn bật lịch tự quét phải thêm service worker và Redis vào `deploy/vps/docker-compose.yml`.
+- Rollback chưa được kiểm thử: về lý thuyết là đặt `IMAGE_TAG` về tag cũ rồi `docker compose up -d`, nhưng migration đã chạy không tự lùi được.
+- Xem log khi lỗi: `ssh deploy@103.9.78.91 'cd pmis && docker compose logs --tail=50'`.
+
 ## Architecture
 
 ### Monorepo

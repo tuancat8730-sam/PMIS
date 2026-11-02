@@ -1,0 +1,71 @@
+# Stack PMIS trên VPS dùng chung (1 GB RAM + swap). Chạy cùng VPS với qlda nên mọi tên và cổng
+# đều tách riêng: project "pmis", Caddy publish cổng 8080 (qlda giữ cổng 80).
+# Chỉ Caddy mở cổng ra ngoài; DB nằm trong mạng nội bộ của compose.
+# Chạy từ scripts/deploy-vps.sh. Cấu hình lấy từ ./.env (sinh tự động lần đầu deploy).
+
+name: pmis
+
+x-api: &api
+  image: pmis-api:${IMAGE_TAG:-latest}
+  env_file: .env
+  restart: unless-stopped
+
+services:
+  db:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: pmis
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+      POSTGRES_DB: pmis
+    # Tinh chỉnh cho máy nhỏ: ứng dụng giữ tối đa vài kết nối
+    command: >
+      postgres -c shared_buffers=64MB -c effective_cache_size=192MB -c work_mem=4MB
+      -c maintenance_work_mem=32MB -c max_connections=30
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pmis -d pmis"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    mem_limit: 256m
+
+  api:
+    <<: *api
+    command: uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8000
+    # Khóa service account Drive nằm trên server (không nằm trong image), chỉ đọc
+    environment:
+      DRIVE_SERVICE_ACCOUNT_FILE: /run/secrets/pmis-drive.json
+    volumes:
+      - ./secrets/pmis-drive.json:/run/secrets/pmis-drive.json:ro
+    depends_on:
+      db: { condition: service_healthy }
+    mem_limit: 256m
+
+  web:
+    image: pmis-web:${IMAGE_TAG:-latest}
+    restart: unless-stopped
+    mem_limit: 256m
+
+  caddy:
+    image: caddy:2.11
+    restart: unless-stopped
+    ports: ["8080:80"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    depends_on: [api, web]
+    mem_limit: 64m
+
+  # Chạy một lần: docker compose run --rm migrate
+  migrate:
+    <<: *api
+    profiles: [tools]
+    restart: "no"
+    command: alembic upgrade head
+    depends_on:
+      db: { condition: service_healthy }
+
+volumes:
+  pgdata:
+  caddy-data:
