@@ -1,10 +1,10 @@
 from io import BytesIO
 
 import pytest
-from app.services.report_templates import ReportKind, get_template
 from docx import Document
 
 from app.services.docx_generator import RenderedSection, render_report_docx
+from app.services.report_templates import ReportKind, get_template
 
 pytestmark = pytest.mark.unit
 
