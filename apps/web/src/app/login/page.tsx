@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 import { LoginForm } from "@/components/login/login-form";
 
-export const COMMAND_CENTER_HREF = "/command-center";
+export const PROJECTS_HREF = "/projects";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function LoginPage() {
         </p>
         <h1 className="text-3xl font-semibold text-neutral-900">Đăng nhập</h1>
       </header>
-      <LoginForm onLoggedIn={() => router.replace(COMMAND_CENTER_HREF)} />
+      <LoginForm onLoggedIn={() => router.replace(PROJECTS_HREF)} />
     </main>
   );
 }
