@@ -89,12 +89,12 @@
 | 4.2 | Web: `/projects/[id]/overview`, hiển thị TMĐT, nguồn vốn, ma trận hợp đồng | ✅ | `src/lib/overview.ts`, `src/components/tracking/overview-view.tsx`, `src/app/projects/[projectId]/overview/page.tsx`. Gọi song song `/projects/{id}`, `/legal-decisions`, `/contracts`. Vitest 79 test xanh, tsc và eslint sạch |
 | 4.3 | API đọc `GET /projects/{id}/legal-decisions`; seed HCM 4 quyết định, LD 2 quyết định | ✅ | Chỉ có đọc. Chưa có API ghi, seed là nguồn duy nhất. LD không có dòng phê duyệt dự án (QĐ 2891 chưa đọc), nên nguồn vốn và thời gian thực hiện LD để trống. API: 549 test xanh, ruff sạch |
 
-### Pha 5: Seed và kiểm chứng
+### Pha 5: Seed và kiểm chứng — ✅ xong, nhánh `feat/tracking-pha5` (xếp chồng trên `feat/tracking-pha4`)
 | ID | Việc | Trạng thái | Ghi chú |
 |---|---|---|---|
-| 5.1 | Seed SGD-HCM và SGD-LD theo bảng ánh xạ | ⬜ | |
-| 5.2 | pytest (unit, integration), vitest, Playwright cho từng trang | ⬜ | |
-| 5.3 | ruff, `alembic check`, chạy seed hai lần | ⬜ | |
+| 5.1 | Seed SGD-HCM và SGD-LD theo bảng ánh xạ | ✅ | Chạy `seed_real_projects` trên `pmis_test`. Lần 1 thêm đủ dữ liệu của cả hai dự án. Lần 2 thêm 0 ở mọi bảng (idempotent). Chưa chạy trên DB dev, chờ xác nhận |
+| 5.2 | pytest (unit, integration), vitest, Playwright cho từng trang | ✅ | pytest 549 passed, cov 84%. Vitest 79 passed. Playwright `e2e/tracking-pages.spec.ts`: 5 test xanh trên chromium (lịch, rủi ro, pháp lý, file, tổng quan), API mock. `pnpm build` biên dịch được 5 route |
+| 5.3 | ruff, `alembic check`, chạy seed hai lần | ✅ | ruff check và format sạch. `alembic check` sạch ở head `c4f8a2d6e1b9`. Round-trip từng migration của Pha 3 và Pha 4 OK |
 
 ## Bảng ánh xạ (Pha 0)
 
