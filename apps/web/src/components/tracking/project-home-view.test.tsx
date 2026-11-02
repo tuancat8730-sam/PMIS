@@ -35,7 +35,7 @@ describe("ProjectHomeView", () => {
     expect(html).toContain('href="/projects/p1/contracts"');
   });
 
-  it("lists the overview first, then the six sections in the order of the Excel sheets", () => {
+  it("lists the overview first, then the six Excel sheets, then the Drive files tab", () => {
     // Arrange
     const expectedLabels = [
       "Tổng quan",
@@ -43,6 +43,7 @@ describe("ProjectHomeView", () => {
       "Rủi ro",
       "Pháp lý",
       "File",
+      "Tệp Drive",
       "Quyết định",
       "Hợp đồng",
     ];
