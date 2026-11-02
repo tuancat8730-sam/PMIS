@@ -8,6 +8,7 @@ from app.api.v1 import (
     delivery_handovers,
     disbursements,
     drive,
+    drive_content,
     drive_uploads,
     equipment,
     field,
@@ -57,4 +58,5 @@ api_router.include_router(legal_documents.router)
 api_router.include_router(file_register.router)
 api_router.include_router(project_legal_decisions.router)
 api_router.include_router(drive.router)
+api_router.include_router(drive_content.router)
 api_router.include_router(drive_uploads.router)
