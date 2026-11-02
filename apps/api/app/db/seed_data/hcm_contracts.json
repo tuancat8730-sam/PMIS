@@ -2,16 +2,77 @@
   {
     "package_name": "Gói thầu chính",
     "package_kind": "MAIN",
-    "contract_value": "4848186000.00"
+    "contract_number": "29/HĐKT-DVN",
+    "signed_date": "2026-09-21",
+    "contract_value": "4848186000.00",
+    "role_label": "Nhà thầu thi công",
+    "contractor_name": "Liên danh DVN (DTH 95% - VietFuture 5%)",
+    "contact_person": "Nguyễn Duy Khánh (DTH - Trưởng nhóm), Nguyễn Đình Đạt (VietFuture)",
+    "status_note": "ĐÃ CÓ BẢN SCAN KÝ CHÍNH THỨC (11 trang)"
   },
   {
     "package_name": "Gói TVGS",
     "package_kind": "CONSULTING",
-    "contract_value": "120000000.00"
+    "contract_number": "24.8.26/HĐTV/SGDĐT-CRYSTAL",
+    "signed_date": "2026-08-24",
+    "expiration_date": "2027-01-21",
+    "contract_value": "120000000.00",
+    "role_label": "Tư vấn giám sát",
+    "contractor_name": "Công ty TNHH Đầu tư Thiết bị Crystal",
+    "contact_person": "Thái Thanh Hưng (GS trưởng), Thuy, Luận",
+    "status_note": "Giám sát 8 bước, 10 điểm dừng HG-H9, H10"
   },
   {
     "package_name": "Gói TVQLDA",
     "package_kind": "CONSULTING",
-    "contract_value": "109000000.00"
+    "contract_number": "248/HĐKT-QLDA",
+    "signed_date": "2026-08-24",
+    "expiration_date": "2027-01-21",
+    "contract_value": "109000000.00",
+    "role_label": "Tư vấn quản lý dự án",
+    "contractor_name": "Công ty TNHH TM DV & Tư vấn Sài Gòn Mới",
+    "contact_person": "A.Tuấn (Chủ trì QLDA), A.Tiến (Thư ký)",
+    "status_note": "Chủ trì điều hành giao ban tuần, tracking tiến độ"
+  },
+  {
+    "package_name": "Tư vấn lập HSMT và ĐGHSDT",
+    "package_kind": "CONSULTING",
+    "contract_number": "01-2026/HĐTV-SGD-HMV",
+    "signed_date": "2026-07-10",
+    "contract_value": "23000000.00",
+    "role_label": "Tư vấn lập HSMT&ĐGHSDT",
+    "contractor_name": "Công ty TNHH Hoàng Minh Vi",
+    "contact_person": "Đại diện Hoàng Minh Vi",
+    "status_note": "Đã bàn giao; Biên bản nghiệm thu còn thiếu"
+  },
+  {
+    "package_name": "Tư vấn thẩm định KQLCNT",
+    "package_kind": "CONSULTING",
+    "contract_number": "01-26/HĐTĐ-SGD-TT",
+    "signed_date": "2026-07-10",
+    "contract_value": "11000000.00",
+    "role_label": "Tư vấn thẩm định KQLCNT",
+    "contractor_name": "Công ty TNHH Tư vấn Đầu tư Trường Thịnh",
+    "contact_person": "Đại diện Trường Thịnh"
+  },
+  {
+    "package_name": "Tư vấn lập BCKTKT",
+    "package_kind": "CONSULTING",
+    "contract_number": "01-2025/HĐ/SGDHCM-SGM",
+    "signed_date": "2025-09-16",
+    "contract_value": "214148189.00",
+    "role_label": "Tư vấn lập BCKTKT",
+    "contractor_name": "Công ty Sài Gòn Mới",
+    "contact_person": "Đại diện Sài Gòn Mới"
+  },
+  {
+    "package_name": "Tư vấn thẩm tra BCKTKT",
+    "package_kind": "CONSULTING",
+    "contract_number": "01.2025/HĐTTDA-SGD-TT",
+    "signed_date": "2025-09-17",
+    "contract_value": "7560000.00",
+    "role_label": "Tư vấn thẩm tra BCKTKT",
+    "contractor_name": "Công ty Trường Thịnh",
+    "contact_person": "Đại diện Trường Thịnh"
   }
 ]

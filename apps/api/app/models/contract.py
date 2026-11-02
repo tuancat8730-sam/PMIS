@@ -24,3 +24,7 @@ class Contract(Base):
     expiration_date: Mapped[date | None] = mapped_column(Date)
     contract_value: Mapped[Decimal] = mapped_column(Numeric(18, 2))
     package_kind: Mapped[str] = mapped_column(String(20), server_default=text("'MAIN'"))
+    contractor_name: Mapped[str | None] = mapped_column(Text)
+    role_label: Mapped[str | None] = mapped_column(String(100))
+    contact_person: Mapped[str | None] = mapped_column(Text)
+    status_note: Mapped[str | None] = mapped_column(Text)
