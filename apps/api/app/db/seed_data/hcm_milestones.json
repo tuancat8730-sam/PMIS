@@ -1,21 +1,112 @@
 [
   {
+    "code": "H0",
+    "name": "Khởi động gói thầu",
+    "baseline_end": "2026-09-29",
+    "adjusted_end": "2026-09-29",
+    "is_hard_deadline": false,
+    "deliverables": "Dự thảo BB họp khởi động, Sơ đồ tổ chức nhân sự thi công",
+    "acceptance_conditions": "Hợp đồng đã ký, bảo lãnh thực hiện HĐ nộp đủ, nhân sự đầy đủ",
+    "tvgs_checkpoint": "Điểm dừng H0",
+    "pm_comment": "Trạng thái: Đang hoàn tất chữ ký. Mới có dự thảo Word; yêu cầu DVN và 3 bên ký chính thức tại cuộc họp 30/10"
+  },
+  {
     "code": "M1",
-    "name": "Mốc M1 (cần xác nhận tên theo hợp đồng)",
+    "name": "Khảo sát, thu thập & Phân tích yêu cầu (SRS)",
     "baseline_end": "2026-10-07",
     "adjusted_end": "2026-11-05",
-    "is_hard_deadline": false
+    "is_hard_deadline": false,
+    "deliverables": "BB khảo sát 8 đơn vị có ký đóng dấu, Báo cáo tổng hợp, Đặc tả SRS, Ma trận phân quyền",
+    "acceptance_conditions": "TVGS & CĐT ký Biên bản nghiệm thu kết quả khảo sát (SRS khóa đường cơ sở)",
+    "tvgs_checkpoint": "Điểm dừng H2",
+    "pm_comment": "Trạng thái: Đang cuốn chiếu. Chậm 13-16 ngày do chờ CV cử đầu mối; đã bù bằng khảo sát cuốn chiếu (xong LHP 28/10). Hạn nộp BC: 03/11, khóa SRS: 05/11"
+  },
+  {
+    "code": "M2",
+    "name": "Thiết kế hệ thống (Kiến trúc, CSDL, Giao diện)",
+    "baseline_end": "2026-10-13",
+    "adjusted_end": "2026-11-08",
+    "is_hard_deadline": false,
+    "deliverables": "Thuyết minh kỹ thuật chi tiết, Thiết kế CSDL, Đặc tả OpenAPI Swagger, Prototype UI/UX",
+    "acceptance_conditions": "Khớp kiến trúc 3 lớp, Cloud trong nước, CSDL PostgreSQL; TVGS thẩm tra đạt",
+    "tvgs_checkpoint": "Điểm dừng H3",
+    "pm_comment": "Trạng thái: Đang lập hồ sơ. Nhà thầu đang cập nhật thiết kế chi tiết theo kết quả khảo sát; hoàn thiện trước 08/11/2026"
+  },
+  {
+    "code": "M3",
+    "name": "Xây dựng & Tích hợp phiên bản phần mềm",
+    "baseline_end": "2026-11-06",
+    "adjusted_end": "2026-11-06",
+    "is_hard_deadline": false,
+    "deliverables": "Bản cài đặt Staging/Test, Source code, API liên thông, Module tích hợp SSO",
+    "acceptance_conditions": "Đủ 12 phân hệ chức năng theo HĐ; sẵn sàng kết nối SSO SAML/OIDC",
+    "tvgs_checkpoint": "Điểm dừng H5",
+    "pm_comment": "Trạng thái: Đang thực hiện. Đã kiểm thử nội bộ 8 chức năng cốt lõi (Ghi tăng, Báo hỏng, Kiểm kê, Dashboard...). Cần ghép API đúng hạn 06/11"
+  },
+  {
+    "code": "M4",
+    "name": "Chuẩn hóa & Chuyển đổi dữ liệu CSVC/thiết bị",
+    "baseline_end": "2026-11-05",
+    "adjusted_end": "2026-11-08",
+    "is_hard_deadline": false,
+    "deliverables": "CSDL đã làm sạch và chuyển đổi của các trường thí điểm; Biên bản đối soát số liệu",
+    "acceptance_conditions": "Khớp quy tắc mã định danh (CR 16/10); mã hóa AES-256; cam kết bảo mật & xóa hủy",
+    "tvgs_checkpoint": "Điểm dừng H4",
+    "pm_comment": "Trạng thái: Đang thực hiện. Đã thu thập dữ liệu thô THPT Lê Hồng Phong; đang chuyển đổi. Chờ CĐT phê duyệt chính thức CR mã thiết bị"
+  },
+  {
+    "code": "M5",
+    "name": "Kiểm thử hệ thống & Nghiệm thu UAT",
+    "baseline_end": "2026-11-11",
+    "adjusted_end": "2026-11-15",
+    "is_hard_deadline": false,
+    "deliverables": "Kịch bản kiểm thử (Test cases), Báo cáo QA/QC, Biên bản UAT có chữ ký người dùng",
+    "acceptance_conditions": "Tải đồng thời ≥ 3.600 CCU; phản hồi < 2s; tải 4G < 3s; xử lý hết lỗi Blocker/Critical",
+    "tvgs_checkpoint": "Điểm dừng H6",
+    "pm_comment": "Trạng thái: Đang lập kịch bản. Báo cáo tuần 4 vẫn ghi Kế hoạch kiểm thử/nghiệm thu đang lập. ĐÒI NỢ GẮP: Buộc DVN nộp trước 03/11 để duyệt"
+  },
+  {
+    "code": "M6",
+    "name": "Đào tạo & Chuyển giao sử dụng",
+    "baseline_end": "2026-11-18",
+    "adjusted_end": "2026-11-20",
+    "is_hard_deadline": false,
+    "deliverables": "Bộ tài liệu HDSD (bản in + video bài giảng), Danh sách điểm danh & đánh giá học viên",
+    "acceptance_conditions": "Hoàn thành đào tạo cho cán bộ Sở, Phòng GD&ĐT và đại diện các trường",
+    "tvgs_checkpoint": "Điểm dừng H7",
+    "pm_comment": "Trạng thái: Chưa bắt đầu. Cần kết hợp đào tạo trực tiếp cán bộ cốt cán và video trực tuyến cho ~1.670 trường để đảm bảo độ phủ"
+  },
+  {
+    "code": "M7",
+    "name": "Vận hành thử nghiệm hệ thống",
+    "baseline_end": "2026-11-25",
+    "adjusted_end": "2026-11-26",
+    "is_hard_deadline": false,
+    "deliverables": "Báo cáo nhật ký vận hành thử nghiệm (5–7 ngày), Log theo dõi Uptime (đạt ≥ 99.9%)",
+    "acceptance_conditions": "Hệ thống vận hành ổn định trên môi trường thật; không phát sinh lỗi nghiêm trọng; RTO ≤ 4h",
+    "tvgs_checkpoint": "Điểm dừng H8",
+    "pm_comment": "Trạng thái: Chưa bắt đầu. BẮT BUỘC: Hồ sơ ATTT Cấp độ 3 phải được phê duyệt trước khi kích hoạt vận hành thử nghiệm"
   },
   {
     "code": "M8",
-    "name": "Nghiệm thu",
+    "name": "NGHIỆM THU TOÀN DIỆN & BÀN GIAO GÓI THẦU",
     "baseline_end": "2026-11-30",
-    "is_hard_deadline": true
+    "adjusted_end": null,
+    "is_hard_deadline": true,
+    "deliverables": "Trọn bộ Hồ sơ nghiệm thu tổng thể cấp CĐT, Biên bản bàn giao đưa vào sử dụng chính thức",
+    "acceptance_conditions": "Hội đồng nghiệm thu (CĐT, TVGS, QLDA, DVN) ký Biên bản nghiệm thu hoàn thành",
+    "tvgs_checkpoint": "Điểm dừng H9",
+    "pm_comment": "Trạng thái: Mốc cố định (chặn). CỘT MỐC CỐ ĐỊNH: Bắt buộc hoàn thành đúng 30/11/2026 để kịp làm thủ tục giải ngân vốn năm 2026"
   },
   {
     "code": "M9",
-    "name": "Giải ngân",
+    "name": "THANH LÝ HỢP ĐỒNG & GIẢI NGÂN NGUỒN VỐN",
     "baseline_end": "2026-12-09",
-    "is_hard_deadline": true
+    "adjusted_end": null,
+    "is_hard_deadline": true,
+    "deliverables": "Biên bản thanh lý HĐ, Hóa đơn tài chính hợp lệ, Giấy đề nghị thanh toán, Hồ sơ kho bạc",
+    "acceptance_conditions": "Kho bạc Nhà nước chấp thuận thanh toán và giải ngân 100% giá trị hợp đồng",
+    "tvgs_checkpoint": "Quyết toán vốn",
+    "pm_comment": "Trạng thái: Hạn chót giải ngân. HẠN CHÓT NIÊN ĐỘ TÀI CHÍNH 2026: Tránh bị thu hồi vốn chi sự nghiệp về ngân sách Thành phố"
   }
 ]

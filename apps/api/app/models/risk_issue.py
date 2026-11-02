@@ -39,6 +39,15 @@ class RiskStatus(StrEnum):
     CLOSED = "CLOSED"
 
 
+class RiskLevel(StrEnum):
+    """Mức tác động và mức khả năng xảy ra; điểm rủi ro = thứ hạng tác động × thứ hạng khả năng."""
+
+    LOW = "LOW"
+    MEDIUM = "MEDIUM"
+    HIGH = "HIGH"
+    VERY_HIGH = "VERY_HIGH"
+
+
 class RiskIssue(Base):
     __tablename__ = "project_risks_and_issues"
     __table_args__ = (UniqueConstraint("project_id", "code", name="uq_risk_issues_project_code"),)
@@ -74,6 +83,13 @@ class RiskIssue(Base):
     owner: Mapped[str | None] = mapped_column(String(OWNER_MAX_LENGTH), default=None)
     due_date: Mapped[date | None] = mapped_column(Date, default=None)
     resolution_ref: Mapped[str | None] = mapped_column(Text, default=None)
+    impact: Mapped[RiskLevel | None] = mapped_column(
+        Enum(RiskLevel, name="risk_level", values_callable=enum_values), default=None
+    )
+    likelihood: Mapped[RiskLevel | None] = mapped_column(
+        Enum(RiskLevel, name="risk_level", values_callable=enum_values), default=None
+    )
+    coordinating_units: Mapped[str | None] = mapped_column(Text, default=None)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         server_default=func.now(),

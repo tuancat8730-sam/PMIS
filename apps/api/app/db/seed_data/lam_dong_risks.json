@@ -1,0 +1,82 @@
+[
+  {
+    "record_type": "RISK",
+    "title": "Chưa có CO, CQ và đủ serial cho lô Đợt 1",
+    "description": "Phiếu kiểm máy tính mẫu A3520 và H4350G chưa có kết quả đối chiếu. Serial mới 320/1.420 bộ. Chưa có hồ sơ CO, CQ theo lô.\nNguồn: Báo cáo tuần QLDA lần 1 tuần 03 (28/10/2026). Mức tác động và khả năng chưa đánh giá trong nguồn.",
+    "category": "Chất lượng hàng hóa",
+    "priority": "HIGH",
+    "owner": "Liên danh nhà thầu",
+    "coordinating_units": "Phối hợp: TVGS, QLDA",
+    "mitigation_action": "Yêu cầu nhà thầu gửi đủ serial, CO/CQ trước hoặc cùng ngày giao hàng"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Liên danh chưa gửi báo cáo tiến độ hằng tuần",
+    "description": "Chưa có số liệu đặt hàng, giao hàng và lắp đặt từng điểm theo thống nhất ngày 21/10.\nNguồn: Báo cáo tuần QLDA lần 1 tuần 03.",
+    "category": "Báo cáo",
+    "priority": "MEDIUM",
+    "owner": "Liên danh nhà thầu",
+    "coordinating_units": "Phối hợp: QLDA, TVGS",
+    "mitigation_action": "Gửi báo cáo tuần vào thứ Sáu và bản chụp biên bản đã ký trong ngày giao hàng"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Quyết định phê duyệt Đề cương TVGS và Tổ nghiệm thu chưa ban hành",
+    "description": "QĐ phê duyệt Đề cương TVGS ở dạng dự thảo. QĐ thành lập Tổ nghiệm thu chưa xác nhận số ban hành.\nNguồn: Báo cáo tuần 03; Kế hoạch bố trí xe ghi QĐ 3748 ngày 28/10.",
+    "category": "Pháp lý",
+    "priority": "HIGH",
+    "owner": "Sở GDĐT (Phòng KHTC)",
+    "coordinating_units": "Phối hợp: QLDA, TVGS",
+    "mitigation_action": "Trình Giám đốc Sở ký QĐ phê duyệt Đề cương TVGS và QĐ thành lập Tổ nghiệm thu"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Hồ sơ giai đoạn chuẩn bị đầu tư chưa bàn giao cho QLDA",
+    "description": "QLDA chưa có hồ sơ chuẩn bị đầu tư để lập chỉ mục và cập nhật phần mềm quản lý dự án. Chưa có số liệu TMĐT, kế hoạch vốn, tạm ứng và giải ngân.\nNguồn: Báo cáo tuần 03, phần V và VI.",
+    "category": "Hồ sơ",
+    "priority": "MEDIUM",
+    "owner": "Sở GDĐT (Phòng KHTC)",
+    "coordinating_units": "Phối hợp: QLDA",
+    "mitigation_action": "Cung cấp hồ sơ chuẩn bị đầu tư và số liệu giải ngân"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Mẫu bàn ghế làm lại và mẫu Đợt 3 chưa được trình",
+    "description": "Mẫu bàn ghế do Liên Thành Phát gia công đang làm lại theo yêu cầu CĐT. Mẫu từng danh mục thiết bị Đợt 3 chưa trình.\nNguồn: Báo cáo tuần 03.",
+    "category": "Hàng mẫu",
+    "priority": "HIGH",
+    "owner": "Liên danh nhà thầu",
+    "coordinating_units": "Phối hợp: CĐT, TVGS",
+    "mitigation_action": "Hoàn thành làm lại mẫu bàn ghế và trình mẫu Đợt 3 trước Đợt 2"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Thiếu biên bản bàn giao có chữ ký đóng dấu của 7 đơn vị",
+    "description": "Chưa có bản đóng dấu tại 1.3, 1.6, 2.18, 5.3, 5.4, 5.6, 5.7 trong sổ theo dõi Ra soát lần 3.\nNguồn: Ra soát lần 3 (sheet Danh sách).",
+    "category": "Hồ sơ",
+    "priority": "MEDIUM",
+    "owner": "QLDA",
+    "coordinating_units": "Phối hợp: các đơn vị thụ hưởng",
+    "mitigation_action": "Thu biên bản có đóng dấu trước khi nghiệm thu"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Mốc Đợt 2 chưa thống nhất giữa các văn bản",
+    "description": "Tờ trình và công văn ghi 16/11; Báo cáo tuần và Phụ lục danh mục ghi 20/11.\nNguồn: Tờ trình 2710/TTr-ALT; Phụ lục danh mục thiết bị.",
+    "category": "Kế hoạch",
+    "priority": "MEDIUM",
+    "owner": "QLDA",
+    "coordinating_units": "Phối hợp: Sở GDĐT, Liên danh nhà thầu",
+    "mitigation_action": "Chốt một mốc và thông báo lại các đơn vị thụ hưởng"
+  },
+  {
+    "record_type": "RISK",
+    "title": "Danh sách đơn vị có sai lệch về số HS lớp 10 và tên trường",
+    "description": "8 đơn vị ghi HS lớp 10 = 35 có thể là giá trị mặc định. 61 sheet đơn vị ghi tên trường là placeholder.\nNguồn: Ra soát lần 3.",
+    "category": "Dữ liệu",
+    "priority": "LOW",
+    "owner": "QLDA",
+    "coordinating_units": "Phối hợp: các đơn vị thụ hưởng",
+    "mitigation_action": "Đối chiếu HS lớp 10 và tên trường với Danh sách trường theo cụm"
+  }
+]

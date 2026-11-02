@@ -14,15 +14,18 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from app.core.config import get_settings
 from app.models.contract import Contract
 from app.models.project import Project, ProjectArchetype
+from app.models.risk_issue import RiskIssue
 from app.schemas.beneficiary_units import BeneficiaryUnitCreate
 from app.schemas.contracts import ContractCreate
 from app.schemas.milestones import MilestoneCreate
 from app.schemas.projects import ProjectCreate
+from app.schemas.risk_issues import RiskIssueCreate
 from app.services.audit import record_audit
 from app.services.beneficiary_units import create_unit, find_unit_by_code
 from app.services.contracts import create_contract
 from app.services.milestones import create_milestone, find_milestone_by_code
 from app.services.projects import create_project
+from app.services.risk_issues import create_risk_issue
 
 logger = logging.getLogger(__name__)
 
@@ -30,8 +33,11 @@ SEED_DATA_DIR = Path(__file__).resolve().parent / "seed_data"
 HCM_UNITS_FILE = SEED_DATA_DIR / "hcm_survey_units.json"
 HCM_MILESTONES_FILE = SEED_DATA_DIR / "hcm_milestones.json"
 HCM_CONTRACTS_FILE = SEED_DATA_DIR / "hcm_contracts.json"
+HCM_RISKS_FILE = SEED_DATA_DIR / "hcm_risks.json"
 LAM_DONG_UNITS_FILE = SEED_DATA_DIR / "lam_dong_units.json"
 LAM_DONG_CONTRACTS_FILE = SEED_DATA_DIR / "lam_dong_contracts.json"
+LAM_DONG_MILESTONES_FILE = SEED_DATA_DIR / "lam_dong_milestones.json"
+LAM_DONG_RISKS_FILE = SEED_DATA_DIR / "lam_dong_risks.json"
 
 HCM_PROJECT = ProjectCreate(
     code="SGD-HCM-CSVC-2026",
@@ -130,6 +136,36 @@ async def ensure_milestones(
     return inserted
 
 
+async def ensure_risks(session: AsyncSession, project: Project, rows: list[dict[str, Any]]) -> int:
+    """Thêm rủi ro còn thiếu theo tiêu đề, không tạo trùng khi chạy lại."""
+    existing_titles = set(
+        (
+            await session.execute(select(RiskIssue.title).where(RiskIssue.project_id == project.id))
+        ).scalars()
+    )
+    inserted = 0
+    for row in rows:
+        payload = RiskIssueCreate(**row)
+        if payload.title in existing_titles:
+            continue
+        risk = await create_risk_issue(
+            session,
+            project_id=project.id,
+            project_code=project.code,
+            values=payload.model_dump(),
+        )
+        await record_audit(
+            session,
+            actor_id=None,
+            action="risk_issue.seed",
+            entity_type="risk_issue",
+            entity_id=str(risk.id),
+            changes={"code": risk.code},
+        )
+        inserted += 1
+    return inserted
+
+
 async def ensure_contracts(
     session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
 ) -> int:
@@ -163,7 +199,9 @@ async def seed_hcm_project(session_factory: async_sessionmaker[AsyncSession]) ->
             session, project.id, load_seed_rows(HCM_MILESTONES_FILE)
         )
         contracts = await ensure_contracts(session, project.id, load_seed_rows(HCM_CONTRACTS_FILE))
+        risks = await ensure_risks(session, project, load_seed_rows(HCM_RISKS_FILE))
         await session.commit()
+    logger.info("Seed %s: thêm %d rủi ro", HCM_PROJECT.code, risks)
     logger.info("Seed %s: thêm %d hợp đồng", HCM_PROJECT.code, contracts)
     logger.info("Seed %s: thêm %d đơn vị thụ hưởng, %d mốc", HCM_PROJECT.code, inserted, milestones)
     return inserted
@@ -177,7 +215,12 @@ async def seed_lam_dong_project(session_factory: async_sessionmaker[AsyncSession
         contracts = await ensure_contracts(
             session, project.id, load_seed_rows(LAM_DONG_CONTRACTS_FILE)
         )
+        milestones = await ensure_milestones(
+            session, project.id, load_seed_rows(LAM_DONG_MILESTONES_FILE)
+        )
+        risks = await ensure_risks(session, project, load_seed_rows(LAM_DONG_RISKS_FILE))
         await session.commit()
+    logger.info("Seed %s: thêm %d mốc, %d rủi ro", LAM_DONG_PROJECT.code, milestones, risks)
     logger.info("Seed %s: thêm %d hợp đồng", LAM_DONG_PROJECT.code, contracts)
     logger.info("Seed %s: thêm %d đơn vị thụ hưởng", LAM_DONG_PROJECT.code, inserted)
     return inserted

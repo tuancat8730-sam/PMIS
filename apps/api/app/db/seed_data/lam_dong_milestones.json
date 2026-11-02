@@ -1,0 +1,52 @@
+[
+  {
+    "code": "LD1",
+    "name": "Giao, lắp đặt, bàn giao thiết bị Tin học (Đợt 1)",
+    "baseline_end": "2026-11-10",
+    "is_hard_deadline": false,
+    "deliverables": "Biên bản bàn giao từng trường (60 đơn vị) có số serial; CO, CQ theo lô",
+    "acceptance_conditions": "Đủ serial 1.420 bộ máy tính; CO/CQ; kiểm tra mẫu máy tính A3520 và H4350G có ký xác nhận",
+    "tvgs_checkpoint": "Kiểm tra kho 26/10–05/11; giao 27/10–10/11 (Đề cương TVGS 1310/ĐC-TVGS-SGM)",
+    "pm_comment": "Tiến độ 28/10: 9/60 đơn vị theo lịch. Báo cáo tuần 03 ghi 320/1.420 serial. Chưa có CO/CQ."
+  },
+  {
+    "code": "LD2",
+    "name": "Giao, lắp đặt thiết bị Ngoại ngữ (Đợt 2)",
+    "baseline_end": "2026-11-25",
+    "is_hard_deadline": false,
+    "deliverables": "Biên bản bàn giao 37 đơn vị; mẫu bàn ghế đã duyệt",
+    "acceptance_conditions": "Duyệt mẫu bàn ghế trước khi giao; danh sách 37 đơn vị chốt",
+    "tvgs_checkpoint": "Kiểm tra kho 10/11–15/11; giao 16/11–25/11 (Tờ trình 2710/TTr-ALT)",
+    "pm_comment": "Mốc lệch: Tờ trình và công văn 16/11; Báo cáo tuần và Phụ lục danh mục 20/11. Bàn ghế đang làm lại."
+  },
+  {
+    "code": "LD3",
+    "name": "Giao, lắp đặt thiết bị các môn còn lại (Đợt 3)",
+    "baseline_end": "2027-01-15",
+    "is_hard_deadline": false,
+    "deliverables": "Biên bản bàn giao 61 đơn vị; danh mục thiết bị theo môn",
+    "acceptance_conditions": "Đủ CO/CQ theo lô; mẫu từng danh mục đã trình và duyệt",
+    "tvgs_checkpoint": "Kiểm tra kho 06/12–30/12; giao 15/12/2026–15/01/2027",
+    "pm_comment": "Chưa trình mẫu từng danh mục thiết bị Đợt 3. Đơn vị Đợt 3 kiểm tra đến 30/12 nhưng giao từ 15/12."
+  },
+  {
+    "code": "LD4",
+    "name": "Đào tạo và nghiệm thu tổng thể tại đơn vị",
+    "baseline_end": "2027-01-28",
+    "is_hard_deadline": false,
+    "deliverables": "Biên bản nghiệm thu tổng thể từng đơn vị; tài liệu hướng dẫn sử dụng",
+    "acceptance_conditions": "Biên bản bàn giao 4 bản mỗi đơn vị; Tổ nghiệm thu ký",
+    "tvgs_checkpoint": "Giám sát đào tạo và nghiệm thu 16/12/2026–28/01/2027",
+    "pm_comment": "Tổ nghiệm thu: 4 tổ, 13 chuyến, lịch đề xuất 04/01–29/01/2027 (Kế hoạch bố trí xe). QĐ thành lập Tổ chưa xác nhận số."
+  },
+  {
+    "code": "LD5",
+    "name": "Nghiệm thu hoàn thành và kết thúc hợp đồng cung cấp",
+    "baseline_end": "2027-02-05",
+    "is_hard_deadline": true,
+    "deliverables": "Hồ sơ hoàn thành, thanh lý hợp đồng, quyết toán",
+    "acceptance_conditions": "Hết hạn 120 ngày kể từ 09/10/2026 (Hợp đồng HD2600226555_2609110905)",
+    "tvgs_checkpoint": "Nghiệm thu hoàn thành 05/02/2027; báo cáo kết quả giám sát khoảng 10 ngày sau",
+    "pm_comment": "Tiến độ 28/10: 20/120 ngày. Nghiệm thu tổng thể dự kiến 16/12/2026–28/01/2027."
+  }
+]
