@@ -17,6 +17,8 @@ from app.models.it_system_module import ItSystemModule
 from app.models.legal_document import LegalDocument
 from app.models.milestone import Milestone
 from app.models.milestone_adjustment import MilestoneAdjustment
+from app.models.milestone_note import MilestoneNote
+from app.models.milestone_task import MilestoneTask
 from app.models.nfr_measurement import NfrMeasurement
 from app.models.penalty_rule import PenaltyRule
 from app.models.pentest_finding import PentestFinding
@@ -51,6 +53,8 @@ __all__ = [
     "LegalDocument",
     "Milestone",
     "MilestoneAdjustment",
+    "MilestoneNote",
+    "MilestoneTask",
     "NfrMeasurement",
     "PenaltyRule",
     "PentestFinding",

@@ -7,6 +7,26 @@ export type MilestoneDisplayStatus =
   | "AT_RISK"
   | "OVERDUE";
 export type RiskLevel = "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH";
+export type MilestoneStorageStatus = "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
+
+export interface TaskRow {
+  id: string;
+  milestone_id: string;
+  name: string;
+  status: MilestoneStorageStatus;
+  assignee: string | null;
+  due_date: string | null;
+  note: string | null;
+  is_overdue: boolean;
+}
+
+export interface NoteRow {
+  id: string;
+  milestone_id: string;
+  body: string;
+  created_by: string;
+  created_at: string;
+}
 
 export interface ScheduleRow {
   id: string;
@@ -29,6 +49,8 @@ export interface ScheduleRow {
   acceptance_conditions: string | null;
   tvgs_checkpoint: string | null;
   pm_comment: string | null;
+  tasks: TaskRow[];
+  notes: NoteRow[];
 }
 
 export interface ScheduleMatrixData {

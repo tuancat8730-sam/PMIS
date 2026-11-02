@@ -24,10 +24,18 @@ interface MatrixPageProps<T> {
   title: string;
   load: (token: string) => Promise<T>;
   render: (data: T) => ReactNode;
+  /** Đổi giá trị để tải lại dữ liệu, ví dụ sau khi ghi thành công. */
+  reloadKey?: number;
 }
 
 /** Khung chung cho các màn hình tracking: đọc token, tải dữ liệu, hiển thị lỗi hoặc nội dung. */
-export function MatrixPage<T>({ projectId, title, load, render }: MatrixPageProps<T>) {
+export function MatrixPage<T>({
+  projectId,
+  title,
+  load,
+  render,
+  reloadKey = 0,
+}: MatrixPageProps<T>) {
   const [state, setState] = useState<LoadState<T>>({ kind: "loading" });
 
   useEffect(() => {
@@ -44,9 +52,9 @@ export function MatrixPage<T>({ projectId, title, load, render }: MatrixPageProp
           message: error instanceof Error ? error.message : "Không tải được dữ liệu",
         }),
       );
-    // load được tạo lại mỗi lần render nhưng chỉ phụ thuộc projectId; chỉ tải khi đổi dự án.
+    // load được tạo lại mỗi lần render nhưng chỉ phụ thuộc projectId và reloadKey.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [projectId]);
+  }, [projectId, reloadKey]);
 
   return (
     <main className="flex flex-col gap-4 p-6">
