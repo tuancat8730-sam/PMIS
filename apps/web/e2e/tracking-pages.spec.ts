@@ -237,6 +237,17 @@ test.describe("Tracking: các màn hình theo dự án", () => {
     await expect(page).toHaveURL(/\/projects$/);
   });
 
+  for (const screen of TRACKING_SCREENS) {
+    test(`màn ${screen} có nút quay lại danh sách dự án`, async ({ page }) => {
+      // Arrange
+      // Act
+      await openTrackingPage(page, screen);
+
+      // Assert
+      await expect(page.getByRole("link", { name: "Quay lại danh sách dự án" })).toBeVisible();
+    });
+  }
+
   test("quyết định hiển thị số quyết định phê duyệt", async ({ page }) => {
     // Arrange
     // Act
