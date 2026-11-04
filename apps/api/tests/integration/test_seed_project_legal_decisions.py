@@ -11,7 +11,7 @@ from app.models.project_legal_decision import LegalDecisionKind, ProjectLegalDec
 pytestmark = pytest.mark.integration
 
 HCM_DECISION_COUNT = 4
-LAM_DONG_DECISION_COUNT = 2
+LAM_DONG_DECISION_COUNT = 4
 HCM_CODE = "SGD-HCM-CSVC-2026"
 LAM_DONG_CODE = "SGD-LD-TB10-2026"
 
@@ -49,7 +49,7 @@ async def test_seed_hcm_legal_decisions_with_investment_amount_and_idempotent(
     assert by_no["1595/QĐ-SGDĐT"].execution_period is not None
 
 
-async def test_seed_lam_dong_legal_decisions_keeps_unknown_fields_empty(app: FastAPI) -> None:
+async def test_seed_lam_dong_legal_decisions_from_report(app: FastAPI) -> None:
     # Arrange
     session_factory = app.state.session_factory
 
@@ -72,7 +72,8 @@ async def test_seed_lam_dong_legal_decisions_keeps_unknown_fields_empty(app: Fas
             .scalars()
             .all()
         )
-    # Số QĐ phê duyệt TMĐT chính thức (QĐ 2891) chưa đọc: không có dòng PROJECT_APPROVAL.
+    # Báo cáo 04/11/2026 có QĐ phê duyệt dự án 2891/QĐ-UBND kèm nguồn vốn và thời gian thực hiện.
     assert len(decisions) == LAM_DONG_DECISION_COUNT
-    assert all(decision.kind != LegalDecisionKind.PROJECT_APPROVAL for decision in decisions)
-    assert all(decision.funding_source is None for decision in decisions)
+    approval = next(d for d in decisions if d.kind == LegalDecisionKind.PROJECT_APPROVAL)
+    assert approval.decision_no == "2891/QĐ-UBND"
+    assert approval.funding_source is not None

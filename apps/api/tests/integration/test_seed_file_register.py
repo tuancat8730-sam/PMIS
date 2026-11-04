@@ -9,7 +9,7 @@ from app.models.project_file_register import ProjectFileRegisterEntry
 pytestmark = pytest.mark.integration
 
 HCM_FILE_ENTRY_COUNT = 20
-LAM_DONG_FILE_ENTRY_COUNT = 2
+LAM_DONG_FILE_ENTRY_COUNT = 25
 LAM_DONG_CODE = "SGD-LD-TB10-2026"
 
 
@@ -47,7 +47,7 @@ async def test_seed_creates_hcm_file_register_and_is_idempotent(app: FastAPI) ->
     assert by_stt[20].folder_path == "Thư mục gốc"
 
 
-async def test_seed_creates_lam_dong_file_register_with_known_fields_only(app: FastAPI) -> None:
+async def test_seed_creates_lam_dong_file_register_with_report_statuses(app: FastAPI) -> None:
     # Arrange
     session_factory = app.state.session_factory
 
@@ -71,6 +71,7 @@ async def test_seed_creates_lam_dong_file_register_with_known_fields_only(app: F
             .scalars()
             .all()
         )
-    # Nguồn LD không có tình trạng pháp lý, bảo mật hay hành động: để trống, không đoán.
-    assert all(entry.legal_status is None for entry in entries)
-    assert all(entry.next_action is None for entry in entries)
+    # Báo cáo 04/11/2026 có tình trạng pháp lý và hành động cho mọi dòng register.
+    assert all(entry.legal_status for entry in entries)
+    serial_entry = next(entry for entry in entries if entry.stt == 9)
+    assert "1.420 serial" in serial_entry.next_action
