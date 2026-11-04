@@ -4,6 +4,21 @@
     "package_kind": "MAIN",
     "contract_number": "HD2600226555_2609110905",
     "signed_date": "2026-10-06",
-    "contract_value": "106225000000.00"
+    "expiration_date": "2027-02-05",
+    "contract_value": "106225000000.00",
+    "role_label": "Nhà thầu chính (Liên danh)",
+    "contractor_name": "Liên danh Gói thầu Mua sắm thiết bị tối thiểu lớp 10 (đứng đầu: Công ty TNHH Nguyên Luân)",
+    "status_note": "Hợp đồng trọn gói; đã nhận tạm ứng 30% (31.867.500.000 đ); đang giao nhận Đợt 1 tại 62 trường; cần chốt danh sách serial và duyệt lại mẫu bàn ghế"
+  },
+  {
+    "package_name": "Gói TVGS",
+    "package_kind": "CONSULTING",
+    "contract_number": "80/2026/HĐTV/SDGĐTLĐ-SGM",
+    "signed_date": "2026-10-12",
+    "expiration_date": "2027-02-08",
+    "contract_value": "360000000.00",
+    "role_label": "Tư vấn Giám sát (TVGS)",
+    "contractor_name": "Công ty TNHH TM DV & Tư vấn Sài Gòn Mới (SGM)",
+    "status_note": "Giám sát 8 bước, kiểm tra hàng mẫu, vật tư đầu vào tại kho; thời hạn HĐ sát hạn gói chính (cần phụ lục gia hạn)"
   }
 ]

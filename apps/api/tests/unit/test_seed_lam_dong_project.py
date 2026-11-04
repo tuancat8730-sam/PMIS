@@ -33,7 +33,8 @@ def test_lam_dong_contract_file_has_one_main_package_with_contract_number() -> N
     contracts = [ContractCreate.model_validate(row) for row in rows]
 
     # Assert
-    assert len(contracts) == 1
+    assert len(contracts) == 2
+    assert sum(contract.package_kind == "MAIN" for contract in contracts) == 1
     assert contracts[0].package_kind == "MAIN"
     assert contracts[0].contract_number == LAM_DONG_CONTRACT_NUMBER
 

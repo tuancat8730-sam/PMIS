@@ -3,6 +3,7 @@
 import asyncio
 import json
 import logging
+from datetime import date
 from decimal import Decimal
 from pathlib import Path
 from typing import Any
@@ -14,7 +15,7 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from app.core.config import get_settings
 from app.models.contract import Contract
 from app.models.legal_document import DocMaturityStatus, LegalDocument
-from app.models.milestone import Milestone
+from app.models.milestone import Milestone, StoredMilestoneStatus
 from app.models.project import Project, ProjectArchetype
 from app.models.project_budget_item import ProjectBudgetItem
 from app.models.project_file_register import ProjectFileRegisterEntry
@@ -172,20 +173,32 @@ def _refresh_seed_text(milestone: Milestone, payload: MilestoneCreate) -> bool:
     return changed
 
 
+class MilestoneSeedRow(MilestoneCreate):
+    """Dòng mốc nạp seed: kèm trạng thái và ngày hoàn thành đã đối chiếu từ báo cáo tracking."""
+
+    status: StoredMilestoneStatus = StoredMilestoneStatus.NOT_STARTED
+    actual_end: date | None = None
+
+
 async def ensure_milestones(
     session: AsyncSession, project_id: UUID, rows: list[dict[str, Any]]
 ) -> int:
     inserted = 0
     for row in rows:
-        payload = MilestoneCreate(**row)
+        payload = MilestoneSeedRow(**row)
         existing = await find_milestone_by_code(session, project_id, payload.code)
         if existing is not None:
             if _refresh_seed_text(existing, payload):
                 await session.flush()
             continue
         milestone = await create_milestone(
-            session, project_id=project_id, values=payload.model_dump()
+            session,
+            project_id=project_id,
+            values=payload.model_dump(exclude={"status", "actual_end"}),
         )
+        milestone.status = payload.status
+        milestone.actual_end = payload.actual_end
+        await session.flush()
         await record_audit(
             session,
             actor_id=None,
